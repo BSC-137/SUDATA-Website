@@ -17,22 +17,27 @@ const { title = "SUDATA" } = Astro.props;
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 	</head>
-	<body class="min-h-screen flex flex-col">
-		<nav class="border-b border-sudata-grey/20 backdrop-blur-sm sticky top-0 z-50">
-			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-				<div class="flex items-center justify-between h-16">
-					<div class="flex-shrink-0">
-						<a href="/" class="text-sudata-cyan font-bold text-xl tracking-wider hover:text-white transition-colors">
+	<body class="min-h-screen flex flex-col bg-sudata-navy relative">
+		<!-- Glassmorphic Navbar -->
+		<nav class="fixed top-6 left-0 right-0 mx-auto max-w-2xl z-50">
+			<div class="backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl shadow-lg shadow-sudata-cyan/10">
+				<div class="px-6 py-3">
+					<div class="flex items-center justify-between">
+						<!-- Logo/Brand -->
+						<a href="/" class="text-white font-bold text-lg tracking-wider hover:text-sudata-cyan transition-colors">
 							SUDATA
 						</a>
-					</div>
-					<div class="hidden md:block">
-						<div class="ml-10 flex items-baseline space-x-8">
-							<a href="/about" class="text-sudata-grey hover:text-sudata-cyan px-3 py-2 rounded-md text-sm font-medium transition-colors">
-								About
+						
+						<!-- Navigation Links -->
+						<div class="flex space-x-1">
+							<a href="/" class="text-white/80 hover:text-white px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 hover:bg-white/10">
+								Home
 							</a>
-							<a href="/events" class="text-sudata-grey hover:text-sudata-cyan px-3 py-2 rounded-md text-sm font-medium transition-colors">
+							<a href="/events" class="text-white/80 hover:text-white px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 hover:bg-white/10">
 								Events
+							</a>
+							<a href="/about" class="text-white/80 hover:text-white px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 hover:bg-white/10">
+								About
 							</a>
 						</div>
 					</div>
@@ -40,11 +45,11 @@ const { title = "SUDATA" } = Astro.props;
 			</div>
 		</nav>
 
-		<main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+		<main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 w-full relative z-10">
 			<slot />
 		</main>
 
-		<footer class="border-t border-sudata-grey/20 py-6 mt-auto">
+		<footer class="border-t border-sudata-grey/20 py-6 mt-auto relative z-10 bg-sudata-navy/80 backdrop-blur-sm">
 			<div class="max-w-7xl mx-auto px-4 text-center text-sm text-sudata-grey/60">
 				&copy; {new Date().getFullYear()} SUDATA. All rights reserved.
 			</div>
