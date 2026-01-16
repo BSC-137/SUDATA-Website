@@ -13,43 +13,64 @@ const { title = "", description = "Tap to view!", images, height = 420 } = Astro
 const uid = `carousel-${Math.random().toString(36).slice(2)}`;
 ---
 
-<div class="album-card w-full max-w-3xl rounded-xl overflow-hidden" id={uid} data-carousel-root>
-  <!-- Uncomment for little headers on each album -->
-  <!-- <div class="pa-like-header px-4 py-3">
-    {title && <div class="font-semibold">{title}</div>}
-    <div class="text-sm text-sudata-grey">{description}</div>
-  </div> -->
+<div class="album-glow">
+  <div class="album-card w-full max-w-3xl rounded-xl overflow-hidden" id={uid} data-carousel-root>
+    <!-- Uncomment for little headers on each album -->
+    <!-- <div class="pa-like-header px-4 py-3">
+      {title && <div class="font-semibold">{title}</div>}
+      <div class="text-sm text-sudata-grey">{description}</div>
+    </div> -->
 
-  <div class="relative">
-    <div class="carousel" style={`height:${height}px`} data-carousel>
-      {images.map((img, i) => (
-        <div class="slide" data-slide>
-          <Image
-            src={img.src}
-            alt={img.alt ?? ""}
-            loading={i === 0 ? "eager" : "lazy"}
-            decoding="async"
-            // Set to object-cover to cover entire frame
-            class="h-full w-full object-contain"
-            widths={[640, 800, 1200, 1600]}
-            sizes="(max-width: 768px) 100vw, 768px"
-          />
-        </div>
-      ))}
-    </div>
+    <div class="relative">
+      <div class="carousel" style={`height:${height}px`} data-carousel>
+        {images.map((img, i) => (
+          <div class="slide" data-slide>
+            <Image
+              src={img.src}
+              alt={img.alt ?? ""}
+              loading={i === 0 ? "eager" : "lazy"}
+              decoding="async"
+              class="h-full w-full object-contain"
+              widths={[640, 800, 1200, 1600]}
+              sizes="(max-width: 768px) 100vw, 768px"
+            />
+          </div>
+        ))}
+      </div>
 
-    <button class="nav left" type="button" data-prev aria-label="Previous">‹</button>
-    <button class="nav right" type="button" data-next aria-label="Next">›</button>
+      <button class="nav left" type="button" data-prev aria-label="Previous">‹</button>
+      <button class="nav right" type="button" data-next aria-label="Next">›</button>
 
-    <div class="dots" data-dots>
-      {images.map((_, i) => (
-        <button class="dot" type="button" data-dot={i} aria-label={`Go to slide ${i + 1}`} />
-      ))}
+      <div class="dots" data-dots>
+        {images.map((_, i) => (
+          <button class="dot" type="button" data-dot={i} aria-label={`Go to slide ${i + 1}`} />
+        ))}
+      </div>
     </div>
   </div>
 </div>
 
 <style>
+
+  .album-card {
+    border: 1px solid rgba(0, 255, 255, 0.18);
+    background: rgba(10, 20, 40, 0.55);
+    box-shadow:
+      0 0 0 1px rgba(0, 255, 255, 0.10) inset,
+      0 0 28px rgba(204, 0, 255, 0.1),
+      0 0 90px rgba(166, 0, 255, 0.06);
+    transition: box-shadow 200ms ease, border-color 200ms ease, transform 200ms ease;
+  }
+
+  .album-card:hover {
+    border-color: rgba(0, 255, 255, 0.30);
+    box-shadow:
+      0 0 0 1px rgba(200, 0, 255, 0.14) inset,
+      0 0 34px rgba(187, 0, 255, 0.16),
+      0 0 120px rgba(217, 0, 255, 0.1);
+    transform: translateY(-1px);
+  }
+
   .pa-like-header {
     background: rgba(10, 20, 40, 0.55);
     border-bottom: 1px solid rgba(0, 255, 255, 0.12);
@@ -68,7 +89,7 @@ const uid = `carousel-${Math.random().toString(36).slice(2)}`;
   .slide { 
     flex: 0 0 100%; 
     scroll-snap-align: center; 
-    background: rgba(9, 29, 73, 0.05)
+    background: rgba(0, 0, 0, 0.35)
   }
 
   .nav {
