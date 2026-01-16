@@ -4,33 +4,24 @@ import { Image } from "astro:assets";
 type Props = {
   title?: string;
   description?: string;
-  images: Array<{
-    src: any;
-    alt?: string;
-  }>;
+  images: Array<{ src: any; alt?: string }>;
   height?: number;
 };
 
-const {
-  title = "",
-  description = "Tap to view!",
-  images,
-  height = 420
-} = Astro.props;
+const { title = "", description = "Tap to view!", images, height = 420 } = Astro.props;
+
+const uid = `carousel-${Math.random().toString(36).slice(2)}`;
 ---
 
-<div class="album-card w-full max-w-3xl rounded-xl overflow-hidden">
-  <div class="pa-like-header px-4 py-3">
+<div class="album-card w-full max-w-3xl rounded-xl overflow-hidden" id={uid} data-carousel-root>
+  <!-- Uncomment for little headers on each album -->
+  <!-- <div class="pa-like-header px-4 py-3">
     {title && <div class="font-semibold">{title}</div>}
     <div class="text-sm text-sudata-grey">{description}</div>
-  </div>
+  </div> -->
 
   <div class="relative">
-    <div
-      class="carousel"
-      style={`height:${height}px`}
-      data-carousel
-    >
+    <div class="carousel" style={`height:${height}px`} data-carousel>
       {images.map((img, i) => (
         <div class="slide" data-slide>
           <Image
@@ -38,7 +29,8 @@ const {
             alt={img.alt ?? ""}
             loading={i === 0 ? "eager" : "lazy"}
             decoding="async"
-            class="h-full w-full object-cover"
+            // Set to object-cover to cover entire frame
+            class="h-full w-full object-contain"
             widths={[640, 800, 1200, 1600]}
             sizes="(max-width: 768px) 100vw, 768px"
           />
@@ -46,12 +38,8 @@ const {
       ))}
     </div>
 
-    <button class="nav left" type="button" data-prev aria-label="Previous">
-      ‹
-    </button>
-    <button class="nav right" type="button" data-next aria-label="Next">
-      ›
-    </button>
+    <button class="nav left" type="button" data-prev aria-label="Previous">‹</button>
+    <button class="nav right" type="button" data-next aria-label="Next">›</button>
 
     <div class="dots" data-dots>
       {images.map((_, i) => (
@@ -75,13 +63,12 @@ const {
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
   }
-  .carousel::-webkit-scrollbar {
-    display: none;
-  }
+  .carousel::-webkit-scrollbar { display: none; }
 
-  .slide {
-    flex: 0 0 100%;
-    scroll-snap-align: center;
+  .slide { 
+    flex: 0 0 100%; 
+    scroll-snap-align: center; 
+    background: rgba(9, 29, 73, 0.05)
   }
 
   .nav {
@@ -100,10 +87,12 @@ const {
     place-items: center;
     cursor: pointer;
     user-select: none;
+    z-index: 10;
+
+    /* important to ensur clicks register even if an image overlays */
+    pointer-events: auto;
   }
-  .nav:hover {
-    border-color: rgba(0, 255, 255, 0.45);
-  }
+  .nav:hover { border-color: rgba(0, 255, 255, 0.45); }
   .nav.left { left: 10px; }
   .nav.right { right: 10px; }
 
@@ -118,6 +107,7 @@ const {
     border-radius: 999px;
     background: rgba(10, 20, 40, 0.45);
     border: 1px solid rgba(0, 255, 255, 0.15);
+    z-index: 10;
   }
   .dot {
     width: 8px;
@@ -127,46 +117,77 @@ const {
     background: rgba(255, 255, 255, 0.45);
     cursor: pointer;
   }
-  .dot[data-active="true"] {
-    background: rgba(0, 255, 255, 0.9);
-  }
+  .dot[data-active="true"] { background: rgba(0, 255, 255, 0.9); }
 </style>
 
 <script is:inline>
-  const root = document.currentScript.closest(".album-card");
-  const track = root.querySelector("[data-carousel]");
-  const slides = [...root.querySelectorAll("[data-slide]")];
-  const dotsWrap = root.querySelector("[data-dots]");
-  const dots = [...root.querySelectorAll("[data-dot]")];
+  function initCarousel(root) {
+    root.dataset.carouselInited = "true";
 
-  const clamp = (n, lo, hi) => Math.max(lo, Math.min(hi, n));
+    const track = root.querySelector("[data-carousel]");
+    const slides = Array.from(root.querySelectorAll("[data-slide]"));
+    const dots = Array.from(root.querySelectorAll("[data-dot]"));
 
-  const getIndex = () => {
-    const w = track.clientWidth || 1;
-    return clamp(Math.round(track.scrollLeft / w), 0, slides.length - 1);
-  };
+    if (!track || slides.length === 0) return;
 
-  const setActiveDot = (idx) => {
-    dots.forEach((d, i) => d.dataset.active = String(i === idx));
-  };
+    const clamp = (n, lo, hi) => Math.max(lo, Math.min(hi, n));
 
-  const goTo = (idx) => {
-    const w = track.clientWidth || 1;
-    track.scrollTo({ left: idx * w, behavior: "smooth" });
-    setActiveDot(idx);
-  };
+    const getIndex = () => {
+      const w = track.clientWidth || 1;
+      return clamp(Math.round(track.scrollLeft / w), 0, slides.length - 1);
+    };
 
-  root.querySelector("[data-prev]").addEventListener("click", () => goTo(getIndex() - 1));
-  root.querySelector("[data-next]").addEventListener("click", () => goTo(getIndex() + 1));
+    const setActiveDot = (idx) => {
+      dots.forEach((d, i) => (d.dataset.active = String(i === idx)));
+    };
 
-  dots.forEach((d) => {
-    d.addEventListener("click", () => goTo(Number(d.dataset.dot)));
-  });
+    const goTo = (idx) => {
+      const w = track.clientWidth || 1;
+      const next = clamp(idx, 0, slides.length - 1);
+      track.scrollTo({ left: next * w, behavior: "smooth" });
+      setActiveDot(next);
+    };
 
-  track.addEventListener("scroll", () => {
-    setActiveDot(getIndex());
-  }, { passive: true });
+    root.querySelector("[data-prev]")?.addEventListener("click", (e) => {
+      e.preventDefault();
+      goTo(getIndex() - 1);
+    });
 
-  // initial state
-  setActiveDot(0);
+    root.querySelector("[data-next]")?.addEventListener("click", (e) => {
+      e.preventDefault();
+      goTo(getIndex() + 1);
+    });
+
+    dots.forEach((d) => {
+      d.addEventListener("click", (e) => {
+        e.preventDefault();
+        goTo(Number(d.dataset.dot));
+      });
+    });
+
+    track.addEventListener(
+      "scroll",
+      () => setActiveDot(getIndex()),
+      { passive: true }
+    );
+
+    // keep dot correct after resize
+    new ResizeObserver(() => setActiveDot(getIndex())).observe(track);
+
+    setActiveDot(0);
+  }
+
+  function initAllCarousels() {
+    document.querySelectorAll("[data-carousel-root]").forEach(initCarousel);
+  }
+
+  // First load
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initAllCarousels, { once: true });
+  } else {
+    initAllCarousels();
+  }
+
+  // Astro client-side navigation / view transitions
+  document.addEventListener("astro:page-load", initAllCarousels);
 </script>
