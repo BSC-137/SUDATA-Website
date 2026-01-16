@@ -1,4 +1,6 @@
 ---
+// This code is pretty poor.
+// I don't understand any of Astro's quirks, I only know the solution (docs came in clutch)
 import { Image } from "astro:assets";
 
 type Props = {
@@ -50,24 +52,38 @@ const uid = `carousel-${Math.random().toString(36).slice(2)}`;
   </div>
 </div>
 
+
 <style>
+  :root {
+    /* tweak this based on what others think of it */
+    --neon-glow: 204, 0, 255;
+  }
 
   .album-card {
     border: 1px solid rgba(0, 255, 255, 0.18);
     background: rgba(10, 20, 40, 0.55);
     box-shadow:
       0 0 0 1px rgba(0, 255, 255, 0.10) inset,
-      0 0 28px rgba(204, 0, 255, 0.1),
-      0 0 90px rgba(166, 0, 255, 0.06);
-    transition: box-shadow 200ms ease, border-color 200ms ease, transform 200ms ease;
+      0 0 28px rgba(var(--neon-glow), 0.10),
+      0 0 90px rgba(var(--neon-glow), 0.06);
+
+    border-color: rgba(0, 255, 255, 0.18);
+    transform: translateY(0);
+
+    /* smooth interpolation */
+    transition:
+      box-shadow 520ms cubic-bezier(0.2, 0.8, 0.2, 1),
+      border-color 420ms ease,
+      transform 220ms ease;
+    will-change: box-shadow, transform;
   }
 
   .album-card:hover {
-    border-color: rgba(0, 255, 255, 0.30);
+    border-color: rgba(0, 255, 255, 0.24);
     box-shadow:
-      0 0 0 1px rgba(200, 0, 255, 0.14) inset,
-      0 0 34px rgba(187, 0, 255, 0.16),
-      0 0 120px rgba(217, 0, 255, 0.1);
+      0 0 0 1px rgba(var(--neon-glow), 0.12) inset,
+      0 0 32px rgba(var(--neon-glow), 0.13),
+      0 0 110px rgba(var(--neon-glow), 0.08);
     transform: translateY(-1px);
   }
 
@@ -197,18 +213,18 @@ const uid = `carousel-${Math.random().toString(36).slice(2)}`;
 
     setActiveDot(0);
   }
-
+  
   function initAllCarousels() {
     document.querySelectorAll("[data-carousel-root]").forEach(initCarousel);
   }
 
-  // First load
+  // This is for buttons (without it you can't navigate each album)
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", initAllCarousels, { once: true });
   } else {
     initAllCarousels();
   }
 
-  // Astro client-side navigation / view transitions
+  // initialise carousels on page load
   document.addEventListener("astro:page-load", initAllCarousels);
 </script>
