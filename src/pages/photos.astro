@@ -1,145 +1,45 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import AlbumCarousel from "../components/AlbumCarousel.astro";
+import { loadAlbum } from "../lib/albums";
+
+// For some reason we need to add every other file ext?? Doesn't show image otherwise
+const innGlob = import.meta.glob("../assets/albums/inn-temp/*.{jpg,jpeg,png,webp,avif}", {
+  eager: true,
+  import: "default",
+});
+
+const ballGlob = import.meta.glob("../assets/albums/ball-temp/*.{jpg,jpeg,png,webp,avif}", {
+  eager: true,
+  import: "default",
+});
+
+const inn2025 = loadAlbum(innGlob, "INN 2025");
+const ball2025 = loadAlbum(ballGlob, "Ball 2025");
 ---
 
-<!-- Note: use 2 space indenting, HTML nests SO MUCH -->
-
 <Layout title="SUDATA | Photos">
-    <div class="flex flex-col items-center min-h-[50vh] px-4 py-10 space-y-10">
-      <h1 class="text-center text-4xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-sudata-cyan to-white">
+  <div class="flex flex-col items-center min-h-[50vh] px-4 py-10 space-y-10">
+    <h1 class="text-center text-4xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-sudata-cyan to-white">
       Photos
-      </h1>
+    </h1>
 
-    <script src="https://cdn.jsdelivr.net/npm/publicalbum@latest/embed-ui.min.js" async></script>
-
-    <!-- INN 2025 -->
     <section class="w-full max-w-4xl text-left space-y-3">
       <h2 class="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-sudata-cyan to-white">
-          INN 2025
+        INN 2025
       </h2>
       <p class="text-sm md:text-base text-sudata-grey">26 May 2025</p>
 
-      <script src="https://cdn.jsdelivr.net/npm/publicalbum@latest/embed-ui.min.js" async></script>
-
-      <div class="w-full">
-        <div class="album-card w-full max-w-3xl rounded-xl overflow-hidden">
-          <div
-            class="pa-carousel-widget"
-            style="width:100%; height:420px; display:none;"
-            data-link="https://photos.app.goo.gl/wy3GXLk2VMhxtgjy8"
-            data-title=""
-            data-description="Tap to view!"
-          >
-          
-          <!-- Should this be unindented by one indent? HTML is so ugly... -->
-          <!-- Photo Objects -->
-          <object data="https://lh3.googleusercontent.com/pw/AP1GczM5dLClu24tykOKuiC0H1aqzDa3MSj587X71gxOjryadN5ACyJVDRH-mWK1BexP-YBt-G39a3hagNckwI9AJwDRFGQKghDFwAX1JsxKluF8CzpBBA=w1920-h1080"></object>
-          <object data="https://lh3.googleusercontent.com/pw/AP1GczM0-vu6fvNGnY-Al2xsVHpqRacMQvdJWI56U4DA79hnlHCA-fwdiGAB_MtCLJiuXZnQ5fdNMolDHffQDlH4h5TAfwM3MZ-Kub8n6cLO7Sc-09EFWw=w1920-h1080"></object>
-          <object data="https://lh3.googleusercontent.com/pw/AP1GczMo9rNP_LtQZ817v5zPsitaFaQzaMQK11hpfTJYOKEHq73CaFiGVTdKoUD0oAuURfKBHOY4vqi-8ElOsEE-VRYyDjKr2I7w_OnaGn2C3v4PU-Rl9w=w1920-h1080"></object>
-          <object data="https://lh3.googleusercontent.com/pw/AP1GczNi5WNRtSGDlzAM0Moy-7X6JXahiu2wdr54qaU5FsMXhN8CTIv6VoT9J4cYmFjyOW7gFlZ76pcpniWVaD6RIpOuldZDXtbLI54NYhryq8F6Iw7pKw=w1920-h1080"></object>
-          <object data="https://lh3.googleusercontent.com/pw/AP1GczNN16TdHHfQdbGi7wiglK6LdjrPMyDnGstdGUeISgYqE1ynMU9uHQgHttptfKFgBQ7SyZTR96DmctS3lNSlA9AMkW-2LVrMBcVi2HG7eLsaEMQBhw=w1920-h1080"></object>
-          <object data="https://lh3.googleusercontent.com/pw/AP1GczNTooxO1nNyeqhzn3cXnYlaVQyUO0lftSa2cghjBWZLo3rpX-EnD2rAxMr8nzm-kpGUY6H8o_By8-dKz_eH4TVJo8RkL2GyI8Imsm07gLtJw-p5uQ=w1920-h1080"></object>
-          <object data="https://lh3.googleusercontent.com/pw/AP1GczMWWrS1z9uxiUWLGpU_NiKLr9xIgBfZbJcfy41URuHLb-0b6lLdwCg-mQA4VVj1hXO2V_9o_zHLtKBSkt_WaPubrDZG2wxsQumXMaqmXdv0dkc3uA=w1920-h1080"></object>
-          <object data="https://lh3.googleusercontent.com/pw/AP1GczONFadNyOrEzkRGDpditGdGOp2f4PbacLhscHK2dWwzwKE_3OrrMVUMFCdpZcZnYFV1k2aqsv2dBG1Wkz96l46UfT01mWNVW6F4WmKN7cgCMx8HFw=w1920-h1080"></object>
-          <object data="https://lh3.googleusercontent.com/pw/AP1GczPgap3sWMDU7z1r1F6dH9vXj94pM3k0-3TzF-lpQKrab_oluEzuBQ3SONhsN8pYbPv2IAdLMsNIloG8j9RQRamp0M5dHe2Qt6SIZdU1L2wATnQHjA=w1920-h1080"></object>
-          <object data="https://lh3.googleusercontent.com/pw/AP1GczPcsXQzEJPdcis6zjCUe9XCIwa-skJWh4nmIXq_KG3QnsTzUD3E1C1izNkFcWZxNw49clrWQ0VRSbr_ZH4TJGlSzK-S784Sej4o4uUW5wa1ASIkEQ=w1920-h1080"></object>
-          <object data="https://lh3.googleusercontent.com/pw/AP1GczNRlwceRHfaZ_kPoN2SDMKqrDTDhtn45ciBjCwqzb7zRTPeKMC0kovtlakzmav4JWejvmrgskWE-Hu6XkR0obPHR5uavEcdmveDKaN3b0HALiGPBA=w1920-h1080"></object>
-          <object data="https://lh3.googleusercontent.com/pw/AP1GczNzZncpCJrFPeExgLV3F2dZayeUSS0b4ej6WpDv2zpHzxoKrP8-hr_o1k8zbhMIHxajAT1_N3vwrTh0Si3Qm28xTxQULJcWUTnURcn3LFIpLdd8fQ=w1920-h1080"></object>
-
-          </div>
-        </div>
-      </div>
+      <AlbumCarousel images={inn2025} description="Tap to view!" height={420} />
     </section>
 
-    <!-- SUDATAxSUMATHxUNSWMATH Ball '25 -->
     <section class="w-full max-w-4xl text-left space-y-3">
       <h2 class="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-sudata-cyan to-white">
-          SUDATA x SUMATH x UNSWMATH Ball 2025
+        SUDATA x SUMATH x UNSWMATH Ball 2025
       </h2>
-      <p class="text-sm md:text-base text-sudata-grey">23 Oct 2025 (debug why not rendering)</p>
+      <p class="text-sm md:text-base text-sudata-grey">23 Oct 2025</p>
 
-      <div class="w-full">
-        <div class="album-card w-full max-w-3xl rounded-xl overflow-hidden">
-          <div
-            class="pa-carousel-widget"
-            style="width:100%; height:480px; display:none;"
-            data-link="https://photos.app.goo.gl/Xo3wZCsvL7mDvhet6"
-            data-title=""
-            data-description="Tap to view!"
-          >
-              
-          <!-- Photo Objects -->
-          <object data="https://lh3.googleusercontent.com/pw/AP1GczOxWJzp2SRo_PKvAJ98gBpTAwQKmAOfWbq9pbFQCKFVe42oug-PSBEmf0NXq_Wt04Ae6msRQ_rREwbrT5dEM4lmy4DSezMC7uuffbyZQFSldIKDGg=w1920-h1080"></object>
-          <object data="https://lh3.googleusercontent.com/pw/AP1GczO3Eq-uxIeSkuGEGNLy9NAH-_Dw0Rr7WHmsC_X2PcsVX9u0PZZgrC0PAefAJTJenSax1xfA2Hcmw1UMJYOXW_ur_9md2E4cDCGhvxSwGnO-HQHc-w=w1920-h1080"></object>
-          <object data="https://lh3.googleusercontent.com/pw/AP1GczNVQqP274U25cPZjolPh4W9DVLk6Lwmw11SppzIMMQGbrurg_cbnGdoeooNX-QIut07RqL0KieuchX43P54MyjtOfzh_lYMOtCZqHYU0tlsUiecWA=w1920-h1080"></object>
-          <object data="https://lh3.googleusercontent.com/pw/AP1GczNTTwl2byw0PrIRf_kOSMullzDv0XUW3OMFPFOjbEcFXID7f_wDxUq-Ly3fjI3JLlP6PearOTc_2x5d99ImsrUOLrlRFw0rr7-8nTTFfBFqCRRRBg=w1920-h1080"></object>
-          <object data="https://lh3.googleusercontent.com/pw/AP1GczNFKGt1Evt_bQdda6SP7rY0P0pUFZ1mKOFrmoV9dGNhN5HiAzQM1vbyBjeIs46T4LQ7SCw5kQxahnBhqGW2b9YpCsyhejXur0q3q24R8IaRZseOEw=w1920-h1080"></object>
-          <object data="https://lh3.googleusercontent.com/pw/AP1GczP2Qu9IQ5_Dmm9nub4oug876MKQCXgaYD0U2qCOOfYBmUG1iDm-LOG7sidMw9wXzYd2VhvQs1eu9fCx4FvtZ9eBN5Xkqgn4Kw9WgqrGnZ-gaGV_iw=w1920-h1080"></object>
-          <object data="https://lh3.googleusercontent.com/pw/AP1GczMz3qn6Ulc5EKjWg8VdGCDGZelk0paoB_UdvPj_IiE_8h3FWDbx_zOL4Q15HVLG3Mty-UyolvjKyRE3yTUXVuEm9M4sz3wOUdICS4ly0x-ONcoZXg=w1920-h1080"></object>
-          <object data="https://lh3.googleusercontent.com/pw/AP1GczNC4cyxyZah9xVtdcmqEtAEnu0YpWzvxJDisc51aTuqB5rPs2RugJS7uJhjLjs3ifTAOQGwChzq0UElf1bnlzvICPIFkR99TzcHvqy6jX40m03i7Q=w1920-h1080"></object>
-          <object data="https://lh3.googleusercontent.com/pw/AP1GczPLtBztGGjzRfHoKQBRG40JyenIr9n6Qu4IgahnlruhhuS_73d_ZNtfg0WwTkV1GLut0gESZ1VnmkWefEeJzWFelzQBKrleqyoGAj_KDat_bUmPSg=w1920-h1080"></object>
-          <object data="https://lh3.googleusercontent.com/pw/AP1GczPQgFx4N7Z-mK90NdW-OjM_nhDaFlG_o3J2tpFMG2SZKKorj2RRr1BejV3uLDCryKAHSdea4kF_Rh6iTs1tpuPZhvFDMsBYOz2XXCjO3WOtYcOAUA=w1920-h1080"></object>
-          <object data="https://lh3.googleusercontent.com/pw/AP1GczNvwWNWZc-3XNCxeVHB_TVzRYlGxRmdp2VYHiGEm2mbjZ1ky-8mXmb2_lPJxSMKo6V_zSKaMpqRam5ylC5rie_kvimziSiRX9O3CrNji4iFfuQJzQ=w1920-h1080"></object>
-          <object data="https://lh3.googleusercontent.com/pw/AP1GczOruTAWg1HQP0Y3hrqO4mqUaIDs66muqLN7YKJoCr8ejuWk3ejm1W5KQo33dugImup35uT7Y3XOZudXbooZJH51y0SYEInB7OZk5z6WTMZGzmdPbA=w1920-h1080"></object>
-          <object data="https://lh3.googleusercontent.com/pw/AP1GczNK9MYcWFkiU1e9-Ku1DuX4K2URW6b7u5SKeMyxJ-uAXOCo6qHRyO0N6MEQ1G9opNIkQd5xL-vZtCEjG4yE0wsVh-QClTKZ27XBRzgQwI-26PIQPA=w1920-h1080"></object>
-          <object data="https://lh3.googleusercontent.com/pw/AP1GczObuJ7g9cvbuiidSVTTp2T38dMZYIuXQtaaKuRyzmGwlh7oIV6Q64rEAsBZYE4nsl8pAiGEjmZNrMsWUV2bU8M9ek2OWW__aagnFQR1QBlzLRu9EA=w1920-h1080"></object>
-          <object data="https://lh3.googleusercontent.com/pw/AP1GczNFhR0rW4Uehc1gqR8VS82EaC9LXwVR1y1O6wIurjdXqnibd0jiRIdnH1aDdddPzS1A_XZn-EeKRR2jR6wGyyFntJVO0R-KOasKMkNZpn2zoCX1mg=w1920-h1080"></object>
-          <object data="https://lh3.googleusercontent.com/pw/AP1GczOCnteFtT4WYma1gCMeD4KV9zu_ZvURJWdV3HO_K3KXuz3n_5Mo-Wb-yV1shjLthOqgQhz0jSdj_Lb5vvYaztYaPVCjz8xOKo-b9fy7StP8-Md7tg=w1920-h1080"></object>
-          <object data="https://lh3.googleusercontent.com/pw/AP1GczOhPV1yF9HH-FbEllkloCikjGHwOfN-TGlhaNPL8i_ihT8FV-AEbHYG60f_MoK9PBxo8iUMZmbZTElaWtK_cWKofU_HYIYhLjOy9kjEylM4lsh4iQ=w1920-h1080"></object>
-          <object data="https://lh3.googleusercontent.com/pw/AP1GczOjeVDg4GpUxDCu2sVv4djOjfiXv9oNMdTzDC-Wc_gHLJIqFZcC0Aq20q6vSjFOWt6NpKsiXEn_zy7w4xigYfAqgeINceqEqDROtCOVHbNEz2gIIQ=w1920-h1080"></object>
-          <object data="https://lh3.googleusercontent.com/pw/AP1GczNTA76iLE9tbbvkoPqp05b30L8-QUs4zImiAGcNHJr5WlEH_wM3aZ51UXGFoPKtRsnFIYfyLemcg9tOJdAikYPwPN3cChzlu5OOEjwqZWE4eXrzGA=w1920-h1080"></object>
-          <object data="https://lh3.googleusercontent.com/pw/AP1GczPWYG4kYVkOztMCPq-Lfjp7Qx9K71KFYaX1Kb8RvKEE3VFm4eBCbRsGNZyAi7D0d5ChThZNd_tu7T04j9MlOdBDK3G5ngFqIXqBTZk65WrFWtkDfQ=w1920-h1080"></object>
-          <object data="https://lh3.googleusercontent.com/pw/AP1GczOYsAUK8QdqdPRQN1Heo9MI2K3KbWbkjjBkwigg2JTSkA-RJK_OYFcfTXX0iF0d_0Rg4r-sEo7vuIsIlIi8pydETwSESo2VNzkJ80pWqD5DagCZmw=w1920-h1080"></object>
-          <object data="https://lh3.googleusercontent.com/pw/AP1GczNA_R_5gPhmqpaUyCMJzySr_0lLFZD7EhjWdH7PE3ZA6uPPGouW2XHyBff_xOvNDJivWjLs5yHhokM4jEnbLMnUz1Vc7tOshA4Dgwh91rU_zFw4ig=w1920-h1080"></object>
-          <object data="https://lh3.googleusercontent.com/pw/AP1GczMoChhN4Sb_igcoTmCfQfETIlM7TJtDmdMsJtvcRxun9pLQU2vU0e5WywwFCSE90XSlrGG02Rcv2woZQHBTKfOknP7-wf72ISeRl2fFSfddSKlWsg=w1920-h1080"></object>
-          <object data="https://lh3.googleusercontent.com/pw/AP1GczOn6NsX6crq2E0eZkeEoxZLJPZ4v9lirvlU_myUAueV5tidCJDDrUt7M3hEasvRLfvOebJTdHbtW_xJPCGZYKX3LWKkkIxQRuqe9ey-6J6K6Hlfxg=w1920-h1080"></object>
-          <object data="https://lh3.googleusercontent.com/pw/AP1GczMYQ0ajCKwyjgNopHaaapih4RhJDQvWbtBIEJ30Tfsgw7YOMHivcU_N9b3sffVyrguO5ngOV10hrQQJPcR21IrQbJZugqdOjO5FpTCxG1-RBnVOgA=w1920-h1080"></object>
-          <object data="https://lh3.googleusercontent.com/pw/AP1GczNyRMo3FtbqPF2qpkK_FlKdTmTbpwSDetY3ihwcoe9l6fqPROmJxqeTdALmsNT8z3BVsuR30waEZAe229JDs_Xssvja35yEhf5tMrxcKUn96MBn-g=w1920-h1080"></object>
-          <object data="https://lh3.googleusercontent.com/pw/AP1GczP1eykvf9Jrxqe2fBW0XepA45Eaq3pMstskWcRsWEcIY1pbGzzj4_nWauzsTyk8y6Fng1GqWj7kn9-NQslgxxhdtLXJIpucQh1E6R-AoQpkw27vPA=w1920-h1080"></object>
-          <object data="https://lh3.googleusercontent.com/pw/AP1GczOZjfRB2ADKucIfV86J9nILdE6lhd6fgzBbjnMWM6n4YauwNtoiKbGigWQgXLVv6KjE2EujZx2Tu1C5d8FJdETpqJ9RvKtMv2tX06Fa1JZB6m3PaQ=w1920-h1080"></object>
-          <object data="https://lh3.googleusercontent.com/pw/AP1GczPovHbW_E03Hk3jKAzuQyol27zuD84L4zwr35MIb3fP6118G65-xGsHGdd8DTZl8dQQdUpjXv0Gs98PQEmRdYUKHgwpkk-6SPwIqm_R3-_LA9s6FA=w1920-h1080"></object>
-          <object data="https://lh3.googleusercontent.com/pw/AP1GczNXej5TuODmrnpSqF8ndLdBo7KjI1cHj01xsOZ1g-wzT0-fCpGp8_78fcujE6vZ87VGryW7xmatjCkeBK7saUroMUjs2Kvzhutip9e9dOFGtlyN-g=w1920-h1080"></object>
-          <object data="https://lh3.googleusercontent.com/pw/AP1GczN1cZF0LrPunjwvCCAGGEPiQzS5Y4GXKjdz7DkLYSyVpJRT73g_wTqk1fPPeWnIJIC02uVgrXwX3Pb2fxzNxXV-UvMDf8BWaIqjHKINOhGAZ8oRXQ=w1920-h1080"></object>
-          <object data="https://lh3.googleusercontent.com/pw/AP1GczNmYxxw2j3JxBRSdDCMkVCNZUosAHpQdCYgvSmPUmhkRxN6SWwmXBjo0yuydIBbWjwxt66ruK87_pp_1JWFryWhMX3pbXpRYtAzpW0a0xfnZri2oA=w1920-h1080"></object>
-          <object data="https://lh3.googleusercontent.com/pw/AP1GczOr45zQ1E9YICUl32g1sewTMGC8wBROF_P3lKXwhvHu4eeR-LUQDr63ORuEZA2VMCeYwTQr8KJDHzbyppS8YCxMxiRxKKUDjLxjD4yey4VkI0mjdQ=w1920-h1080"></object>
-          <object data="https://lh3.googleusercontent.com/pw/AP1GczPzqLfSxLxFgpGRQkodyt0zonhvrBEGPKwCYIdKVcn_nZT8F7oWKrZRLUUX4s-_5gEZztYpZQosKSumb9qax7DeXAMbg6IN61AcdVJPMKxMUB784Q=w1920-h1080"></object>
-          <object data="https://lh3.googleusercontent.com/pw/AP1GczN-ObfpA-PbuTi4S0ZAEQK_CmnNhXn2Pbus2hd9QXyikEMUkGvhHz4eRPJ567cB3t1gtD99SHZRiWf2Yx_ZbZvSEyoStCOtaGihHa1Uc8havfF9lg=w1920-h1080"></object>
-          <object data="https://lh3.googleusercontent.com/pw/AP1GczMEtJ06w_UjfeXIBYl1isEKzlkY-L204ChjrU_vd3krZAwmDuPNsyt5flJ6Dgqd7oYZKPTQ03nh3sFaDk9iKNE4fN7N3Frc5tvu4vbN5iMprPNlWw=w1920-h1080"></object>
-          <object data="https://lh3.googleusercontent.com/pw/AP1GczODDJMvDx0Tjmmycp8CDISV7zJZPApP8jAUZ38hLXjyvsspnYV2oKqLcJMSbY65f1-Qp7kyHES_PWxB8JP0h-BhWvWGCT2hhrDEyRrw3JUcDeRpQg=w1920-h1080"></object>
-          <object data="https://lh3.googleusercontent.com/pw/AP1GczO0EXnwTOrWwPZHX_bIAs_mhdkznO5CcyanR4xY_zEfwuGTBLc8l2j0vdn1OkiMTeznQyF5BKodJtbZ7Dl2eSorqMYHiRXeGh6pPE2yabIhFEtC9Q=w1920-h1080"></object>
-
-          </div>
-        </div>
-      </div>
+      <AlbumCarousel images={ball2025} description="Tap to view!" height={420} />
     </section>
-
-    <a
-      href="/"
-      class="border border-sudata-cyan/20 px-5 py-3 rounded-lg bg-sudata-navy/50 hover:border-sudata-cyan/50 transition-all"
-    >
-      ← Back home
-    </a>
   </div>
-
-  
-  <style>
-    .album-card {
-      border: 1px solid rgba(0, 255, 255, 0.18);
-      background: rgba(10, 20, 40, 0.55);
-      box-shadow:
-        0 0 0 1px rgba(0, 255, 255, 0.10) inset,
-        0 0 28px rgba(0, 255, 255, 0.10),
-        0 0 90px rgba(0, 255, 255, 0.06);
-      transition: box-shadow 200ms ease, border-color 200ms ease, transform 200ms ease;
-    }
-
-    .album-card:hover {
-      border-color: rgba(0, 255, 255, 0.30);
-      box-shadow:
-        0 0 0 1px rgba(0, 255, 255, 0.14) inset,
-        0 0 34px rgba(0, 255, 255, 0.16),
-        0 0 120px rgba(0, 255, 255, 0.10);
-      transform: translateY(-1px);
-    }
-  </style>
 </Layout>

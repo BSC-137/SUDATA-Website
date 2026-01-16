@@ -1,0 +1,172 @@
+---
+import { Image } from "astro:assets";
+
+type Props = {
+  title?: string;
+  description?: string;
+  images: Array<{
+    src: any;
+    alt?: string;
+  }>;
+  height?: number;
+};
+
+const {
+  title = "",
+  description = "Tap to view!",
+  images,
+  height = 420
+} = Astro.props;
+---
+
+<div class="album-card w-full max-w-3xl rounded-xl overflow-hidden">
+  <div class="pa-like-header px-4 py-3">
+    {title && <div class="font-semibold">{title}</div>}
+    <div class="text-sm text-sudata-grey">{description}</div>
+  </div>
+
+  <div class="relative">
+    <div
+      class="carousel"
+      style={`height:${height}px`}
+      data-carousel
+    >
+      {images.map((img, i) => (
+        <div class="slide" data-slide>
+          <Image
+            src={img.src}
+            alt={img.alt ?? ""}
+            loading={i === 0 ? "eager" : "lazy"}
+            decoding="async"
+            class="h-full w-full object-cover"
+            widths={[640, 800, 1200, 1600]}
+            sizes="(max-width: 768px) 100vw, 768px"
+          />
+        </div>
+      ))}
+    </div>
+
+    <button class="nav left" type="button" data-prev aria-label="Previous">
+      ‹
+    </button>
+    <button class="nav right" type="button" data-next aria-label="Next">
+      ›
+    </button>
+
+    <div class="dots" data-dots>
+      {images.map((_, i) => (
+        <button class="dot" type="button" data-dot={i} aria-label={`Go to slide ${i + 1}`} />
+      ))}
+    </div>
+  </div>
+</div>
+
+<style>
+  .pa-like-header {
+    background: rgba(10, 20, 40, 0.55);
+    border-bottom: 1px solid rgba(0, 255, 255, 0.12);
+  }
+
+  .carousel {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .carousel::-webkit-scrollbar {
+    display: none;
+  }
+
+  .slide {
+    flex: 0 0 100%;
+    scroll-snap-align: center;
+  }
+
+  .nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 42px;
+    height: 42px;
+    border-radius: 999px;
+    border: 1px solid rgba(0, 255, 255, 0.25);
+    background: rgba(10, 20, 40, 0.55);
+    color: white;
+    font-size: 28px;
+    line-height: 1;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    user-select: none;
+  }
+  .nav:hover {
+    border-color: rgba(0, 255, 255, 0.45);
+  }
+  .nav.left { left: 10px; }
+  .nav.right { right: 10px; }
+
+  .dots {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 10px;
+    display: flex;
+    gap: 8px;
+    padding: 8px 10px;
+    border-radius: 999px;
+    background: rgba(10, 20, 40, 0.45);
+    border: 1px solid rgba(0, 255, 255, 0.15);
+  }
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    border: 0;
+    background: rgba(255, 255, 255, 0.45);
+    cursor: pointer;
+  }
+  .dot[data-active="true"] {
+    background: rgba(0, 255, 255, 0.9);
+  }
+</style>
+
+<script is:inline>
+  const root = document.currentScript.closest(".album-card");
+  const track = root.querySelector("[data-carousel]");
+  const slides = [...root.querySelectorAll("[data-slide]")];
+  const dotsWrap = root.querySelector("[data-dots]");
+  const dots = [...root.querySelectorAll("[data-dot]")];
+
+  const clamp = (n, lo, hi) => Math.max(lo, Math.min(hi, n));
+
+  const getIndex = () => {
+    const w = track.clientWidth || 1;
+    return clamp(Math.round(track.scrollLeft / w), 0, slides.length - 1);
+  };
+
+  const setActiveDot = (idx) => {
+    dots.forEach((d, i) => d.dataset.active = String(i === idx));
+  };
+
+  const goTo = (idx) => {
+    const w = track.clientWidth || 1;
+    track.scrollTo({ left: idx * w, behavior: "smooth" });
+    setActiveDot(idx);
+  };
+
+  root.querySelector("[data-prev]").addEventListener("click", () => goTo(getIndex() - 1));
+  root.querySelector("[data-next]").addEventListener("click", () => goTo(getIndex() + 1));
+
+  dots.forEach((d) => {
+    d.addEventListener("click", () => goTo(Number(d.dataset.dot)));
+  });
+
+  track.addEventListener("scroll", () => {
+    setActiveDot(getIndex());
+  }, { passive: true });
+
+  // initial state
+  setActiveDot(0);
+</script>
