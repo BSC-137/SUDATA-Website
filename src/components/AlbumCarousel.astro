@@ -125,13 +125,21 @@ const uid = `carousel-${Math.random().toString(36).slice(2)}`;
     cursor: pointer;
     user-select: none;
     z-index: 10;
+    
+    transition: transform 120ms ease, border-color 180ms ease, background 180ms ease, box-shadow 220ms ease;
 
     /* important to ensur clicks register even if an image overlays */
     pointer-events: auto;
   }
-  .nav:hover { border-color: rgba(0, 255, 255, 0.45); }
+  .nav:hover { 
+    border-color: rgba(0, 255, 255, 0.45); 
+    transform: translateY(-50%) scale(1.04); 
+    box-shadow: 0 0 16px rgba(0, 255, 255, 0.18);
+  }
   .nav.left { left: 10px; }
   .nav.right { right: 10px; }
+  .nav:active { transform: translateY(-50%) scale(0.96); }
+  .nav:focus-visible { outline: 2px solid rgba(0,255,255,0.55); outline-offset: 3px; }
 
   .dots {
     position: absolute;
@@ -154,7 +162,12 @@ const uid = `carousel-${Math.random().toString(36).slice(2)}`;
     background: rgba(255, 255, 255, 0.45);
     cursor: pointer;
   }
-  .dot[data-active="true"] { background: rgba(0, 255, 255, 0.9); }
+  .dot:hover  { transform: scale(1.25); }
+  .dot:active { transform: scale(0.9); }
+  .dot[data-active="true"] {
+    background: rgba(0, 255, 255, 0.9);
+    transform: scale(1.35);
+  }
 </style>
 
 <script is:inline>
