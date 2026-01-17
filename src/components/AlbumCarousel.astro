@@ -61,6 +61,8 @@ const uid = `carousel-${Math.random().toString(36).slice(2)}`;
   :root {
     /* tweak this based on what others think of it */
     --neon-glow: 204, 0, 255;
+
+    --dot-size: 8px
   }
 
   .album-card {
@@ -172,13 +174,12 @@ const uid = `carousel-${Math.random().toString(36).slice(2)}`;
   .dot:hover  { transform: scale(1.25); }
   .dot:active { transform: scale(0.9); }
 
-  /* don't style active dot; indicator is the active marker */
   .dot[data-active="true"] {
     background: rgba(255, 255, 255, 0.45);
     transform: none;
   }
 
-  /* Moving indicator: positioned by JS, sits on TOP so it covers the white dot */
+  /* Moving indicator is positioned by JS, sits on top so it covers the white dot */
   .dot-indicator {
     position: absolute;
     top: 50%;
@@ -187,37 +188,37 @@ const uid = `carousel-${Math.random().toString(36).slice(2)}`;
     pointer-events: none;
     z-index: 5;
 
-    width: 8px;
-    height: 8px;
+    width: var(--dot-size);
+    height: var(--dot-size);
 
     will-change: transform;
   }
 
   .dot-indicator-dot {
     display: block;
-    width: 8px;
-    height: 8px;
+    width: var(--dot-size);
+    height: var(--dot-size);
     border-radius: 999px;
     background: rgba(0, 255, 255, 0.95);
 
     transform: scale(1.35); /* bigger at rest */
     transform-origin: center;
-    transition: transform 140ms ease;
+    transition: transform 90ms ease;
   }
 
-  /* shrink while moving */
+  /* tweak the dot shrink while moving */
   .dot-indicator.is-moving .dot-indicator-dot {
-    transform: scale(0.75);
+    transform: scale(1);
   }
 
   /* pop when it settles */
   .dot-indicator.is-pop .dot-indicator-dot {
-    animation: dot-pop 200ms cubic-bezier(0.2, 0.9, 0.2, 1);
+    animation: dot-pop 140ms cubic-bezier(0.2, 0.9, 0.2, 1);
   }
 
   @keyframes dot-pop {
-    0%   { transform: scale(0.95); }
-    60%  { transform: scale(1.55); }
+    0%   { transform: scale(1.05); }
+    60%  { transform: scale(1.48); }
     100% { transform: scale(1.35); }
   }
 </style>
@@ -252,9 +253,10 @@ const uid = `carousel-${Math.random().toString(36).slice(2)}`;
     let centers = [];
     const recomputeCenters = () => {
       const wrapRect = dotsWrap.getBoundingClientRect();
+      const wrapLeft = wrapRect.left + dotsWrap.clientLeft;
       centers = dots.map((d) => {
         const r = d.getBoundingClientRect();
-        return (r.left - wrapRect.left) + r.width / 2;
+        return (r.left - wrapLeft) + r.width / 2;
       });
     };
 
@@ -271,7 +273,7 @@ const uid = `carousel-${Math.random().toString(36).slice(2)}`;
       const center = centers[i0] * (1 - frac) + centers[i1] * frac;
       const x = center - indicator.offsetWidth / 2;
 
-      // follow scroll exactly (no extra easing; scrollTo smooth already eases)
+      // follow scroll exactly ( scrollTo smooth already eases)
       indicator.style.transition = "none";
       indicator.style.transform = `translate3d(${x}px, -50%, 0)`;
     };
@@ -292,13 +294,13 @@ const uid = `carousel-${Math.random().toString(36).slice(2)}`;
         indicator.classList.add("is-pop");
         clearTimeout(popTimer);
         popTimer = setTimeout(() => indicator.classList.remove("is-pop"), 220);
-      }, 120);
+      }, 1);
     };
 
     const goTo = (idx) => {
       const current = getIndex();
       const next = clamp(idx, 0, slides.length - 1);
-      if (next === current) return; // prevents "end bump" animation
+      if (next === current) return;  // prevents end bump animation
 
       markMoving();
       const w = track.clientWidth || 1;
@@ -324,7 +326,7 @@ const uid = `carousel-${Math.random().toString(36).slice(2)}`;
       });
     });
 
-    // scroll drives indicator smoothly between dots (touch swipe + smooth scrollTo)
+    // scroll drives indicator smoothly between dots
     const onScroll = () => {
       const w = track.clientWidth || 1;
       const t = track.scrollLeft / w;
@@ -336,7 +338,7 @@ const uid = `carousel-${Math.random().toString(36).slice(2)}`;
 
     track.addEventListener("scroll", onScroll, { passive: true });
 
-    // resize: recompute centers + reposition
+    // recompute centers + reposition on resize
     new ResizeObserver(() => {
       recomputeCenters();
       const w = track.clientWidth || 1;
