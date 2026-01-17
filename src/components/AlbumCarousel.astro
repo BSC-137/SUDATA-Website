@@ -44,6 +44,11 @@ const uid = `carousel-${Math.random().toString(36).slice(2)}`;
       <button class="nav right" type="button" data-next aria-label="Next">›</button>
 
       <div class="dots" data-dots>
+        <!-- moving active indicator -->
+        <span class="dot-indicator" aria-hidden="true">
+          <span class="dot-indicator-dot"></span>
+        </span>
+
         {images.map((_, i) => (
           <button class="dot" type="button" data-dot={i} aria-label={`Go to slide ${i + 1}`} />
         ))}
@@ -51,7 +56,6 @@ const uid = `carousel-${Math.random().toString(36).slice(2)}`;
     </div>
   </div>
 </div>
-
 
 <style>
   :root {
@@ -70,7 +74,6 @@ const uid = `carousel-${Math.random().toString(36).slice(2)}`;
     border-color: rgba(0, 255, 255, 0.18);
     transform: translateY(0);
 
-    /* smooth interpolation */
     transition:
       box-shadow 520ms cubic-bezier(0.2, 0.8, 0.2, 1),
       border-color 420ms ease,
@@ -84,7 +87,7 @@ const uid = `carousel-${Math.random().toString(36).slice(2)}`;
       0 0 0 1px rgba(var(--neon-glow), 0.12) inset,
       0 0 32px rgba(var(--neon-glow), 0.13),
       0 0 110px rgba(var(--neon-glow), 0.08);
-    transform: translateY(-1px);
+    transform: translateY(-1px) rotateX(2.6deg) rotateY(-2.6deg);
   }
 
   .pa-like-header {
@@ -102,10 +105,10 @@ const uid = `carousel-${Math.random().toString(36).slice(2)}`;
   }
   .carousel::-webkit-scrollbar { display: none; }
 
-  .slide { 
-    flex: 0 0 100%; 
-    scroll-snap-align: center; 
-    background: rgba(0, 0, 0, 0.35)
+  .slide {
+    flex: 0 0 100%;
+    scroll-snap-align: center;
+    background: rgba(0, 0, 0, 0.35);
   }
 
   .nav {
@@ -125,15 +128,13 @@ const uid = `carousel-${Math.random().toString(36).slice(2)}`;
     cursor: pointer;
     user-select: none;
     z-index: 10;
-    
-    transition: transform 120ms ease, border-color 180ms ease, background 180ms ease, box-shadow 220ms ease;
 
-    /* important to ensur clicks register even if an image overlays */
+    transition: transform 120ms ease, border-color 180ms ease, background 180ms ease, box-shadow 220ms ease;
     pointer-events: auto;
   }
-  .nav:hover { 
-    border-color: rgba(0, 255, 255, 0.45); 
-    transform: translateY(-50%) scale(1.04); 
+  .nav:hover {
+    border-color: rgba(0, 255, 255, 0.45);
+    transform: translateY(-50%) scale(1.04);
     box-shadow: 0 0 16px rgba(0, 255, 255, 0.18);
   }
   .nav.left { left: 10px; }
@@ -147,6 +148,7 @@ const uid = `carousel-${Math.random().toString(36).slice(2)}`;
     transform: translateX(-50%);
     bottom: 10px;
     display: flex;
+    align-items: center;
     gap: 8px;
     padding: 8px 10px;
     border-radius: 999px;
@@ -154,6 +156,7 @@ const uid = `carousel-${Math.random().toString(36).slice(2)}`;
     border: 1px solid rgba(0, 255, 255, 0.15);
     z-index: 10;
   }
+
   .dot {
     width: 8px;
     height: 8px;
@@ -161,24 +164,78 @@ const uid = `carousel-${Math.random().toString(36).slice(2)}`;
     border: 0;
     background: rgba(255, 255, 255, 0.45);
     cursor: pointer;
+    position: relative;
+    z-index: 2;
+    transition: transform 120ms ease, background 160ms ease;
   }
+
   .dot:hover  { transform: scale(1.25); }
   .dot:active { transform: scale(0.9); }
+
+  /* don't style active dot; indicator is the active marker */
   .dot[data-active="true"] {
-    background: rgba(0, 255, 255, 0.9);
-    transform: scale(1.35);
+    background: rgba(255, 255, 255, 0.45);
+    transform: none;
+  }
+
+  /* Moving indicator: positioned by JS, sits on TOP so it covers the white dot */
+  .dot-indicator {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translate3d(0, -50%, 0);
+    pointer-events: none;
+    z-index: 5;
+
+    width: 8px;
+    height: 8px;
+
+    will-change: transform;
+  }
+
+  .dot-indicator-dot {
+    display: block;
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: rgba(0, 255, 255, 0.95);
+
+    transform: scale(1.35); /* bigger at rest */
+    transform-origin: center;
+    transition: transform 140ms ease;
+  }
+
+  /* shrink while moving */
+  .dot-indicator.is-moving .dot-indicator-dot {
+    transform: scale(0.75);
+  }
+
+  /* pop when it settles */
+  .dot-indicator.is-pop .dot-indicator-dot {
+    animation: dot-pop 200ms cubic-bezier(0.2, 0.9, 0.2, 1);
+  }
+
+  @keyframes dot-pop {
+    0%   { transform: scale(0.95); }
+    60%  { transform: scale(1.55); }
+    100% { transform: scale(1.35); }
   }
 </style>
 
 <script is:inline>
   function initCarousel(root) {
+    if (root.dataset.carouselInited === "true") return;
     root.dataset.carouselInited = "true";
 
     const track = root.querySelector("[data-carousel]");
     const slides = Array.from(root.querySelectorAll("[data-slide]"));
     const dots = Array.from(root.querySelectorAll("[data-dot]"));
+    const dotsWrap = root.querySelector("[data-dots]");
+    const indicator = dotsWrap?.querySelector(".dot-indicator");
 
-    if (!track || slides.length === 0) return;
+    if (!track || slides.length === 0 || !dotsWrap || !indicator || dots.length === 0) return;
+
+    const prefersReduced = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
 
     const clamp = (n, lo, hi) => Math.max(lo, Math.min(hi, n));
 
@@ -187,17 +244,68 @@ const uid = `carousel-${Math.random().toString(36).slice(2)}`;
       return clamp(Math.round(track.scrollLeft / w), 0, slides.length - 1);
     };
 
-    const setActiveDot = (idx) => {
+    const setDotsActive = (idx) => {
       dots.forEach((d, i) => (d.dataset.active = String(i === idx)));
     };
 
-    const goTo = (idx) => {
-      const w = track.clientWidth || 1;
-      const next = clamp(idx, 0, slides.length - 1);
-      track.scrollTo({ left: next * w, behavior: "smooth" });
-      setActiveDot(next);
+    // Dot centers relative to dots wrapper
+    let centers = [];
+    const recomputeCenters = () => {
+      const wrapRect = dotsWrap.getBoundingClientRect();
+      centers = dots.map((d) => {
+        const r = d.getBoundingClientRect();
+        return (r.left - wrapRect.left) + r.width / 2;
+      });
     };
 
+    // Place indicator at fractional progress t (0..n-1)
+    const setIndicatorProgress = (t) => {
+      if (!centers.length) return;
+      const n = centers.length;
+      const clampedT = Math.max(0, Math.min(n - 1, t));
+
+      const i0 = Math.floor(clampedT);
+      const i1 = Math.min(i0 + 1, n - 1);
+      const frac = clampedT - i0;
+
+      const center = centers[i0] * (1 - frac) + centers[i1] * frac;
+      const x = center - indicator.offsetWidth / 2;
+
+      // follow scroll exactly (no extra easing; scrollTo smooth already eases)
+      indicator.style.transition = "none";
+      indicator.style.transform = `translate3d(${x}px, -50%, 0)`;
+    };
+
+    // moving + settle detection
+    let scrollEndTimer = null;
+    let popTimer = null;
+
+    const markMoving = () => {
+      if (prefersReduced) return;
+
+      indicator.classList.add("is-moving");
+      indicator.classList.remove("is-pop");
+
+      clearTimeout(scrollEndTimer);
+      scrollEndTimer = setTimeout(() => {
+        indicator.classList.remove("is-moving");
+        indicator.classList.add("is-pop");
+        clearTimeout(popTimer);
+        popTimer = setTimeout(() => indicator.classList.remove("is-pop"), 220);
+      }, 120);
+    };
+
+    const goTo = (idx) => {
+      const current = getIndex();
+      const next = clamp(idx, 0, slides.length - 1);
+      if (next === current) return; // prevents "end bump" animation
+
+      markMoving();
+      const w = track.clientWidth || 1;
+      track.scrollTo({ left: next * w, behavior: "smooth" });
+    };
+
+    // buttons
     root.querySelector("[data-prev]")?.addEventListener("click", (e) => {
       e.preventDefault();
       goTo(getIndex() - 1);
@@ -208,6 +316,7 @@ const uid = `carousel-${Math.random().toString(36).slice(2)}`;
       goTo(getIndex() + 1);
     });
 
+    // dot clicks
     dots.forEach((d) => {
       d.addEventListener("click", (e) => {
         e.preventDefault();
@@ -215,29 +324,41 @@ const uid = `carousel-${Math.random().toString(36).slice(2)}`;
       });
     });
 
-    track.addEventListener(
-      "scroll",
-      () => setActiveDot(getIndex()),
-      { passive: true }
-    );
+    // scroll drives indicator smoothly between dots (touch swipe + smooth scrollTo)
+    const onScroll = () => {
+      const w = track.clientWidth || 1;
+      const t = track.scrollLeft / w;
 
-    // keep dot correct after resize
-    new ResizeObserver(() => setActiveDot(getIndex())).observe(track);
+      setIndicatorProgress(t);
+      setDotsActive(clamp(Math.round(t), 0, slides.length - 1));
+      markMoving();
+    };
 
-    setActiveDot(0);
+    track.addEventListener("scroll", onScroll, { passive: true });
+
+    // resize: recompute centers + reposition
+    new ResizeObserver(() => {
+      recomputeCenters();
+      const w = track.clientWidth || 1;
+      setIndicatorProgress(track.scrollLeft / w);
+      setDotsActive(getIndex());
+    }).observe(track);
+
+    // init
+    recomputeCenters();
+    setIndicatorProgress(0);
+    setDotsActive(0);
   }
-  
+
   function initAllCarousels() {
     document.querySelectorAll("[data-carousel-root]").forEach(initCarousel);
   }
 
-  // This is for buttons (without it you can't navigate each album)
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", initAllCarousels, { once: true });
   } else {
     initAllCarousels();
   }
 
-  // initialise carousels on page load
   document.addEventListener("astro:page-load", initAllCarousels);
 </script>
