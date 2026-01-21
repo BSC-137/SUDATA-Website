@@ -8,10 +8,12 @@ export default {
           navy: '#020617',
           cyan: '#22d3ee',
           grey: '#94a3b8',
+          neon: '#00F0FF',
         },
       },
       fontFamily: {
-        mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', '"Liberation Mono"', '"Courier New"', 'monospace'],
+        mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', '"Liberation Mono"', '"Courier New"', 'monospace'],
+        retro: ['"VT323"', 'monospace'],
       },
     },
   },

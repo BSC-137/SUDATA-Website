@@ -15,28 +15,36 @@ const { title = "SUDATA" } = Astro.props;
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=VT323&display=swap" rel="stylesheet">
 		<title>{title}</title>
 	</head>
-	<body class="min-h-screen flex flex-col bg-sudata-navy relative">
+	<body class="min-h-screen flex flex-col bg-sudata-navy relative overflow-x-hidden selection:bg-sudata-cyan selection:text-sudata-navy">
+		<!-- Retro Scanline Overlay -->
+		<div class="fixed inset-0 pointer-events-none z-[60] bg-scanlines opacity-10"></div>
+		<!-- Film Grain Overlay -->
+		<div class="fixed inset-0 pointer-events-none z-[59] opacity-20 bg-noise mix-blend-overlay"></div>
+		
 		<!-- Glassmorphic Navbar -->
-		<nav class="fixed top-6 left-0 right-0 mx-auto max-w-2xl z-50">
-			<div class="backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl shadow-lg shadow-sudata-cyan/10">
-				<div class="px-6 py-3">
-					<div class="flex items-center justify-between">
+		<nav class="fixed top-6 left-0 right-0 mx-auto max-w-2xl z-50 flex justify-center">
+			<div class="backdrop-blur-xl bg-white/5 border border-white/20 rounded-full shadow-2xl shadow-sudata-cyan/20 overflow-hidden">
+				<div class="px-8 py-4">
+					<div class="flex items-center justify-between gap-12">
 						<!-- Logo/Brand -->
 						<a href="/" class="text-white font-bold text-lg tracking-wider hover:text-sudata-cyan transition-colors">
 							SUDATA
 						</a>
 						
 						<!-- Navigation Links -->
-						<div class="flex space-x-1">
-							<a href="/" class="text-white/80 hover:text-white px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 hover:bg-white/10">
+						<div class="flex space-x-2">
+							<a href="/" class="text-white/80 hover:text-white px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:bg-white/10 hover:shadow-[0_0_10px_rgba(255,255,255,0.2)]">
 								Home
 							</a>
-							<a href="/events" class="text-white/80 hover:text-white px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 hover:bg-white/10">
+							<a href="/events" class="text-white/80 hover:text-white px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:bg-white/10 hover:shadow-[0_0_10px_rgba(255,255,255,0.2)]">
 								Events
 							</a>
-							<a href="/about" class="text-white/80 hover:text-white px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 hover:bg-white/10">
+							<a href="/about" class="text-white/80 hover:text-white px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:bg-white/10 hover:shadow-[0_0_10px_rgba(255,255,255,0.2)]">
 								About
 							</a>
 						</div>
@@ -54,5 +62,59 @@ const { title = "SUDATA" } = Astro.props;
 				&copy; {new Date().getFullYear()} SUDATA. All rights reserved.
 			</div>
 		</footer>
+		<script>
+			// Advanced Vapor Pixel Cursor Trail
+			document.addEventListener('mousemove', (e) => {
+				const pixel = document.createElement('div');
+				pixel.classList.add('pixel-trail');
+				
+				// Snap to grid for pixel effect (e.g., 4px grid)
+				const gridSize = 4;
+				const x = Math.floor(e.clientX / gridSize) * gridSize;
+				const y = Math.floor(e.clientY / gridSize) * gridSize;
+				
+				// Randomize life and size slightly for "vapor" look
+				const randomScale = 0.5 + Math.random(); 
+				const randomLife = 400 + Math.random() * 400; 
+				
+				pixel.style.left = `${x}px`;
+				pixel.style.top = `${y}px`;
+				pixel.style.transform = `scale(${randomScale})`;
+				pixel.style.opacity = `${0.5 + Math.random() * 0.5}`;
+				
+				document.body.appendChild(pixel);
+				
+				setTimeout(() => {
+					pixel.remove();
+				}, randomLife);
+			});
+
+			// Scroll-Driven "Data Stream" Reveal
+			const observerOptions = {
+				root: null,
+				rootMargin: '0px',
+				threshold: 0.15 
+			};
+
+			const observer = new IntersectionObserver((entries, observer) => {
+				entries.forEach(entry => {
+					if (entry.isIntersecting) {
+                        // Enter viewport: Fade In & Slide Up
+						entry.target.classList.remove('opacity-0', 'translate-y-[40px]');
+						entry.target.classList.add('opacity-100', 'translate-y-0');
+					} else {
+                        // Leave viewport: Fade Out & Slide Down
+                        entry.target.classList.remove('opacity-100', 'translate-y-0');
+						entry.target.classList.add('opacity-0', 'translate-y-[40px]');
+                    }
+				});
+			}, observerOptions);
+
+			document.querySelectorAll('.reveal-on-scroll').forEach((el) => {
+                // Initial State
+				el.classList.add('opacity-0', 'translate-y-[40px]', 'transition-all', 'duration-1000', 'ease-[cubic-bezier(0.16,1,0.3,1)]');
+				observer.observe(el);
+			});
+		</script>
 	</body>
 </html>

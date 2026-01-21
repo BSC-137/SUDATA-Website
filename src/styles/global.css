@@ -8,7 +8,117 @@
   }
   
   h1, h2, h3, h4, h5, h6 {
-    @apply text-white;
+    @apply text-white tracking-widest;
   }
 }
 
+@layer components {
+  .pixel-trail {
+    @apply fixed w-1 h-1 bg-sudata-neon pointer-events-none z-[100];
+    animation: fadeOut 0.8s forwards;
+    box-shadow: 0 0 4px #00F0FF;
+  }
+
+  /* Refined Glass Slab */
+  .glass-panel-3d {
+    @apply backdrop-blur-xl bg-gradient-to-br from-white/10 to-transparent border-t border-l border-white/30 border-b border-r border-black/20 rounded-[32px] shadow-2xl relative overflow-hidden;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .glass-panel-3d:hover {
+    @apply backdrop-blur-2xl bg-white/10 border-white/40;
+    transform: translateY(-20px) scale(1.05);
+    box-shadow: 0 0 30px rgba(0, 240, 255, 0.4);
+  }
+  
+  /* Shimmer Effect */
+  .glass-panel-3d::after {
+    content: "";
+    @apply absolute top-0 -left-[100%] w-1/2 h-full pointer-events-none;
+    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transform: skewX(-25deg);
+    transition: 0s;
+  }
+
+  .glass-panel-3d:hover::after {
+    left: 150%;
+    transition: 0.7s ease-in-out;
+  }
+  
+  .font-mono-tech {
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .neon-text-shadow {
+    text-shadow: 0 0 10px rgba(0, 240, 255, 0.8), 0 0 20px rgba(0, 240, 255, 0.4);
+  }
+
+  .neon-icon-glow {
+    filter: drop-shadow(0 0 10px #00F0FF);
+  }
+  
+  .scanline-overlay {
+    background: linear-gradient(
+      to bottom,
+      rgba(255,255,255,0) 0%,
+      rgba(255,255,255,0) 50%,
+      rgba(0,0,0,0.2) 50%,
+      rgba(0,0,0,0.2) 100%
+    );
+    background-size: 100% 4px;
+  }
+  
+  .btn-scanline {
+    background: linear-gradient(
+      to bottom,
+      rgba(255,255,255,0) 50%,
+      rgba(0,0,0,0.1) 50%
+    );
+    background-size: 100% 4px;
+  }
+}
+
+@keyframes fadeOut {
+  0% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.8; }
+  100% { opacity: 0; transform: scale(0); }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes flicker {
+  0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100% {
+    opacity: 0.99;
+  }
+  20%, 21.999%, 63%, 63.999%, 65%, 69.999% {
+    opacity: 0.4;
+  }
+}
+
+.animate-flicker {
+  animation: flicker 2s infinite;
+}
+
+.bg-scanlines {
+  background: linear-gradient(
+    to bottom,
+    rgba(255,255,255,0),
+    rgba(255,255,255,0) 50%,
+    rgba(0,0,0,0.2) 50%,
+    rgba(0,0,0,0.2)
+  );
+  background-size: 100% 4px;
+}
+
+.bg-noise {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.4'/%3E%3C/svg%3E");
+}
