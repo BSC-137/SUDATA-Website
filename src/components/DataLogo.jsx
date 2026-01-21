@@ -1,77 +1,68 @@
-import React, { useMemo, useRef, useState, useEffect } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import { Canvas, useFrame, useLoader, useThree } from '@react-three/fiber';
 import { SVGLoader } from 'three/examples/jsm/loaders/SVGLoader';
 import * as THREE from 'three';
 
-const LogoParticles = () => {
-  const pointsRef = useRef();
+const LogoLines = () => {
+  const meshRef = useRef();
   const { mouse, viewport } = useThree();
-  const [stabilized, setStabilized] = useState(false);
   
   // Load SVG
   const svgData = useLoader(SVGLoader, '/logo.svg');
   
-  const { positions, randomPositions, colors } = useMemo(() => {
+  const { positions, randomPositions, indices } = useMemo(() => {
     const paths = svgData.paths;
-    const allShapes = [];
+    const allPoints = [];
     
-    // Extract shapes from paths
+    // Extract shapes and points from paths
     paths.forEach((path) => {
-      // Filter out background shapes by checking if they are the background rectangle
-      // The background usually covers the whole viewbox (1054x572)
-      // We can also check userData or fill, but bounds is safer.
       const shapes = SVGLoader.createShapes(path);
       
       shapes.forEach((shape) => {
-        // Compute shape bounds
-        const points = shape.getPoints();
-        const geometry = new THREE.BufferGeometry().setFromPoints(points);
+        // Compute shape bounds to ignore background
+        const shapePoints = shape.getPoints();
+        const geometry = new THREE.BufferGeometry().setFromPoints(shapePoints);
         geometry.computeBoundingBox();
         const box = geometry.boundingBox;
         const width = box.max.x - box.min.x;
         const height = box.max.y - box.min.y;
 
-        // Ignore if it's the background rectangle (approx 1054x572)
+        // Ignore background rectangle
         if (width > 1000 && height > 500) {
             return;
         }
         
-        allShapes.push(shape);
+        // Sample points along the shape for smoother lines
+        // Adaptive sampling based on length for consistent density
+        const spacing = 2; // Adjust for density
+        const count = Math.ceil(shape.getLength() / spacing);
+        const sampledPoints = shape.getSpacedPoints(count);
+        
+        // Add points for this shape as a continuous sequence
+        allPoints.push(sampledPoints);
       });
     });
 
-    // Sample points
-    const targetPoints = [];
-    const numPoints = 8000; // Increased density
-    
-    // Calculate total length to distribute points evenly
-    let totalLength = 0;
-    const shapeLengths = allShapes.map(shape => {
-      const length = shape.getLength();
-      totalLength += length;
-      return length;
-    });
+    // Flatten points and create indices for line segments
+    const flatPoints = [];
+    const lineIndices = [];
+    let currentIndex = 0;
 
-    allShapes.forEach((shape, i) => {
-      const count = Math.max(1, Math.floor((shapeLengths[i] / totalLength) * numPoints));
-      const points = shape.getSpacedPoints(count);
-      points.forEach(p => {
-         // Invert Y because SVG coordinates are top-down, 3D is bottom-up
-        targetPoints.push(new THREE.Vector3(p.x, -p.y, 0));
-      });
+    allPoints.forEach(shapePoints => {
+        for (let i = 0; i < shapePoints.length; i++) {
+            // Invert Y because SVG coordinates are top-down, 3D is bottom-up
+            flatPoints.push(new THREE.Vector3(shapePoints[i].x, -shapePoints[i].y, 0));
+            
+            // Connect to next point in shape to form a segment
+            if (i < shapePoints.length - 1) {
+                lineIndices.push(currentIndex + i, currentIndex + i + 1);
+            }
+        }
+        currentIndex += shapePoints.length;
     });
-
-    // Adjust to exactly numPoints
-    while (targetPoints.length < numPoints) {
-       const index = Math.floor(Math.random() * targetPoints.length);
-       targetPoints.push(targetPoints[index].clone());
-    }
-    if (targetPoints.length > numPoints) {
-      targetPoints.length = numPoints;
-    }
 
     // Center and Scale the points
-    const box = new THREE.Box3().setFromPoints(targetPoints);
+    const box = new THREE.Box3().setFromPoints(flatPoints);
     const center = new THREE.Vector3();
     box.getCenter(center);
     const size = new THREE.Vector3();
@@ -81,14 +72,17 @@ const LogoParticles = () => {
     const targetWidth = viewport.width * 0.6;
     const scale = targetWidth / size.x;
     
+    const numPoints = flatPoints.length;
     const finalPositions = new Float32Array(numPoints * 3);
     const randomPos = new Float32Array(numPoints * 3);
     
-    targetPoints.forEach((p, i) => {
-      // Centered and Scaled position
+    flatPoints.forEach((p, i) => {
+      // Centered and Scaled position (X, Y)
       const x = (p.x - center.x) * scale;
       const y = (p.y - center.y) * scale;
-      const z = 0;
+      
+      // Random Z depth for optical illusion (-1.5 to 1.5)
+      const z = (Math.random() - 0.5) * 3;
       
       finalPositions[i * 3] = x;
       finalPositions[i * 3 + 1] = y;
@@ -97,32 +91,33 @@ const LogoParticles = () => {
       // Random position for initial state (sphere)
       const theta = Math.random() * Math.PI * 2;
       const phi = Math.acos(2 * Math.random() - 1);
-      const r = 5 + Math.random() * 5; // Spread out
+      const r = 10 + Math.random() * 10; // Start further out
       
       randomPos[i * 3] = r * Math.sin(phi) * Math.cos(theta);
       randomPos[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
       randomPos[i * 3 + 2] = r * Math.cos(phi);
     });
 
-    return { positions: finalPositions, randomPositions: randomPos };
+    return { 
+        positions: finalPositions, 
+        randomPositions: randomPos, 
+        indices: new Uint16Array(lineIndices) 
+    };
   }, [svgData, viewport.width]);
 
   // Current positions buffer
   const currentPositions = useMemo(() => new Float32Array(randomPositions), [randomPositions]);
-  const stabilizationRef = useRef(new Float32Array(8000).fill(0)); // 0 = moving, 1 = stabilized
-
+  
   useFrame((state) => {
-    if (!pointsRef.current) return;
+    if (!meshRef.current) return;
 
-    const time = state.clock.getElapsedTime();
     // Transition duration 3s
+    const time = state.clock.getElapsedTime();
     const progress = Math.min(time / 3, 1);
     const eased = 1 - Math.pow(1 - progress, 3); // Cubic ease out
 
-    const positionsAttribute = pointsRef.current.geometry.attributes.position;
-    const stabilizedFlags = stabilizationRef.current;
-    let stabilizedCount = 0;
-    const totalPoints = 8000;
+    const positionsAttribute = meshRef.current.geometry.attributes.position;
+    const totalPoints = currentPositions.length / 3;
 
     for (let i = 0; i < totalPoints; i++) {
       const ix = i * 3;
@@ -134,50 +129,21 @@ const LogoParticles = () => {
       const ty = positions[iy];
       const tz = positions[iz];
 
-      // If already stabilized, apply shimmer if fully stabilized
-      if (stabilizedFlags[i] === 1) {
-        stabilizedCount++;
-        if (stabilized) {
-             // Subtle shimmer/glow effect
-             const shimmerSpeed = 2;
-             const shimmerAmount = 0.002;
-             const offset = Math.sin(time * shimmerSpeed + i * 0.1) * shimmerAmount;
-             currentPositions[ix] = tx + offset;
-             currentPositions[iy] = ty + offset;
-             currentPositions[iz] = tz + offset;
-        } else {
-             currentPositions[ix] = tx;
-             currentPositions[iy] = ty;
-             currentPositions[iz] = tz;
-        }
-        continue;
-      }
-
-      // Current logic
+      // Start
       const sx = randomPositions[ix];
       const sy = randomPositions[iy];
       const sz = randomPositions[iz];
       
-      let cx = currentPositions[ix];
-      let cy = currentPositions[iy];
-      let cz = currentPositions[iz];
-
-      // Move towards target
-      // We calculate step based on progress to ensure it eventually gets there
-      // Or just lerp from start to target based on eased progress
+      // Lerp
       let nx = sx + (tx - sx) * eased;
       let ny = sy + (ty - sy) * eased;
       let nz = sz + (tz - sz) * eased;
-
-      // Check distance to target
-      const distSq = (nx - tx) ** 2 + (ny - ty) ** 2 + (nz - tz) ** 2;
       
-      if (distSq < 0.000001) { // dist < 0.001
+      // Lock to target when complete to maintain illusion
+      if (progress >= 1) {
           nx = tx;
           ny = ty;
           nz = tz;
-          stabilizedFlags[i] = 1;
-          stabilizedCount++;
       }
 
       currentPositions[ix] = nx;
@@ -187,20 +153,18 @@ const LogoParticles = () => {
 
     positionsAttribute.needsUpdate = true;
     
-    // Check if 95% stabilized
-    if (!stabilized && stabilizedCount / totalPoints > 0.95) {
-        setStabilized(true);
-    }
-    
-    // Mouse Parallax (always active but subtle)
-    if (pointsRef.current) {
-        pointsRef.current.rotation.x = THREE.MathUtils.lerp(pointsRef.current.rotation.x, mouse.y * 0.1, 0.1);
-        pointsRef.current.rotation.y = THREE.MathUtils.lerp(pointsRef.current.rotation.y, mouse.x * 0.1, 0.1);
+    // Enhanced Mouse Parallax for Depth Perception
+    if (meshRef.current) {
+        const targetRotX = mouse.y * 0.8; // Wide angle to see depth
+        const targetRotY = mouse.x * 0.8;
+        
+        meshRef.current.rotation.x = THREE.MathUtils.lerp(meshRef.current.rotation.x, targetRotX, 0.05);
+        meshRef.current.rotation.y = THREE.MathUtils.lerp(meshRef.current.rotation.y, targetRotY, 0.05);
     }
   });
 
   return (
-    <points ref={pointsRef}>
+    <lineSegments ref={meshRef}>
       <bufferGeometry>
         <bufferAttribute
           attach="attributes-position"
@@ -208,16 +172,21 @@ const LogoParticles = () => {
           array={currentPositions}
           itemSize={3}
         />
+        <bufferAttribute
+            attach="index"
+            count={indices.length}
+            array={indices}
+            itemSize={1}
+        />
       </bufferGeometry>
-      <pointsMaterial
-        size={0.035}
-        color="#ffffff"
-        sizeAttenuation={true}
+      <lineBasicMaterial
+        color="#22d3ee"
         transparent={true}
-        opacity={0.9}
+        opacity={0.6}
+        linewidth={1}
         blending={THREE.AdditiveBlending}
       />
-    </points>
+    </lineSegments>
   );
 };
 
@@ -229,7 +198,7 @@ const DataLogo = () => {
         dpr={[1, 2]}
         gl={{ alpha: true, antialias: true }}
       >
-        <LogoParticles />
+        <LogoLines />
       </Canvas>
     </div>
   );
