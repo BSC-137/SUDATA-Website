@@ -1,0 +1,58 @@
+---
+import Layout from '../layouts/Layout.astro';
+import EventCalendar from '../components/EventCalendar.jsx';
+import eventsData from '../data/events.json';
+
+const pageTitle = 'Events Calendar | SUDATA';
+---
+
+<Layout title={pageTitle}>
+  <div class="min-h-screen bg-[#020617] text-[#94a3b8] pt-24 pb-16 px-4">
+    <!-- Header Section -->
+    <div class="max-w-7xl mx-auto mb-12">
+      <div class="text-center mb-8">
+        <h1 class="text-5xl md:text-6xl font-bold mb-4">
+          <span class="text-[#00F0FF]" style="text-shadow: 0 0 20px #00F0FF, 0 0 40px #00F0FF;">
+            Events Calendar
+          </span>
+        </h1>
+        <p class="text-xl text-[#94a3b8] max-w-3xl mx-auto">
+          Explore our 2025 events archive. Filter by type and dive into past workshops, social mixers, and industry collaborations.
+        </p>
+      </div>
+
+      <!-- Year Badge -->
+      <div class="flex justify-center mb-8">
+        <div class="inline-flex items-center gap-3 px-6 py-3 rounded-lg bg-[#00F0FF]/10 border border-[#00F0FF]/30 backdrop-blur-xl">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" style="image-rendering: pixelated;">
+            <path d="M7 2H9V4H15V2H17V4H19C20.1046 4 21 4.89543 21 6V20C21 21.1046 20.1046 22 19 22H5C3.89543 22 3 21.1046 3 20V6C3 4.89543 3.89543 4 5 4H7V2Z" fill="#00F0FF"/>
+            <path d="M3 8H21V10H3V8Z" fill="#020617"/>
+          </svg>
+          <span class="text-[#00F0FF] font-bold text-lg">2025 Archive</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Calendar Component -->
+    <div class="max-w-7xl mx-auto">
+      <EventCalendar events={eventsData.events} client:load />
+    </div>
+
+    <!-- Info Footer -->
+    <div class="max-w-4xl mx-auto mt-16 text-center">
+      <div class="p-6 rounded-lg bg-[#00F0FF]/5 border border-[#00F0FF]/20 backdrop-blur-xl">
+        <p class="text-[#94a3b8]">
+          💡 <strong class="text-[#00F0FF]">Pro Tip:</strong> Click on any event to view full details and sign-up information. 
+          Use the filters to find events that match your interests!
+        </p>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  /* Smooth scrolling for the page */
+  html {
+    scroll-behavior: smooth;
+  }
+</style>
