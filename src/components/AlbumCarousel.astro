@@ -1,6 +1,4 @@
 ---
-// This code is pretty poor.
-// I don't understand any of Astro's quirks, I only know the solution (docs came in clutch)
 import { Image } from "astro:assets";
 
 type Props = {
@@ -8,43 +6,71 @@ type Props = {
   description?: string;
   images: Array<{ src: any; alt?: string }>;
   height?: number;
+
+  /** 0..1 – how strong the CRT corner stretch is */
+  crtWarp?: number;
+
+  /** 0..1 – how wide the warped edge area is (bigger = warp reaches further inward) */
+  crtEdge?: number;
+
+  /** scanline strength 0..1 */
+  scanStrength?: number;
 };
 
-const { title = "", description = "Tap to view!", images, height = 420 } = Astro.props;
+const {
+  title = "",
+  description = "Tap to view!",
+  images,
+  height = 420,
+  crtWarp = 0.28,
+  crtEdge = 0.45,
+  scanStrength = 0.35,
+} = Astro.props;
 
 const uid = `carousel-${Math.random().toString(36).slice(2)}`;
+
+const filterId = `${uid}-crt`;
 ---
 
-<div class="album-glow">
-  <div class="album-card w-full max-w-3xl rounded-xl overflow-hidden" id={uid} data-carousel-root>
-    <!-- Uncomment for little headers on each album -->
-    <!-- <div class="pa-like-header px-4 py-3">
-      {title && <div class="font-semibold">{title}</div>}
+<div class="album-shell">
+  <div
+    class="album-card w-full max-w-3xl rounded-2xl overflow-hidden"
+    id={uid}
+    data-carousel-root
+    data-crt-filter={filterId}
+    style={`--crt-warp:${crtWarp}; --crt-edge:${crtEdge}; --scan-strength:${scanStrength};`}
+  >
+    <!-- uncomment for headers on each album -->
+    <!--
+    <div class="album-header px-5 py-4">
+      {title && <div class="text-white font-semibold tracking-wide">{title}</div>}
       <div class="text-sm text-sudata-grey">{description}</div>
-    </div> -->
+    </div>
+    -->
 
     <div class="relative">
-      <div class="carousel" style={`height:${height}px`} data-carousel>
-        {images.map((img, i) => (
-          <div class="slide" data-slide>
-            <Image
-              src={img.src}
-              alt={img.alt ?? ""}
-              loading={i === 0 ? "eager" : "lazy"}
-              decoding="async"
-              class="h-full w-full object-contain"
-              widths={[640, 800, 1200, 1600]}
-              sizes="(max-width: 768px) 100vw, 768px"
-            />
-          </div>
-        ))}
+      <div class="crt-stage" style={`--crt-filter: url(#${filterId});`}>
+        <div class="carousel" style={`height:${height}px`} data-carousel>
+          {images.map((img, i) => (
+            <div class="slide" data-slide>
+              <Image
+                src={img.src}
+                alt={img.alt ?? ""}
+                loading={i === 0 ? "eager" : "lazy"}
+                decoding="async"
+                class="h-full w-full object-contain"
+                widths={[640, 800, 1200, 1600]}
+                sizes="(max-width: 768px) 100vw, 768px"
+              />
+            </div>
+          ))}
+        </div>
       </div>
 
       <button class="nav left" type="button" data-prev aria-label="Previous">‹</button>
       <button class="nav right" type="button" data-next aria-label="Next">›</button>
 
       <div class="dots" data-dots>
-        <!-- moving active indicator -->
         <span class="dot-indicator" aria-hidden="true">
           <span class="dot-indicator-dot"></span>
         </span>
@@ -57,72 +83,191 @@ const uid = `carousel-${Math.random().toString(36).slice(2)}`;
   </div>
 </div>
 
-<style>
-  :root {
-    /* tweak this based on what others think of it */
-    --neon-glow: 204, 0, 255;
+<svg class="crt-filters" aria-hidden="true" focusable="false">
+  <filter id={`${filterId}`} x="-12%" y="-12%" width="124%" height="124%" color-interpolation-filters="sRGB">
+    <feTurbulence
+      type="turbulence"
+      baseFrequency="0.006"
+      numOctaves="1"
+      seed="2"
+      stitchTiles="stitch"
+      result="noise"
+    />
+    <feGaussianBlur in="noise" stdDeviation="18" result="noiseSmooth" />
 
-    --dot-size: 8px
+    <feDisplacementMap
+      in="SourceGraphic"
+      in2="noiseSmooth"
+      scale="6"
+      xChannelSelector="R"
+      yChannelSelector="G"
+      result="warped"
+      data-crt-disp
+    />
+
+    <feMorphology in="SourceAlpha" operator="erode" radius="18" result="eroded" data-crt-edge />
+    <feComposite in="SourceAlpha" in2="eroded" operator="out" result="edgeRing" />
+    <feGaussianBlur in="edgeRing" stdDeviation="10" result="edgeMask" />
+
+    <feComposite in="warped" in2="edgeMask" operator="in" result="warpedEdges" />
+
+    <feComposite in="SourceGraphic" in2="warpedEdges" operator="over" />
+  </filter>
+</svg>
+
+<style>
+  .album-shell {
+    position: relative;
   }
 
   .album-card {
-    border: 1px solid rgba(0, 255, 255, 0.18);
-    background: rgba(10, 20, 40, 0.55);
+    /* local component palette */
+    --sudata-neon: 0, 240, 255;    /* #00F0FF */
+    --sudata-navy: 2, 6, 23;       /* #020617 */
+    --sudata-grey: 148, 163, 184;  /* #94a3b8 */
+
+    --dot-size: 8px;
+    --ease-mech: cubic-bezier(0.16, 1, 0.3, 1);
+
+    border: 1px solid rgba(var(--sudata-neon), 0.22);
+    background: rgba(var(--sudata-navy), 0.55);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+
     box-shadow:
-      0 0 0 1px rgba(0, 255, 255, 0.10) inset,
-      0 0 28px rgba(var(--neon-glow), 0.10),
-      0 0 90px rgba(var(--neon-glow), 0.06);
+      0 0 0 1px rgba(255, 255, 255, 0.05) inset,
+      0 0 26px rgba(var(--sudata-neon), 0.14),
+      0 0 80px rgba(var(--sudata-neon), 0.08);
 
-    border-color: rgba(0, 255, 255, 0.18);
-    transform: translateY(0);
-
+    transform: translateY(0) scale(1);
     transition:
-      box-shadow 520ms cubic-bezier(0.2, 0.8, 0.2, 1),
-      border-color 420ms ease,
-      transform 220ms ease;
-    will-change: box-shadow, transform;
+      transform 900ms var(--ease-mech),
+      box-shadow 900ms var(--ease-mech),
+      border-color 600ms var(--ease-mech);
+    will-change: transform, box-shadow;
+
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
   }
 
+  /* keep hover subtle so it doesn't cover album metadata elsewhere */
   .album-card:hover {
-    border-color: rgba(0, 255, 255, 0.24);
+    transform: translateY(-6px) scale(1.01);
+    border-color: rgba(var(--sudata-neon), 0.38);
     box-shadow:
-      0 0 0 1px rgba(var(--neon-glow), 0.12) inset,
-      0 0 32px rgba(var(--neon-glow), 0.13),
-      0 0 110px rgba(var(--neon-glow), 0.08);
-    transform: translateY(-1px) rotateX(2.6deg) rotateY(-2.6deg);
+      0 0 0 1px rgba(var(--sudata-neon), 0.14) inset,
+      0 0 38px rgba(var(--sudata-neon), 0.22),
+      0 0 120px rgba(var(--sudata-neon), 0.12);
   }
 
-  .pa-like-header {
-    background: rgba(10, 20, 40, 0.55);
-    border-bottom: 1px solid rgba(0, 255, 255, 0.12);
+  .album-header {
+    background: rgba(var(--sudata-navy), 0.55);
+    border-bottom: 1px solid rgba(var(--sudata-neon), 0.12);
   }
 
+  .crt-filters {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+  }
+
+  /* CRT screen layer */
+  .crt-stage {
+    position: relative;
+    z-index: 0;
+    filter: var(--crt-filter);
+    transform: translateZ(0);
+  }
+
+  .crt-stage::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+    background:
+      radial-gradient(120% 90% at 50% 45%,
+        rgba(255,255,255,0.06) 0%,
+        rgba(255,255,255,0.00) 45%,
+        rgba(0,0,0,0.35) 78%,
+        rgba(0,0,0,0.55) 100%
+      );
+    mix-blend-mode: soft-light;
+  }
+
+  /* Scanlines */
+  .crt-stage::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 3;
+
+    background: repeating-linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.10) 0px,
+      rgba(255, 255, 255, 0.10) 3px,
+      rgba(0, 0, 0, 0.22) 3px,
+      rgba(0, 0, 0, 0.22) 6px,
+      rgba(0, 0, 0, 0) 6px,
+      rgba(0, 0, 0, 0) 14px
+    );
+
+    opacity: var(--scan-strength, 0.35);
+    mix-blend-mode: soft-light;
+    image-rendering: pixelated;
+
+    /* tiny drift looks CRT-y, disable if want fully static */
+    animation: scan-drift 5s linear infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .crt-stage::after { animation: none; }
+  }
+
+  @keyframes scan-drift {
+    from { background-position: 0 0; }
+    to   { background-position: 0 56px; }
+  }
+
+  /* ===== CAROUSEL TRACK ===== */
   .carousel {
+    position: relative;
+    z-index: 1;
+
     display: flex;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
+    background: rgba(0, 0, 0, 0.18);
   }
   .carousel::-webkit-scrollbar { display: none; }
 
   .slide {
     flex: 0 0 100%;
     scroll-snap-align: center;
-    background: rgba(0, 0, 0, 0.35);
+    background: rgba(0, 0, 0, 0.18);
   }
 
+  /* ===== NAV BUTTONS ===== */
   .nav {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    width: 42px;
-    height: 42px;
+    width: 44px;
+    height: 44px;
     border-radius: 999px;
-    border: 1px solid rgba(0, 255, 255, 0.25);
-    background: rgba(10, 20, 40, 0.55);
-    color: white;
+
+    border: 1px solid rgba(var(--sudata-neon), 0.26);
+    background: rgba(var(--sudata-navy), 0.55);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+
+    color: rgba(255, 255, 255, 0.92);
     font-size: 28px;
     line-height: 1;
     display: grid;
@@ -131,55 +276,69 @@ const uid = `carousel-${Math.random().toString(36).slice(2)}`;
     user-select: none;
     z-index: 10;
 
-    transition: transform 120ms ease, border-color 180ms ease, background 180ms ease, box-shadow 220ms ease;
-    pointer-events: auto;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+    transition:
+      transform 220ms var(--ease-mech),
+      border-color 400ms var(--ease-mech),
+      box-shadow 500ms var(--ease-mech),
+      background 500ms var(--ease-mech);
   }
   .nav:hover {
-    border-color: rgba(0, 255, 255, 0.45);
-    transform: translateY(-50%) scale(1.04);
-    box-shadow: 0 0 16px rgba(0, 255, 255, 0.18);
+    border-color: rgba(var(--sudata-neon), 0.46);
+    box-shadow:
+      0 0 0 1px rgba(var(--sudata-neon), 0.12) inset,
+      0 0 18px rgba(var(--sudata-neon), 0.22);
+    transform: translateY(-50%) scale(1.06);
   }
-  .nav.left { left: 10px; }
-  .nav.right { right: 10px; }
   .nav:active { transform: translateY(-50%) scale(0.96); }
-  .nav:focus-visible { outline: 2px solid rgba(0,255,255,0.55); outline-offset: 3px; }
+  .nav:focus-visible {
+    outline: 2px solid rgba(var(--sudata-neon), 0.60);
+    outline-offset: 3px;
+  }
+  .nav.left { left: 12px; }
+  .nav.right { right: 12px; }
 
+  /* ===== DOTS ===== */
   .dots {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    bottom: 10px;
+    bottom: 12px;
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 8px 10px;
+    gap: 10px;
+    padding: 9px 12px;
     border-radius: 999px;
-    background: rgba(10, 20, 40, 0.45);
-    border: 1px solid rgba(0, 255, 255, 0.15);
+
+    background: rgba(var(--sudata-navy), 0.50);
+    border: 1px solid rgba(var(--sudata-neon), 0.16);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.04) inset;
     z-index: 10;
   }
 
   .dot {
-    width: 8px;
-    height: 8px;
+    width: var(--dot-size);
+    height: var(--dot-size);
     border-radius: 999px;
     border: 0;
-    background: rgba(255, 255, 255, 0.45);
+    background: rgba(var(--sudata-grey), 0.65);
     cursor: pointer;
     position: relative;
     z-index: 2;
-    transition: transform 120ms ease, background 160ms ease;
+    transition: transform 220ms var(--ease-mech), background 300ms var(--ease-mech);
   }
 
-  .dot:hover  { transform: scale(1.25); }
-  .dot:active { transform: scale(0.9); }
+  .dot:hover  { transform: scale(1.35); }
+  .dot:active { transform: scale(0.92); }
 
   .dot[data-active="true"] {
-    background: rgba(255, 255, 255, 0.45);
+    background: rgba(var(--sudata-grey), 0.65);
     transform: none;
   }
 
-  /* Moving indicator is positioned by JS, sits on top so it covers the white dot */
   .dot-indicator {
     position: absolute;
     top: 50%;
@@ -199,19 +358,18 @@ const uid = `carousel-${Math.random().toString(36).slice(2)}`;
     width: var(--dot-size);
     height: var(--dot-size);
     border-radius: 999px;
-    background: rgba(0, 255, 255, 0.95);
+    background: rgba(var(--sudata-neon), 0.95);
+    box-shadow:
+      0 0 10px rgba(var(--sudata-neon), 0.55),
+      0 0 22px rgba(var(--sudata-neon), 0.22);
 
-    transform: scale(1.35); /* bigger at rest */
+    transform: scale(1.35);
     transform-origin: center;
     transition: transform 90ms ease;
   }
 
-  /* tweak the dot shrink while moving */
-  .dot-indicator.is-moving .dot-indicator-dot {
-    transform: scale(1);
-  }
+  .dot-indicator.is-moving .dot-indicator-dot { transform: scale(1); }
 
-  /* pop when it settles */
   .dot-indicator.is-pop .dot-indicator-dot {
     animation: dot-pop 140ms cubic-bezier(0.2, 0.9, 0.2, 1);
   }
@@ -237,9 +395,41 @@ const uid = `carousel-${Math.random().toString(36).slice(2)}`;
     if (!track || slides.length === 0 || !dotsWrap || !indicator || dots.length === 0) return;
 
     const prefersReduced = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
-
     const clamp = (n, lo, hi) => Math.max(lo, Math.min(hi, n));
 
+    /* CRT tunin */
+    function applyCrtTuning() {
+      const filterId = root.dataset.crtFilter;
+      if (!filterId) return;
+
+      const filter = document.getElementById(filterId);
+      if (!filter) return;
+
+      const disp = filter.querySelector("[data-crt-disp]");
+      const edge = filter.querySelector("[data-crt-edge]");
+      if (!disp || !edge) return;
+
+      const cs = getComputedStyle(root);
+      const warp = Math.max(0, Math.min(1, parseFloat(cs.getPropertyValue("--crt-warp")) || 0));
+      const edgeAmt = Math.max(0, Math.min(1, parseFloat(cs.getPropertyValue("--crt-edge")) || 0));
+
+      // strength: 0..1 -> 0..22
+      const scale = warp * 55;
+
+      // edge width: 0..1 -> erode radius 8..30
+      const radius = 8 + edgeAmt * 22;
+
+      disp.setAttribute("scale", String(scale.toFixed(2)));
+      edge.setAttribute("radius", String(radius.toFixed(2)));
+    }
+
+
+    applyCrtTuning();
+    root.addEventListener("mouseenter", applyCrtTuning);
+    root.addEventListener("mouseleave", applyCrtTuning);
+    window.addEventListener("resize", applyCrtTuning, { passive: true });
+
+    /* ---- your existing carousel logic ---- */
     const getIndex = () => {
       const w = track.clientWidth || 1;
       return clamp(Math.round(track.scrollLeft / w), 0, slides.length - 1);
@@ -249,7 +439,6 @@ const uid = `carousel-${Math.random().toString(36).slice(2)}`;
       dots.forEach((d, i) => (d.dataset.active = String(i === idx)));
     };
 
-    // Dot centers relative to dots wrapper
     let centers = [];
     const recomputeCenters = () => {
       const wrapRect = dotsWrap.getBoundingClientRect();
@@ -260,7 +449,6 @@ const uid = `carousel-${Math.random().toString(36).slice(2)}`;
       });
     };
 
-    // Place indicator at fractional progress t (0..n-1)
     const setIndicatorProgress = (t) => {
       if (!centers.length) return;
       const n = centers.length;
@@ -273,12 +461,10 @@ const uid = `carousel-${Math.random().toString(36).slice(2)}`;
       const center = centers[i0] * (1 - frac) + centers[i1] * frac;
       const x = center - indicator.offsetWidth / 2;
 
-      // follow scroll exactly ( scrollTo smooth already eases)
       indicator.style.transition = "none";
       indicator.style.transform = `translate3d(${x}px, -50%, 0)`;
     };
 
-    // moving + settle detection
     let scrollEndTimer = null;
     let popTimer = null;
 
@@ -300,14 +486,13 @@ const uid = `carousel-${Math.random().toString(36).slice(2)}`;
     const goTo = (idx) => {
       const current = getIndex();
       const next = clamp(idx, 0, slides.length - 1);
-      if (next === current) return;  // prevents end bump animation
+      if (next === current) return;
 
       markMoving();
       const w = track.clientWidth || 1;
       track.scrollTo({ left: next * w, behavior: "smooth" });
     };
 
-    // buttons
     root.querySelector("[data-prev]")?.addEventListener("click", (e) => {
       e.preventDefault();
       goTo(getIndex() - 1);
@@ -318,7 +503,6 @@ const uid = `carousel-${Math.random().toString(36).slice(2)}`;
       goTo(getIndex() + 1);
     });
 
-    // dot clicks
     dots.forEach((d) => {
       d.addEventListener("click", (e) => {
         e.preventDefault();
@@ -326,7 +510,6 @@ const uid = `carousel-${Math.random().toString(36).slice(2)}`;
       });
     });
 
-    // scroll drives indicator smoothly between dots
     const onScroll = () => {
       const w = track.clientWidth || 1;
       const t = track.scrollLeft / w;
@@ -338,15 +521,14 @@ const uid = `carousel-${Math.random().toString(36).slice(2)}`;
 
     track.addEventListener("scroll", onScroll, { passive: true });
 
-    // recompute centers + reposition on resize
     new ResizeObserver(() => {
       recomputeCenters();
       const w = track.clientWidth || 1;
       setIndicatorProgress(track.scrollLeft / w);
       setDotsActive(getIndex());
+      applyCrtTuning();
     }).observe(track);
 
-    // init
     recomputeCenters();
     setIndicatorProgress(0);
     setDotsActive(0);
