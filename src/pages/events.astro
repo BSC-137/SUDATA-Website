@@ -1,9 +1,18 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import EventCalendar from '../components/EventCalendar.jsx';
-import eventsData from '../data/events.json';
 
 const pageTitle = 'Events Calendar | SUDATA';
+
+// Read events.json file content at build time and pass as inline data
+import { readFileSync } from 'fs';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const eventsPath = join(__dirname, '..', 'data', 'events.json');
+const eventsData = JSON.parse(readFileSync(eventsPath, 'utf-8'));
 ---
 
 <Layout title={pageTitle}>
@@ -16,36 +25,18 @@ const pageTitle = 'Events Calendar | SUDATA';
             Events Calendar
           </span>
         </h1>
-        <p class="text-xl text-[#94a3b8] max-w-3xl mx-auto">
-          Explore our 2025 events archive. Filter by type and dive into past workshops, social mixers, and industry collaborations.
+        <p class="text-xl text-[#94a3b8] max-w-3xl mx-auto mb-3">
+          Explore SUDATA events across multiple years. Filter by type and dive into past workshops, social mixers, and industry collaborations.
         </p>
-      </div>
-
-      <!-- Year Badge -->
-      <div class="flex justify-center mb-8">
-        <div class="inline-flex items-center gap-3 px-6 py-3 rounded-lg bg-[#00F0FF]/10 border border-[#00F0FF]/30 backdrop-blur-xl">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" style="image-rendering: pixelated;">
-            <path d="M7 2H9V4H15V2H17V4H19C20.1046 4 21 4.89543 21 6V20C21 21.1046 20.1046 22 19 22H5C3.89543 22 3 21.1046 3 20V6C3 4.89543 3.89543 4 5 4H7V2Z" fill="#00F0FF"/>
-            <path d="M3 8H21V10H3V8Z" fill="#020617"/>
-          </svg>
-          <span class="text-[#00F0FF] font-bold text-lg">2025 Archive</span>
-        </div>
+        <p class="text-sm text-[#94a3b8]/80 max-w-2xl mx-auto">
+          Click on any event to view full details and sign-up information. Use the filters to find events that match your interests.
+        </p>
       </div>
     </div>
 
     <!-- Calendar Component -->
     <div class="max-w-7xl mx-auto">
       <EventCalendar events={eventsData.events} client:load />
-    </div>
-
-    <!-- Info Footer -->
-    <div class="max-w-4xl mx-auto mt-16 text-center">
-      <div class="p-6 rounded-lg bg-[#00F0FF]/5 border border-[#00F0FF]/20 backdrop-blur-xl">
-        <p class="text-[#94a3b8]">
-          💡 <strong class="text-[#00F0FF]">Pro Tip:</strong> Click on any event to view full details and sign-up information. 
-          Use the filters to find events that match your interests!
-        </p>
-      </div>
     </div>
   </div>
 </Layout>

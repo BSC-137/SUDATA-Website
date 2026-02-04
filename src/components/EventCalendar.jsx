@@ -1,8 +1,12 @@
 import { useState, useMemo } from 'react';
 import EventModal from './EventModal';
+import { getSemesterInfo } from '../data/semesterDates';
+import { getHolidayName } from '../data/publicHolidays';
 
 const EventCalendar = ({ events }) => {
-  const [selectedMonth, setSelectedMonth] = useState(0); // 0 = January
+  const currentYear = new Date().getFullYear();
+  const [selectedYear, setSelectedYear] = useState(currentYear);
+  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth()); // 0 = January
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [activeFilters, setActiveFilters] = useState(new Set(['academic', 'social', 'industry']));
 
@@ -11,49 +15,27 @@ const EventCalendar = ({ events }) => {
     'July', 'August', 'September', 'October', 'November', 'December'
   ];
 
-  // Get semester week info for a given date
-  const getSemesterWeek = (date) => {
-    const dateObj = new Date(2025, selectedMonth, date);
-    
-    // Semester 1: Week 1 starts Feb 24, 2025
-    const sem1Start = new Date(2025, 1, 24); // Feb 24
-    const sem1End = new Date(2025, 5, 1);    // Jun 1
-    
-    // Semester 2: Week 1 starts Aug 4, 2025
-    const sem2Start = new Date(2025, 7, 4);  // Aug 4
-    const sem2End = new Date(2025, 10, 9);   // Nov 9
-    
-    if (dateObj >= sem1Start && dateObj <= sem1End) {
-      const weekNum = Math.floor((dateObj - sem1Start) / (7 * 24 * 60 * 60 * 1000)) + 1;
-      if (weekNum <= 13) return { semester: 1, week: weekNum };
-      // STUVAC/Exams
-      if (dateObj >= new Date(2025, 5, 2) && dateObj <= new Date(2025, 5, 8)) {
-        return { semester: 1, week: 'STUVAC' };
-      }
-      if (dateObj >= new Date(2025, 5, 10)) {
-        return { semester: 1, week: 'Exams' };
-      }
-    }
-    
-    if (dateObj >= sem2Start && dateObj <= sem2End) {
-      const weekNum = Math.floor((dateObj - sem2Start) / (7 * 24 * 60 * 60 * 1000)) + 1;
-      if (weekNum <= 13) return { semester: 2, week: weekNum };
-      // STUVAC/Exams
-      if (dateObj >= new Date(2025, 10, 10) && dateObj <= new Date(2025, 10, 16)) {
-        return { semester: 2, week: 'STUVAC' };
-      }
-      if (dateObj >= new Date(2025, 10, 17)) {
-        return { semester: 2, week: 'Exams' };
-      }
-    }
-    
-    return null;
+  const availableYears = [2024, 2025, 2026]; // Can add more years as needed
+
+  // Get semester week info for a given date using the config
+  const getSemesterWeek = (day) => {
+    const dateStr = `${selectedYear}-${String(selectedMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+    return getSemesterInfo(dateStr, selectedYear);
   };
 
-  // Filter events by active tags
+  // Check if date is a public holiday
+  const getPublicHoliday = (day) => {
+    const dateStr = `${selectedYear}-${String(selectedMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+    return getHolidayName(dateStr, selectedYear);
+  };
+
+  // Filter events by active tags and selected year
   const filteredEvents = useMemo(() => {
-    return events.filter(event => activeFilters.has(event.type));
-  }, [events, activeFilters]);
+    return events.filter(event => {
+      const eventYear = new Date(event.date).getFullYear();
+      return activeFilters.has(event.type) && eventYear === selectedYear;
+    });
+  }, [events, activeFilters, selectedYear]);
 
   // Get events for selected month
   const monthEvents = useMemo(() => {
@@ -65,8 +47,8 @@ const EventCalendar = ({ events }) => {
 
   // Generate calendar grid for selected month
   const generateCalendar = () => {
-    const firstDay = new Date(2025, selectedMonth, 1);
-    const lastDay = new Date(2025, selectedMonth + 1, 0);
+    const firstDay = new Date(selectedYear, selectedMonth, 1);
+    const lastDay = new Date(selectedYear, selectedMonth + 1, 0);
     const startingDayOfWeek = firstDay.getDay();
     const daysInMonth = lastDay.getDate();
 
@@ -96,8 +78,14 @@ const EventCalendar = ({ events }) => {
   // Get events for a specific day
   const getEventsForDay = (day) => {
     if (!day) return [];
-    const dateStr = `2025-${String(selectedMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-    return monthEvents.filter(event => event.date === dateStr);
+    const dateStr = `${selectedYear}-${String(selectedMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+    const dayEvents = monthEvents.filter(event => event.date === dateStr);
+    // Sort by time (chronological order)
+    return dayEvents.sort((a, b) => {
+      const timeA = a.time || '00:00';
+      const timeB = b.time || '00:00';
+      return timeA.localeCompare(timeB);
+    });
   };
 
   const toggleFilter = (type) => {
@@ -113,9 +101,30 @@ const EventCalendar = ({ events }) => {
   };
 
   const filterConfig = {
-    academic: { color: '#00F0FF', icon: 'M12 2L2 7V11C2 16.55 6.84 21.74 12 23C17.16 21.74 22 16.55 22 11V7L12 2Z' },
-    social: { color: '#FF00FF', icon: 'M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2Z' },
-    industry: { color: '#FFD700', icon: 'M12 2L1 7V11C1 16 5 21 12 23C19 21 23 16 23 11V7L12 2Z' }
+    academic: { 
+      color: '#00F0FF', 
+      bgActive: 'bg-[#00F0FF]/20',
+      borderActive: 'border-[#00F0FF]',
+      textActive: 'text-[#00F0FF]',
+      shadow: 'shadow-[0_0_20px_rgba(0,240,255,0.5)]',
+      icon: 'M12 2L2 7V11C2 16.55 6.84 21.74 12 23C17.16 21.74 22 16.55 22 11V7L12 2Z' 
+    },
+    social: { 
+      color: '#06B6D4', 
+      bgActive: 'bg-[#06B6D4]/20',
+      borderActive: 'border-[#06B6D4]',
+      textActive: 'text-[#06B6D4]',
+      shadow: 'shadow-[0_0_20px_rgba(6,182,212,0.5)]',
+      icon: 'M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2Z' 
+    },
+    industry: { 
+      color: '#0EA5E9', 
+      bgActive: 'bg-[#0EA5E9]/20',
+      borderActive: 'border-[#0EA5E9]',
+      textActive: 'text-[#0EA5E9]',
+      shadow: 'shadow-[0_0_20px_rgba(14,165,233,0.5)]',
+      icon: 'M12 2L1 7V11C1 16 5 21 12 23C19 21 23 16 23 11V7L12 2Z' 
+    }
   };
 
   return (
@@ -130,8 +139,8 @@ const EventCalendar = ({ events }) => {
               px-6 py-3 rounded-lg font-bold text-sm uppercase tracking-wider
               transition-all duration-300 ease-out
               ${activeFilters.has(type)
-                ? 'bg-[#00F0FF]/20 border-2 border-[#00F0FF] text-[#00F0FF] shadow-[0_0_20px_rgba(0,240,255,0.5)]'
-                : 'bg-[#020617] border-2 border-[#94a3b8]/30 text-[#94a3b8] hover:border-[#94a3b8]/50'
+                ? `${config.bgActive} border-2 ${config.borderActive} ${config.textActive} ${config.shadow}`
+                : 'bg-[#020617] border-2 border-[#94a3b8]/30 text-[#94a3b8] hover:border-[#94a3b8]/50 opacity-50'
               }
             `}
             style={{
@@ -148,11 +157,83 @@ const EventCalendar = ({ events }) => {
         ))}
       </div>
 
+      {/* Year Selector - Current Year + Archive Dropdown */}
+      <div className="flex justify-center items-center gap-4">
+        <button
+          onClick={() => {
+            setSelectedYear(currentYear);
+            setSelectedMonth(new Date().getMonth());
+          }}
+          className={`
+            px-6 py-2 rounded-lg font-bold text-sm
+            transition-all duration-300 ease-out
+            ${selectedYear === currentYear
+              ? 'bg-[#00F0FF]/20 border-2 border-[#00F0FF] text-[#00F0FF]'
+              : 'bg-[#020617] border-2 border-[#94a3b8]/30 text-[#94a3b8] hover:border-[#94a3b8]/50'
+            }
+          `}
+          style={{
+            backdropFilter: 'blur(20px)'
+          }}
+        >
+          {currentYear}
+        </button>
+
+        <div className="relative">
+          <select
+            value={selectedYear === currentYear ? '' : selectedYear}
+            onChange={(e) => {
+              if (e.target.value) {
+                setSelectedYear(parseInt(e.target.value));
+                setSelectedMonth(0);
+              }
+            }}
+            className={`
+              px-6 py-2 rounded-lg font-bold text-sm cursor-pointer appearance-none pr-10
+              transition-all duration-300 ease-out
+              ${selectedYear !== currentYear
+                ? 'bg-[#00F0FF]/20 border-2 border-[#00F0FF] text-[#00F0FF]'
+                : 'bg-[#020617] border-2 border-[#94a3b8]/30 text-[#94a3b8] hover:border-[#94a3b8]/50'
+              }
+            `}
+            style={{
+              backdropFilter: 'blur(20px)'
+            }}
+          >
+            <option value="">Multi-Year Archive</option>
+            {availableYears.filter(y => y !== currentYear).map(year => (
+              <option key={year} value={year}>{year}</option>
+            ))}
+          </select>
+          <svg 
+            className={`absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none ${selectedYear !== currentYear ? 'text-[#00F0FF]' : 'text-[#94a3b8]'}`}
+            width="12" 
+            height="12" 
+            viewBox="0 0 24 24" 
+            fill="currentColor"
+            style={{ imageRendering: 'pixelated' }}
+          >
+            <path d="M7 10L12 15L17 10H7Z" />
+          </svg>
+        </div>
+      </div>
+
       {/* Month Navigation */}
       <div className="flex items-center justify-between max-w-2xl mx-auto">
         <button
-          onClick={() => setSelectedMonth(prev => Math.max(0, prev - 1))}
-          disabled={selectedMonth === 0}
+          onClick={() => {
+            if (selectedMonth === 0) {
+              // Go to December of previous year
+              const prevYear = selectedYear - 1;
+              if (availableYears.includes(prevYear)) {
+                setSelectedYear(prevYear);
+                setSelectedMonth(11);
+              }
+            } else {
+              setSelectedMonth(prev => prev - 1);
+            }
+          }}
+          disabled={selectedMonth === 0 && !availableYears.includes(selectedYear - 1)}
           className="p-3 rounded-lg bg-[#00F0FF]/10 border border-[#00F0FF]/30 text-[#00F0FF] 
                      hover:bg-[#00F0FF]/20 hover:scale-110 transition-all duration-300
                      disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:scale-100"
@@ -164,12 +245,23 @@ const EventCalendar = ({ events }) => {
         </button>
 
         <h2 className="text-3xl font-bold text-[#00F0FF]" style={{ textShadow: '0 0 20px #00F0FF' }}>
-          {months[selectedMonth]} 2025
+          {months[selectedMonth]} {selectedYear}
         </h2>
 
         <button
-          onClick={() => setSelectedMonth(prev => Math.min(11, prev + 1))}
-          disabled={selectedMonth === 11}
+          onClick={() => {
+            if (selectedMonth === 11) {
+              // Go to January of next year
+              const nextYear = selectedYear + 1;
+              if (availableYears.includes(nextYear)) {
+                setSelectedYear(nextYear);
+                setSelectedMonth(0);
+              }
+            } else {
+              setSelectedMonth(prev => prev + 1);
+            }
+          }}
+          disabled={selectedMonth === 11 && !availableYears.includes(selectedYear + 1)}
           className="p-3 rounded-lg bg-[#00F0FF]/10 border border-[#00F0FF]/30 text-[#00F0FF] 
                      hover:bg-[#00F0FF]/20 hover:scale-110 transition-all duration-300
                      disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:scale-100"
@@ -200,6 +292,8 @@ const EventCalendar = ({ events }) => {
               {week.map((day, dayIdx) => {
                 const dayEvents = day ? getEventsForDay(day) : [];
                 const semesterInfo = day ? getSemesterWeek(day) : null;
+                const holidayName = day ? getPublicHoliday(day) : null;
+                
                 return (
                   <div
                     key={dayIdx}
@@ -210,31 +304,55 @@ const EventCalendar = ({ events }) => {
                         : 'bg-transparent'
                       }
                       ${dayEvents.length > 0 ? 'ring-2 ring-[#00F0FF]/50' : ''}
+                      ${holidayName ? 'bg-[#FF00FF]/10 border-[#FF00FF]/30' : ''}
                     `}
+                    title={holidayName || ''}
                   >
                     {day && (
                       <>
                         <div className="flex items-start justify-between gap-1">
-                          <div className="text-[#94a3b8] font-bold text-sm">{day}</div>
+                          <div className={`font-bold text-sm ${holidayName ? 'text-[#FF00FF]' : 'text-[#94a3b8]'}`}>
+                            {day}
+                          </div>
                           {semesterInfo && (
-                            <div className="text-[10px] text-[#00F0FF]/60 font-mono leading-tight">
-                              S{semesterInfo.semester}W{semesterInfo.week}
+                            <div className="text-[9px] text-[#00F0FF]/60 font-mono leading-tight">
+                              {semesterInfo.week 
+                                ? `S${semesterInfo.semester}W${semesterInfo.week}`
+                                : semesterInfo.period
+                              }
                             </div>
                           )}
                         </div>
+                        
+                        {/* Public Holiday Indicator */}
+                        {holidayName && !dayEvents.length && (
+                          <div className="absolute bottom-1 left-1 right-1">
+                            <div className="text-[9px] text-[#FF00FF] font-bold truncate">
+                              {holidayName}
+                            </div>
+                          </div>
+                        )}
+                        
+                        {/* Events - positioned at top */}
                         {dayEvents.length > 0 && (
-                          <div className="absolute bottom-1 left-1 right-1 space-y-1">
-                            {dayEvents.map(event => (
-                              <button
-                                key={event.id}
-                                onClick={() => setSelectedEvent(event)}
-                                className="w-full text-left px-1.5 py-0.5 rounded text-[10px] font-bold truncate
-                                         bg-[#00F0FF]/90 text-[#020617] hover:bg-[#00F0FF] transition-colors"
-                                title={event.title}
-                              >
-                                {event.title}
-                              </button>
-                            ))}
+                          <div className="mt-1 space-y-1">
+                            {dayEvents.map(event => {
+                              const eventConfig = filterConfig[event.type];
+                              return (
+                                <button
+                                  key={event.id}
+                                  onClick={() => setSelectedEvent(event)}
+                                  className={`w-full text-left px-1.5 py-0.5 rounded text-[10px] font-bold truncate transition-colors`}
+                                  style={{
+                                    backgroundColor: eventConfig.color,
+                                    color: '#020617'
+                                  }}
+                                  title={event.title}
+                                >
+                                  {event.title}
+                                </button>
+                              );
+                            })}
                           </div>
                         )}
                       </>
