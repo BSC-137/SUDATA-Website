@@ -62,8 +62,8 @@
       to bottom,
       rgba(255,255,255,0) 0%,
       rgba(255,255,255,0) 50%,
-      rgba(0,0,0,0.2) 50%,
-      rgba(0,0,0,0.2) 100%
+      rgba(0,0,0,0.16) 50%,
+      rgba(0,0,0,0.16) 100%
     );
     background-size: 100% 4px;
   }
@@ -121,4 +121,88 @@
 
 .bg-noise {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.4'/%3E%3C/svg%3E");
+}
+
+/* Hide scrollbar for carousel while keeping scroll */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Terminal / Matrix block for About "What We Do" */
+.terminal-block {
+  @apply relative overflow-hidden rounded-2xl border border-sudata-neon/40 bg-sudata-navy/90 backdrop-blur-sm;
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.15), inset 0 0 60px rgba(0, 240, 255, 0.03);
+}
+.terminal-block::before {
+  content: "";
+  @apply absolute inset-0 pointer-events-none;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 240, 255, 0.03) 2px,
+    rgba(0, 240, 255, 0.03) 4px
+  );
+}
+.terminal-block::after {
+  content: "";
+  @apply absolute top-0 left-0 right-0 h-px pointer-events-none;
+  background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.6), transparent);
+}
+
+/* Executive card: glassy 3D pop-up on hover */
+.executive-card-3d {
+  @apply relative overflow-hidden; /* Ensure sheen stays inside */
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: none;
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  backdrop-filter: blur(12px);
+  z-index: 1;
+}
+
+.executive-card-3d::before {
+  /* Sheen effect layer */
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    rgba(0, 240, 255, 0.2),
+    transparent
+  );
+  transition: 0.5s;
+  pointer-events: none;
+}
+
+.executive-card-3d:hover {
+  transform: translateY(-10px) translateZ(40px);
+  background: rgba(255, 255, 255, 0.05); /* Subtle tint */
+  border-color: rgba(0, 240, 255, 0.5);
+  backdrop-filter: blur(12px); 
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.6), /* Deep shadow for lift */
+    0 0 0 1px rgba(0, 240, 255, 0.1); /* Sharp rim */
+  z-index: 50;
+}
+
+.executive-card-3d:hover::before {
+  left: 100%; /* Move sheen across */
+  transition: 0.7s ease-in-out;
+}
+
+/* Ensure content stays sharp during transform */
+.executive-card-3d > * {
+  transform: translateZ(20px); /* Parallax text slightly */
 }
