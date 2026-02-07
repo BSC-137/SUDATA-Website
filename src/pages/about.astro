@@ -1,0 +1,118 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ExecutiveCarousel from '../components/ExecutiveCarousel.jsx';
+---
+
+<Layout title="About | SUDATA">
+	<div class="flex flex-col w-full max-w-4xl mx-auto space-y-24 pt-32 pb-24">
+		<!-- Page title -->
+		<header class="reveal-on-scroll text-center space-y-4">
+			<h1 class="text-4xl md:text-6xl font-bold text-sudata-neon tracking-widest neon-text-shadow font-mono-tech">
+				About SUDATA
+			</h1>
+			<p class="text-sudata-grey font-mono-tech text-lg tracking-wide">
+				[ Sydney University Data Society ]
+			</p>
+		</header>
+
+		<!-- [SECTION: MISSION_LOG] -->
+		<section class="reveal-on-scroll terminal-block scanline-overlay p-8 md:p-12">
+			<div class="relative z-10">
+				<div class="font-mono-tech text-sudata-neon/80 text-sm tracking-[0.2em] mb-4 flex items-center gap-2">
+					<span class="animate-flicker">&gt;_</span>
+					<span>[SECTION: MISSION_LOG]</span>
+				</div>
+				<h2 class="text-2xl md:text-3xl font-bold text-white font-mono-tech tracking-widest mb-6">
+					The Human Layer of Data Science
+				</h2>
+				<p class="text-sudata-grey font-mono-tech text-base md:text-lg leading-relaxed">
+					At SUDATA, we believe that data is more than just raw numbers and cold logic—it's the DNA of the modern world. But even the most complex systems need a heart. We are a hybrid collective: one part academic powerhouse, one part industrial pipeline, and one part vibrant family. Our mission is to bridge the gap between classroom theory and real-world impact, all while building a community where every member feels like they belong.
+				</p>
+			</div>
+		</section>
+
+		<!-- [SECTION: CORE_PILLARS] -->
+		<section class="reveal-on-scroll terminal-block scanline-overlay p-8 md:p-12">
+			<div class="relative z-10">
+				<div class="font-mono-tech text-sudata-neon/80 text-sm tracking-[0.2em] mb-6 flex items-center gap-2">
+					<span class="animate-flicker">_</span>
+					<span>[SECTION: CORE_PILLARS]</span>
+				</div>
+
+				<div class="space-y-10">
+					<!-- 01. THE SOCIAL FABRIC -->
+					<div>
+						<div class="font-mono-tech text-sudata-neon text-sm tracking-[0.2em] mb-2">
+							01. THE SOCIAL FABRIC
+						</div>
+						<h3 class="text-xl font-bold text-white font-mono-tech tracking-wider mb-3">
+							Work Hard, Play Harder.
+						</h3>
+						<p class="text-sudata-grey font-mono-tech text-base leading-relaxed">
+							We aren't just a society; we're a bustling ecosystem of like-minded people. From high-energy parties and casual pub nights to late-night study grinds, SUDATA is where you find your "nodes"—lifelong friends who share your drive. We take our social life as seriously as our datasets, ensuring there's always a welcoming space to meet new people and step away from the screen.
+						</p>
+					</div>
+
+					<!-- 02. INDUSTRIAL SYNERGY -->
+					<div>
+						<div class="font-mono-tech text-sudata-neon text-sm tracking-[0.2em] mb-2">
+							02. INDUSTRIAL SYNERGY
+						</div>
+						<h3 class="text-xl font-bold text-white font-mono-tech tracking-wider mb-3">
+							Your High-Bandwidth Career Pipeline.
+						</h3>
+						<p class="text-sudata-grey font-mono-tech text-base leading-relaxed">
+							We boast extensive industry connections that put our members directly in front of the world's leading tech and data firms. Our networking events aren't just about handing out resumes; they are about building genuine relationships with professionals. Whether it's an exclusive industry dinner or a formal networking night, we provide the bandwidth you need to launch your career.
+						</p>
+					</div>
+
+					<!-- 03. THE FORGE -->
+					<div>
+						<div class="font-mono-tech text-sudata-neon text-sm tracking-[0.2em] mb-2">
+							03. THE FORGE: HACKATHONS & LABS
+						</div>
+						<h3 class="text-xl font-bold text-white font-mono-tech tracking-wider mb-3">
+							Where Theory Meets Execution.
+						</h3>
+						<p class="text-sudata-grey font-mono-tech text-base leading-relaxed">
+							Our workshops and hackathons are the heartbeat of our academic side. We host high-intensity events designed to push your limits, from Python deep-dives to neural network builds. It's collaborative, it's competitive, and it's the best way to level up your stack alongside the brightest minds at the University of Sydney.
+						</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- [SECTION: EXEC_TEAM_HEADER] -->
+		<section class="reveal-on-scroll w-full">
+			<div class="font-mono-tech text-sudata-neon/80 text-sm tracking-[0.2em] mb-4 flex justify-center gap-2">
+				<span class="animate-flicker">_</span>
+				<span>[SECTION: EXEC_TEAM_HEADER]</span>
+			</div>
+			<h2 class="text-2xl md:text-4xl font-bold text-white font-mono-tech tracking-widest mb-2 text-center">
+				Meet the Architects
+			</h2>
+			<p class="text-sudata-grey font-mono-tech text-sm md:text-base tracking-wide text-center mb-10 max-w-2xl mx-auto">
+				The team behind the terminal. Our executive board is a diverse group of student leaders dedicated to maintaining the SUDATA ecosystem and ensuring every member has the resources to thrive.
+			</p>
+			<div class="w-full overflow-hidden px-2">
+				<ExecutiveCarousel client:visible />
+			</div>
+		</section>
+
+		<!-- [CHEEKY "DATA" FOOTER] -->
+		<footer class="reveal-on-scroll terminal-block scanline-overlay p-8 md:p-12">
+			<div class="relative z-10">
+				<div class="font-mono-tech text-sudata-neon/80 text-sm tracking-[0.2em] mb-6 flex items-center gap-2">
+					<span>// EOF: COMMUNITY_METRICS</span>
+				</div>
+				<div class="font-mono-tech text-sudata-neon/90 text-sm md:text-base tracking-wider space-y-3">
+					<p class="text-white/90 font-bold">SOCIAL_STATISTICS_v1.0</p>
+					<p class="text-sudata-grey">New Friendships Initialized: ∞</p>
+					<p class="text-sudata-grey">Coffee to Code Conversion: 98% Efficiency</p>
+					<p class="text-sudata-grey">System Status: Healthy & Growing</p>
+					<p class="text-sudata-neon/90 mt-4">Protocol: Join the Family</p>
+				</div>
+			</div>
+		</footer>
+	</div>
+</Layout>
