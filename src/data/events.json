@@ -1,615 +1,772 @@
 {
   "events": [
     {
-      "id": "event_001",
       "title": "TESTING",
       "date": "2025-02-20",
       "time": "16:00",
       "venue": "International Student Lounge",
       "type": "social",
       "description": "O-Week social event to meet new members and make connections in a fun, relaxed environment.",
-      "collaborators": ["SUDATA"],
+      "collaborators": [
+        "SUDATA"
+      ],
       "catering": "None",
       "signupLink": "https://forms.google.com/example",
-      "attendees": 0
+      "attendees": 0,
+      "id": "event_001"
     },
     {
-      "id": "event_002",
       "title": "Introduction to R Workshop",
       "date": "2025-02-25",
       "time": "18:00",
       "venue": "TBA",
       "type": "academic",
       "description": "Learn the fundamentals of R programming for data analysis and statistical computing.",
-      "collaborators": ["SUDATA"],
+      "collaborators": [
+        "SUDATA"
+      ],
       "catering": "TBA",
       "signupLink": "https://forms.google.com/example",
-      "attendees": 0
+      "attendees": 0,
+      "id": "event_002"
     },
     {
-      "id": "event_003",
       "title": "Welcome Drinks/Pub Crawl",
       "date": "2025-02-25",
       "time": "20:00",
       "venue": "TBA",
       "type": "social",
       "description": "Kick off the semester with drinks and socializing. A great way to meet the SUDATA community!",
-      "collaborators": ["SUDATA"],
+      "collaborators": [
+        "SUDATA"
+      ],
       "catering": "Drinks",
       "signupLink": "https://forms.google.com/example",
-      "attendees": 0
+      "attendees": 0,
+      "id": "event_003"
     },
     {
-      "id": "event_004",
       "title": "Jane Street Talk",
       "date": "2025-03-03",
       "time": "17:00",
       "venue": "TBA",
       "type": "industry",
       "description": "Industry talk from Jane Street about quantitative trading and careers in finance.",
-      "collaborators": ["SUDATA", "SUWIE", "Jane Street"],
+      "collaborators": [
+        "SUDATA",
+        "SUWIE",
+        "Jane Street"
+      ],
       "catering": "TBA",
       "signupLink": "https://forms.google.com/example",
-      "attendees": 0
+      "attendees": 0,
+      "id": "event_004"
     },
     {
-      "id": "event_005",
       "title": "Introduction to Data Science/Career Panel",
       "date": "2025-03-11",
       "time": "18:00",
       "venue": "TBA",
       "type": "academic",
       "description": "Learn about data science fundamentals and hear from industry professionals about career paths.",
-      "collaborators": ["SUDATA"],
+      "collaborators": [
+        "SUDATA"
+      ],
       "catering": "TBA",
       "signupLink": "https://forms.google.com/example",
-      "attendees": 0
+      "attendees": 0,
+      "id": "event_005"
     },
     {
-      "id": "event_006",
       "title": "Coffee Catchup with CBA",
       "date": "2025-03-13",
       "time": "14:00",
       "venue": "TBA",
       "type": "industry",
       "description": "Casual networking session with Commonwealth Bank representatives. Bring your questions!",
-      "collaborators": ["SUDATA", "Commonwealth Bank"],
+      "collaborators": [
+        "SUDATA",
+        "Commonwealth Bank"
+      ],
       "catering": "Coffee and snacks",
       "signupLink": "https://forms.google.com/example",
-      "attendees": 0
+      "attendees": 0,
+      "id": "event_006"
     },
     {
-      "id": "event_007",
       "title": "Craftsoc Collaboration",
       "date": "2025-03-14",
       "time": "18:00",
       "venue": "TBA",
       "type": "social",
       "description": "Creative social event in collaboration with Craftsoc. Arts, crafts, and socializing!",
-      "collaborators": ["SUDATA", "Craftsoc"],
+      "collaborators": [
+        "SUDATA",
+        "Craftsoc"
+      ],
       "catering": "Drinks and snacks",
       "signupLink": "https://forms.google.com/example",
-      "attendees": 0
+      "attendees": 0,
+      "id": "event_007"
     },
     {
-      "id": "event_008",
       "title": "SUDATA Camp",
       "date": "2025-03-17",
       "time": "09:00",
       "venue": "TBA",
       "type": "social",
       "description": "Weekend camp for SUDATA members - bonding, activities, and fun away from campus!",
-      "collaborators": ["SUDATA"],
+      "collaborators": [
+        "SUDATA"
+      ],
       "catering": "All meals provided",
       "signupLink": "https://forms.google.com/example",
-      "attendees": 0
+      "attendees": 0,
+      "id": "event_008"
     },
     {
-      "id": "event_009",
       "title": "Quantium Office Event",
       "date": "2025-03-19",
       "time": "09:00",
       "venue": "Quantium Office",
       "type": "industry",
       "description": "Visit Quantium's office for networking and insights into data science in retail analytics.",
-      "collaborators": ["SUDATA", "Quantium"],
+      "collaborators": [
+        "SUDATA",
+        "Quantium"
+      ],
       "catering": "Morning tea",
       "signupLink": "https://forms.google.com/example",
-      "attendees": 0
+      "attendees": 0,
+      "id": "event_009"
     },
     {
-      "id": "event_010",
       "title": "Mahjong Night with Mahjong Soc",
       "date": "2025-03-27",
       "time": "18:00",
       "venue": "TBA",
       "type": "social",
       "description": "Learn and play mahjong with the Mahjong Society. All skill levels welcome!",
-      "collaborators": ["SUDATA", "Mahjong Society"],
+      "collaborators": [
+        "SUDATA",
+        "Mahjong Society"
+      ],
       "catering": "Snacks",
       "signupLink": "https://forms.google.com/example",
-      "attendees": 0
+      "attendees": 0,
+      "id": "event_010"
     },
     {
-      "id": "event_011",
       "title": "AI Workshop with Rhombus AI",
       "date": "2025-04-01",
       "time": "18:00",
       "venue": "TBA",
       "type": "academic",
       "description": "Hands-on workshop covering artificial intelligence and machine learning applications.",
-      "collaborators": ["SUDATA", "Rhombus AI"],
+      "collaborators": [
+        "SUDATA",
+        "Rhombus AI"
+      ],
       "catering": "Pizza and drinks",
       "signupLink": "https://forms.google.com/example",
-      "attendees": 0
+      "attendees": 0,
+      "id": "event_011"
     },
     {
-      "id": "event_012",
       "title": "Coffee Catchup with BISA",
       "date": "2025-04-07",
       "time": "15:00",
       "venue": "TBA",
       "type": "industry",
       "description": "Networking session with Business Information Systems Association members.",
-      "collaborators": ["SUDATA", "BISA"],
+      "collaborators": [
+        "SUDATA",
+        "BISA"
+      ],
       "catering": "Coffee",
       "signupLink": "https://forms.google.com/example",
-      "attendees": 0
+      "attendees": 0,
+      "id": "event_012"
     },
     {
-      "id": "event_013",
       "title": "Coffee Catchup with 180DC",
       "date": "2025-04-14",
       "time": "15:00",
       "venue": "TBA",
       "type": "industry",
       "description": "Connect with 180 Degrees Consulting members over coffee.",
-      "collaborators": ["SUDATA", "180 Degrees Consulting"],
+      "collaborators": [
+        "SUDATA",
+        "180 Degrees Consulting"
+      ],
       "catering": "Coffee",
       "signupLink": "https://forms.google.com/example",
-      "attendees": 0
+      "attendees": 0,
+      "id": "event_013"
     },
     {
-      "id": "event_014",
       "title": "AmplifyMe Finance Accelerator",
       "date": "2025-04-28",
       "time": "18:00",
       "venue": "TBA",
       "type": "industry",
       "description": "Finance accelerator program session with AmplifyMe focusing on career development.",
-      "collaborators": ["SUDATA", "AmplifyMe"],
+      "collaborators": [
+        "SUDATA",
+        "AmplifyMe"
+      ],
       "catering": "TBA",
       "signupLink": "https://forms.google.com/example",
-      "attendees": 0
+      "attendees": 0,
+      "id": "event_014"
     },
     {
-      "id": "event_015",
       "title": "Internal Event",
       "date": "2025-05-02",
       "time": "18:00",
       "venue": "TBA",
       "type": "social",
       "description": "Internal SUDATA team event for members and subcommittee.",
-      "collaborators": ["SUDATA"],
+      "collaborators": [
+        "SUDATA"
+      ],
       "catering": "TBA",
       "signupLink": "https://forms.google.com/example",
-      "attendees": 0
+      "attendees": 0,
+      "id": "event_015"
     },
     {
-      "id": "event_016",
       "title": "Academic Workshop",
       "date": "2025-05-05",
       "time": "18:00",
       "venue": "TBA",
       "type": "academic",
       "description": "Academic skills workshop covering data science techniques and best practices.",
-      "collaborators": ["SUDATA"],
+      "collaborators": [
+        "SUDATA"
+      ],
       "catering": "Pizza",
       "signupLink": "https://forms.google.com/example",
-      "attendees": 0
+      "attendees": 0,
+      "id": "event_016"
     },
     {
-      "id": "event_017",
       "title": "SMS x SUDATA Pub Crawl",
       "date": "2025-05-09",
       "time": "19:00",
       "venue": "Multiple venues",
       "type": "social",
       "description": "Joint pub crawl with Sydney Medical Society. A night of drinks and socializing!",
-      "collaborators": ["SUDATA", "Sydney Medical Society"],
+      "collaborators": [
+        "SUDATA",
+        "Sydney Medical Society"
+      ],
       "catering": "Drinks",
       "signupLink": "https://forms.google.com/example",
-      "attendees": 0
+      "attendees": 0,
+      "id": "event_017"
     },
     {
-      "id": "event_018",
       "title": "Industry Networking Night",
       "date": "2025-05-20",
       "time": "18:00",
       "venue": "TBA",
       "type": "industry",
       "description": "Major networking event with industry professionals from various data science companies.",
-      "collaborators": ["SUDATA"],
+      "collaborators": [
+        "SUDATA"
+      ],
       "catering": "Canapés and drinks",
       "signupLink": "https://forms.google.com/example",
-      "attendees": 0
+      "attendees": 0,
+      "id": "event_018"
     },
     {
-      "id": "event_019",
       "title": "Trivia Night",
       "date": "2025-05-22",
       "time": "18:00",
       "venue": "TBA",
       "type": "social",
       "description": "Half social, half academic trivia night. Test your knowledge and have fun!",
-      "collaborators": ["SUDATA"],
+      "collaborators": [
+        "SUDATA"
+      ],
       "catering": "Pizza and drinks",
       "signupLink": "https://forms.google.com/example",
-      "attendees": 0
+      "attendees": 0,
+      "id": "event_019"
     },
     {
-      "id": "event_020",
       "title": "DATA1002 Revision Session",
       "date": "2025-06-03",
       "time": "18:00",
       "venue": "TBA",
       "type": "academic",
       "description": "Comprehensive revision session for DATA1002 exam preparation during STUVAC.",
-      "collaborators": ["SUDATA"],
+      "collaborators": [
+        "SUDATA"
+      ],
       "catering": "Snacks",
       "signupLink": "https://forms.google.com/example",
-      "attendees": 0
+      "attendees": 0,
+      "id": "event_020"
     },
     {
-      "id": "event_021",
       "title": "Cruise",
       "date": "2025-06-03",
       "time": "19:00",
       "venue": "Sydney Harbour",
       "type": "social",
       "description": "End of semester cruise celebration on Sydney Harbour!",
-      "collaborators": ["SUDATA", "SYNCS", "SUMS"],
+      "collaborators": [
+        "SUDATA",
+        "SYNCS",
+        "SUMS"
+      ],
       "catering": "Included",
       "signupLink": "https://forms.google.com/example",
-      "attendees": 0
+      "attendees": 0,
+      "id": "event_021"
     },
     {
-      "id": "event_022",
       "title": "Westpac Coffee Chat",
       "date": "2025-08-04",
       "time": "14:00",
       "venue": "TBA",
       "type": "industry",
       "description": "Coffee chat with Westpac to learn about their 2026 graduate programs.",
-      "collaborators": ["SUDATA", "Westpac"],
+      "collaborators": [
+        "SUDATA",
+        "Westpac"
+      ],
       "catering": "Coffee and snacks",
       "signupLink": "https://forms.google.com/example",
-      "attendees": 0
+      "attendees": 0,
+      "id": "event_022"
     },
     {
-      "id": "event_023",
       "title": "Pub Crawl",
       "date": "2025-08-08",
       "time": "19:00",
       "venue": "Multiple venues",
       "type": "social",
       "description": "Semester 2 welcome pub crawl to kick off the semester with drinks and socializing!",
-      "collaborators": ["SUDATA"],
+      "collaborators": [
+        "SUDATA"
+      ],
       "catering": "Drinks",
       "signupLink": "https://forms.google.com/example",
-      "attendees": 0
+      "attendees": 0,
+      "id": "event_023"
     },
     {
-      "id": "event_024",
       "title": "Quantium Poker Night",
       "date": "2025-08-12",
       "time": "18:00",
       "venue": "TBA",
       "type": "industry",
       "description": "Poker night sponsored by Quantium. Learn poker strategy and network with professionals.",
-      "collaborators": ["SUDATA", "Quantium"],
+      "collaborators": [
+        "SUDATA",
+        "Quantium"
+      ],
       "catering": "Snacks and drinks",
       "signupLink": "https://forms.google.com/example",
-      "attendees": 0
+      "attendees": 0,
+      "id": "event_024"
     },
     {
-      "id": "event_025",
       "title": "Introduction to Data Science",
       "date": "2025-08-12",
       "time": "18:00",
       "venue": "TBA",
       "type": "academic",
       "description": "Introductory workshop for students new to data science. Perfect for beginners!",
-      "collaborators": ["SUDATA"],
+      "collaborators": [
+        "SUDATA"
+      ],
       "catering": "Pizza",
       "signupLink": "https://forms.google.com/example",
-      "attendees": 0
+      "attendees": 0,
+      "id": "event_025"
     },
     {
-      "id": "event_026",
       "title": "Speed Friending",
       "date": "2025-08-14",
       "time": "18:00",
       "venue": "BHB Seminar Room 2130 (ABS)",
       "type": "social",
       "description": "Semester 2 speed friending event to meet new members and expand your network.",
-      "collaborators": ["SUDATA"],
+      "collaborators": [
+        "SUDATA"
+      ],
       "catering": "Snacks",
       "signupLink": "https://forms.google.com/example",
-      "attendees": 0
+      "attendees": 0,
+      "id": "event_026"
     },
     {
-      "id": "event_027",
       "title": "CBA In-Office Networking Event",
       "date": "2025-08-18",
       "time": "17:00",
       "venue": "Commonwealth Bank Office",
       "type": "industry",
       "description": "Visit CBA's office for networking and insights into banking data science roles.",
-      "collaborators": ["SUDATA", "Commonwealth Bank"],
+      "collaborators": [
+        "SUDATA",
+        "Commonwealth Bank"
+      ],
       "catering": "Refreshments",
       "signupLink": "https://forms.google.com/example",
-      "attendees": 0
+      "attendees": 0,
+      "id": "event_027"
     },
     {
-      "id": "event_028",
       "title": "Movie Night with Wasabi",
       "date": "2025-08-21",
       "time": "18:00",
       "venue": "TBA",
       "type": "social",
       "description": "Collaborative movie night with Wasabi society. Popcorn and entertainment!",
-      "collaborators": ["SUDATA", "Wasabi"],
+      "collaborators": [
+        "SUDATA",
+        "Wasabi"
+      ],
       "catering": "Popcorn and snacks",
       "signupLink": "https://forms.google.com/example",
-      "attendees": 0
+      "attendees": 0,
+      "id": "event_028"
     },
     {
-      "id": "event_029",
       "title": "Coffee Catchup with Microsoft/Meta",
       "date": "2025-08-28",
       "time": "15:00",
       "venue": "TBA",
       "type": "industry",
       "description": "Coffee session with tech giants Microsoft and Meta to learn about opportunities.",
-      "collaborators": ["SUDATA", "Microsoft", "Meta"],
+      "collaborators": [
+        "SUDATA",
+        "Microsoft",
+        "Meta"
+      ],
       "catering": "Coffee",
       "signupLink": "https://forms.google.com/example",
-      "attendees": 0
+      "attendees": 0,
+      "id": "event_029"
     },
     {
-      "id": "event_030",
       "title": "Mentoring Program Orientation",
       "date": "2025-08-28",
       "time": "18:00",
       "venue": "TBA",
       "type": "academic",
       "description": "Kick-off event for SUDATA's mentoring program. Meet your mentors and mentees!",
-      "collaborators": ["SUDATA"],
+      "collaborators": [
+        "SUDATA"
+      ],
       "catering": "Light refreshments",
       "signupLink": "https://forms.google.com/example",
-      "attendees": 0
+      "attendees": 0,
+      "id": "event_030"
     },
     {
-      "id": "event_031",
       "title": "Machine Learning Workshop",
       "date": "2025-09-02",
       "time": "18:00",
       "venue": "TBA",
       "type": "academic",
       "description": "Deep dive into machine learning algorithms and practical applications.",
-      "collaborators": ["SUDATA"],
+      "collaborators": [
+        "SUDATA"
+      ],
       "catering": "Pizza and drinks",
       "signupLink": "https://forms.google.com/example",
-      "attendees": 0
+      "attendees": 0,
+      "id": "event_031"
     },
     {
-      "id": "event_032",
       "title": "Social Sports Event",
       "date": "2025-09-05",
       "time": "15:00",
       "venue": "TBA",
       "type": "social",
       "description": "Casual sports afternoon for SUDATA members. All skill levels welcome!",
-      "collaborators": ["SUDATA"],
+      "collaborators": [
+        "SUDATA"
+      ],
       "catering": "Snacks and drinks",
       "signupLink": "https://forms.google.com/example",
-      "attendees": 0
+      "attendees": 0,
+      "id": "event_032"
     },
     {
-      "id": "event_033",
-      "title": "Startup Panel Night",
-      "date": "2025-09-11",
-      "time": "18:00",
-      "venue": "TBA",
-      "type": "industry",
-      "description": "Panel discussion with startup founders about data science in entrepreneurship.",
-      "collaborators": ["SUDATA"],
-      "catering": "Light refreshments",
-      "signupLink": "https://forms.google.com/example",
-      "attendees": 0
-    },
-    {
-      "id": "event_034",
       "title": "Coffee Catchup with SUBAA",
       "date": "2025-09-11",
       "time": "15:00",
       "venue": "TBA",
       "type": "industry",
       "description": "Networking session with Sydney University Business Analytics Association.",
-      "collaborators": ["SUDATA", "SUBAA"],
+      "collaborators": [
+        "SUDATA",
+        "SUBAA"
+      ],
       "catering": "Coffee",
       "signupLink": "https://forms.google.com/example",
-      "attendees": 0
+      "attendees": 0,
+      "id": "event_033"
     },
     {
-      "id": "event_035",
+      "title": "Startup Panel Night",
+      "date": "2025-09-11",
+      "time": "18:00",
+      "venue": "TBA",
+      "type": "industry",
+      "description": "Panel discussion with startup founders about data science in entrepreneurship.",
+      "collaborators": [
+        "SUDATA"
+      ],
+      "catering": "Light refreshments",
+      "signupLink": "https://forms.google.com/example",
+      "attendees": 0,
+      "id": "event_034"
+    },
+    {
       "title": "Intern Panel",
       "date": "2025-09-18",
       "time": "18:00",
       "venue": "TBA",
       "type": "industry",
       "description": "Hear from students who completed data science internships about their experiences.",
-      "collaborators": ["SUDATA"],
+      "collaborators": [
+        "SUDATA"
+      ],
       "catering": "Snacks",
       "signupLink": "https://forms.google.com/example",
-      "attendees": 0
+      "attendees": 0,
+      "id": "event_035"
     },
     {
-      "id": "event_036",
       "title": "Ultimate Frisbee",
       "date": "2025-09-23",
       "time": "15:00",
       "venue": "The Square",
       "type": "social",
       "description": "Mentoring program social sports event playing ultimate frisbee!",
-      "collaborators": ["SUDATA"],
+      "collaborators": [
+        "SUDATA"
+      ],
       "catering": "None",
       "signupLink": "https://forms.google.com/example",
-      "attendees": 0
+      "attendees": 0,
+      "id": "event_036"
     },
     {
-      "id": "event_037",
       "title": "USYD Datathon",
       "date": "2025-09-29",
       "time": "09:00",
       "venue": "TBA",
       "type": "academic",
       "description": "Multi-day datathon competition. Solve real-world data problems and win prizes!",
-      "collaborators": ["SUDATA", "SUBAA", "CBA", "Westpac", "Quantium", "Jane Street"],
+      "collaborators": [
+        "SUDATA",
+        "SUBAA",
+        "CBA",
+        "Westpac",
+        "Quantium",
+        "Jane Street"
+      ],
       "catering": "Meals provided",
       "signupLink": "https://forms.google.com/example",
-      "attendees": 0
+      "attendees": 0,
+      "id": "event_037"
     },
     {
-      "id": "event_038",
-      "title": "DATA1002 Study Session",
-      "date": "2025-10-14",
-      "time": "18:00",
-      "venue": "TBA",
-      "type": "academic",
-      "description": "Study session to help students prepare for DATA1002 assessments.",
-      "collaborators": ["SUDATA"],
-      "catering": "Snacks",
-      "signupLink": "https://forms.google.com/example",
-      "attendees": 0
-    },
-    {
-      "id": "event_039",
-      "title": "Mahjong Society Collaboration",
-      "date": "2025-10-15",
-      "time": "16:00",
-      "venue": "TBA",
-      "type": "social",
-      "description": "Another fun mahjong session with the Mahjong Society!",
-      "collaborators": ["SUDATA", "Mahjong Society"],
-      "catering": "Snacks",
-      "signupLink": "https://forms.google.com/example",
-      "attendees": 0
-    },
-    {
-      "id": "event_040",
-      "title": "Trivia with EconSoc",
-      "date": "2025-10-17",
-      "time": "18:00",
-      "venue": "TBA",
-      "type": "social",
-      "description": "Joint trivia night with Economics Society. Test your knowledge across various topics!",
-      "collaborators": ["SUDATA", "Economics Society"],
-      "catering": "Pizza and drinks",
-      "signupLink": "https://forms.google.com/example",
-      "attendees": 0
-    },
-    {
-      "id": "event_041",
-      "title": "SUDATA Ball",
-      "date": "2025-10-23",
-      "time": "19:00",
-      "venue": "L’Aqua, Terrace Room",
-      "type": "social",
-      "description": "Join UNSW MATHSOC, SUMS and SUDATA for an unforgettable night, including a 3-course meal, UNLIMITED drinks and DJ!",
-      "collaborators": ["SUDATA", "SUMS", "UNSW MATHSOC"],
-      "catering": "Three-course dinner",
-      "signupLink": "https://events.humanitix.com/mathsoc-x-sums-x-sudata-presents-among-the-stars-annual-ball",
-      "attendees": 0
-    },
-    {
-      "id": "event_042",
-      "title": "Annual General Meeting",
-      "date": "2025-10-24",
-      "time": "16:30",
-      "venue": "BHB Lecture Theatre 1130",
-      "type": "academic",
-      "description": "Join us for the SUDATA 2025 Annual General Meeting as we wrap up an incredible year, share what we’ve accomplished, and elect the 2026 Executive Team that’ll lead SUDATA into the next chapter.",
-      "collaborators": ["SUDATA"],
-      "catering": "None",
-      "signupLink": "https://link.sudata.org/agm2025nominations",
-      "attendees": 0
-    },
-    {
-      "id": "event_043",
       "title": "BBQ Picnic",
       "date": "2025-10-13",
       "time": "12:00",
       "venue": "Victoria Park",
       "type": "social",
       "description": "Join SUEDE and SUDATA for a laid-back BBQ Picnic at Victoria Park! A perfect chance to unwind, eat good food, and meet new friends across both communities.",
-      "collaborators": ["SUDATA", "SUEDE"],
+      "collaborators": [
+        "SUDATA",
+        "SUEDE"
+      ],
       "catering": "BBQ",
       "signupLink": "https://forms.google.com/example",
-      "attendees": 0
+      "attendees": 0,
+      "id": "event_038"
     },
     {
-      "id": "event_044",
+      "title": "DATA1002 Study Session",
+      "date": "2025-10-14",
+      "time": "18:00",
+      "venue": "TBA",
+      "type": "academic",
+      "description": "Study session to help students prepare for DATA1002 assessments.",
+      "collaborators": [
+        "SUDATA"
+      ],
+      "catering": "Snacks",
+      "signupLink": "https://forms.google.com/example",
+      "attendees": 0,
+      "id": "event_039"
+    },
+    {
+      "title": "Mahjong Society Collaboration",
+      "date": "2025-10-15",
+      "time": "16:00",
+      "venue": "TBA",
+      "type": "social",
+      "description": "Another fun mahjong session with the Mahjong Society!",
+      "collaborators": [
+        "SUDATA",
+        "Mahjong Society"
+      ],
+      "catering": "Snacks",
+      "signupLink": "https://forms.google.com/example",
+      "attendees": 0,
+      "id": "event_040"
+    },
+    {
+      "title": "Trivia with EconSoc",
+      "date": "2025-10-17",
+      "time": "18:00",
+      "venue": "TBA",
+      "type": "social",
+      "description": "Joint trivia night with Economics Society. Test your knowledge across various topics!",
+      "collaborators": [
+        "SUDATA",
+        "Economics Society"
+      ],
+      "catering": "Pizza and drinks",
+      "signupLink": "https://forms.google.com/example",
+      "attendees": 0,
+      "id": "event_041"
+    },
+    {
+      "title": "SUDATA Ball",
+      "date": "2025-10-23",
+      "time": "19:00",
+      "venue": "L’Aqua, Terrace Room",
+      "type": "social",
+      "description": "Join UNSW MATHSOC, SUMS and SUDATA for an unforgettable night, including a 3-course meal, UNLIMITED drinks and DJ!",
+      "collaborators": [
+        "SUDATA",
+        "SUMS",
+        "UNSW MATHSOC"
+      ],
+      "catering": "Three-course dinner",
+      "signupLink": "https://events.humanitix.com/mathsoc-x-sums-x-sudata-presents-among-the-stars-annual-ball",
+      "attendees": 0,
+      "id": "event_042"
+    },
+    {
+      "title": "Annual General Meeting",
+      "date": "2025-10-24",
+      "time": "16:30",
+      "venue": "BHB Lecture Theatre 1130",
+      "type": "academic",
+      "description": "Join us for the SUDATA 2025 Annual General Meeting as we wrap up an incredible year, share what we’ve accomplished, and elect the 2026 Executive Team that’ll lead SUDATA into the next chapter.",
+      "collaborators": [
+        "SUDATA"
+      ],
+      "catering": "None",
+      "signupLink": "https://link.sudata.org/agm2025nominations",
+      "attendees": 0,
+      "id": "event_043"
+    },
+    {
       "title": "Mentoring Program Presentation Night",
       "date": "2025-10-28",
       "time": "18:00",
       "venue": "Law Annex Lecture Theatre 026",
       "type": "academic",
       "description": "Join us for the 2025 Mentoring Program Presentation Night, where our mentees showcase their hard work, findings, and creative data-driven solutions developed under the guidance of mentors from the Sydney Precision Data Science Centre (SPDSC).",
-      "collaborators": ["SUDATA", "SPDSC"],
+      "collaborators": [
+        "SUDATA",
+        "SPDSC"
+      ],
       "catering": "Light refreshments",
       "signupLink": "https://forms.gle/Qv22MTefFCbkDoif7",
-      "attendees": 0
+      "attendees": 0,
+      "id": "event_044"
     },
     {
-      "id": "event_045",
       "title": "Coffee Catchup with Notion",
       "date": "2025-10-30",
       "time": "11:00",
       "venue": "Jane Foss Russell Building L2",
       "type": "industry",
       "description": "Come grab a coffee, meet the Notion team, and chat all things productivity, uni life, and how to make your workspace aesthetic and efficient.",
-      "collaborators": ["SUDATA", "Notion"],
+      "collaborators": [
+        "SUDATA",
+        "Notion"
+      ],
       "catering": "Coffee",
       "signupLink": "https://campusleaders.notion.site/28bd5368c6db80cd8383f4b8ae1cf880",
-      "attendees": 0
+      "attendees": 0,
+      "id": "event_045"
     },
     {
-      "id": "event_046",
       "title": "Halloween Pub Crawl",
       "date": "2025-10-31",
       "time": "19:00",
       "venue": "Sanctuary Hotel and Shark Hotel",
       "type": "social",
       "description": "Join SUDATA & TechSoc for a spooktacular bar crawl filled with creepy cocktails, new friends, and plenty of Halloween magic.",
-      "collaborators": ["SUDATA", "UTS TechSoc"],
+      "collaborators": [
+        "SUDATA",
+        "UTS TechSoc"
+      ],
       "catering": "Drinks",
       "signupLink": "https://events.humanitix.com/usyd-sudata-x-uts-techsoc-halloween-pub-crawl",
-      "attendees": 0
+      "attendees": 0,
+      "id": "event_046"
     },
     {
-      "id": "event_047",
       "title": "DATA1002/2002 Revision Session",
       "date": "2025-11-13",
       "time": "11:00",
       "venue": "Carslaw Lecture Theatres 157-257 and 159-259",
       "type": "academic",
       "description": "STUVAC revision session for DATA1002 and DATA2002 final exam preparation.",
-      "collaborators": ["SUDATA"],
+      "collaborators": [
+        "SUDATA"
+      ],
       "catering": "Lunch and Snacks",
       "signupLink": "https://docs.google.com/forms/d/e/1FAIpQLSdOQ6QU7fPNe9oa4mItcof9UH8VsgHTjxPJp3uWLmr9d9mv5w/viewform",
-      "attendees": 0
+      "attendees": 0,
+      "id": "event_047"
+    },
+    {
+      "title": "Welcome Week 2026",
+      "date": "2026-02-23",
+      "time": "18:00",
+      "venue": "TBA",
+      "type": "social",
+      "description": "Kick off 2026 with new members!",
+      "collaborators": [
+        "SUDATA"
+      ],
+      "catering": "Pizza and drinks",
+      "signupLink": "https://forms.google.com/example",
+      "attendees": 0,
+      "id": "event_048"
+    },
+    {
+      "title": "Data Science Workshop 2026",
+      "date": "2026-03-10",
+      "time": "18:00",
+      "venue": "TBA",
+      "type": "academic",
+      "description": "Advanced data science techniques for 2026.",
+      "collaborators": [
+        "SUDATA"
+      ],
+      "catering": "Snacks",
+      "signupLink": "https://forms.google.com/example",
+      "attendees": 0,
+      "id": "event_049"
     }
   ]
 }

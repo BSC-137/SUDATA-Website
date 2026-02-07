@@ -2,11 +2,7 @@
 
 A retro-styled, neon-themed events calendar for your data science society website, built with Astro and React.
 
-## 📦 What's Included
-
-This package contains everything you need to add a fully functional events calendar to your SUDATA website:
-
-### Files to Add to Your Repository
+### Repository structure fo Events calendar
 
 ```
 src/
@@ -15,14 +11,13 @@ src/
 │   └── EventModal.jsx          # Event detail modal popup
 ├── data/
 │   └── events.json             # All your event data (14 placeholder events)
-└── pages/
+├── pages/
     └── events.astro            # Events calendar page
+|
+├── convertExcelToJson.py       # `python3 convertExcelToJson.py events_template.xlsx src/data/events.json` (excel -> json)
+├── createMultiYearTemplate.py  # `python3 createMultiYearTemplate.py events_copy.json events_template.xlsx` (json -> excel in python)
+└── events_template.xlsx        # Excel template for SUDATA directors to fill in their event details of the year 
 ```
-
-### Documentation Files
-- `SETUP_INSTRUCTIONS.md` - Step-by-step setup guide
-- `EVENT_DATA_TEMPLATE.md` - Template for adding events from Google Doc
-- `README.md` - This file
 
 ## 🎨 Design Features
 
@@ -42,48 +37,16 @@ Your events calendar maintains the SUDATA design system:
 
 ## 🚀 Quick Start
 
-### 1. Copy Files to Your Repo
+### 1. Fill in Your Event Data
 
-```bash
-# Navigate to your SUDATA-Website repo
-cd SUDATA-Website
+Open `events_template.xlsx` and add SUDATA events.
 
-# Copy component files
-cp EventCalendar.jsx src/components/
-cp EventModal.jsx src/components/
-
-# Copy data file
-mkdir -p src/data
-cp events.json src/data/
-
-# Copy page file
-cp events.astro src/pages/
-```
-
-### 2. Add Navigation Link
-
-In `src/layouts/Layout.astro`, add the Events Calendar link to your header navigation:
-
-```astro
-<a 
-  href="/events"
-  class="text-[#94a3b8] hover:text-[#00F0FF] transition-colors duration-300"
->
-  Events Calendar
-</a>
-```
-
-### 3. Fill in Your Event Data
-
-Open `src/data/events.json` and replace placeholder events with your actual 2025 events from your Google Doc. Use the template in `EVENT_DATA_TEMPLATE.md`.
-
-### 4. Test It Out
+### 2. Test It Out
 
 ```bash
 npm run dev
 ```
-
-Navigate to `http://localhost:4321/events` to see your calendar!
+Navigate to `http://localhost:4321/events` to see your calendar.
 
 ## 📝 Adding Your Events
 

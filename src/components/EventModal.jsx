@@ -40,6 +40,97 @@ const EventModal = ({ event, onClose }) => {
     });
   };
 
+  /**
+   * Generate ICS file content for calendar import
+   */
+  const generateICS = () => {
+    // Parse date and time
+    const [year, month, day] = event.date.split('-').map(Number);
+    const [hours, minutes] = event.time.split(':').map(Number);
+    
+    // Create start date object
+    const startDate = new Date(year, month - 1, day, hours, minutes);
+    
+    // Assume 1 hour duration if not specified
+    const endDate = new Date(startDate.getTime() + 60 * 60 * 1000);
+    
+    // Format dates for ICS (YYYYMMDDTHHMMSS)
+    const formatICSDate = (date) => {
+      const pad = (num) => String(num).padStart(2, '0');
+      return `${date.getFullYear()}${pad(date.getMonth() + 1)}${pad(date.getDate())}T${pad(date.getHours())}${pad(date.getMinutes())}${pad(date.getSeconds())}`;
+    };
+    
+    const dtstart = formatICSDate(startDate);
+    const dtend = formatICSDate(endDate);
+    const dtstamp = formatICSDate(new Date());
+    
+    // Generate unique ID
+    const uid = `${event.id}@sudata.org`;
+    
+    // Escape special characters in text fields
+    const escapeICS = (text) => {
+      if (!text) return '';
+      return text.replace(/\\/g, '\\\\')
+                 .replace(/;/g, '\\;')
+                 .replace(/,/g, '\\,')
+                 .replace(/\n/g, '\\n');
+    };
+    
+    // Build description
+    let description = escapeICS(event.description);
+    if (event.collaborators && event.collaborators.length > 0) {
+      description += `\\n\\nCollaborators: ${event.collaborators.join(', ')}`;
+    }
+    if (event.catering && event.catering !== 'None') {
+      description += `\\n\\nCatering: ${event.catering}`;
+    }
+    description += `\\n\\nSign up: ${event.signupLink}`;
+    
+    // ICS content
+    const icsContent = [
+      'BEGIN:VCALENDAR',
+      'VERSION:2.0',
+      'PRODID:-//SUDATA//Events Calendar//EN',
+      'CALSCALE:GREGORIAN',
+      'METHOD:PUBLISH',
+      'BEGIN:VEVENT',
+      `UID:${uid}`,
+      `DTSTAMP:${dtstamp}`,
+      `DTSTART:${dtstart}`,
+      `DTEND:${dtend}`,
+      `SUMMARY:${escapeICS(event.title)}`,
+      `DESCRIPTION:${description}`,
+      `LOCATION:${escapeICS(event.venue)}`,
+      `CATEGORIES:${event.type.toUpperCase()}`,
+      'STATUS:CONFIRMED',
+      'SEQUENCE:0',
+      'END:VEVENT',
+      'END:VCALENDAR'
+    ].join('\r\n');
+    
+    return icsContent;
+  };
+
+  /**
+   * Download ICS file
+   */
+  const downloadICS = () => {
+    const icsContent = generateICS();
+    const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    
+    // Create filename from event title and date
+    const filename = `${event.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_${event.date}.ics`;
+    link.download = filename;
+    
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <div 
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
@@ -176,8 +267,8 @@ const EventModal = ({ event, onClose }) => {
           </div>
         )}
 
-        {/* Sign Up Button */}
-        <div className="flex gap-4">
+        {/* Action Buttons */}
+        <div className="flex flex-col sm:flex-row gap-4">
           <a
             href={event.signupLink}
             target="_blank"
@@ -188,6 +279,19 @@ const EventModal = ({ event, onClose }) => {
           >
             View Sign-Up Form
           </a>
+          
+          <button
+            onClick={downloadICS}
+            className="px-6 py-4 rounded-lg bg-[#FF00FF]/20 border-2 border-[#FF00FF]/50 text-[#FF00FF] font-bold
+                     hover:bg-[#FF00FF]/30 hover:border-[#FF00FF] hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2"
+            style={{ boxShadow: '0 0 20px rgba(255,0,255,0.3)' }}
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style={{ imageRendering: 'pixelated' }}>
+              <path d="M19 3H18V1H16V3H8V1H6V3H5C3.89 3 3 3.9 3 5V19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3ZM19 19H5V9H19V19ZM19 7H5V5H19V7Z" />
+            </svg>
+            Add to Calendar
+          </button>
+          
           <button
             onClick={onClose}
             className="px-6 py-4 rounded-lg bg-[#00F0FF]/10 border-2 border-[#00F0FF]/30 text-[#00F0FF] font-bold
