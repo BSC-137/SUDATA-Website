@@ -1,6 +1,18 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import ExecutiveCarousel from '../components/ExecutiveCarousel.jsx';
+import InteractivePieChart from '../components/InteractivePieChart.jsx';
+import { processChartData } from '../utils/processChartData.js';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+
+// Get the directory path and construct CSV path
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const csvPath = join(__dirname, '../../public/society_data/sudata_members_cleaned.csv');
+
+// Load and process CSV data
+const { majorData, degreeData, genderData, ethnicityData } = processChartData(csvPath);
 ---
 
 <Layout title="About | SUDATA">
@@ -96,59 +108,43 @@ import ExecutiveCarousel from '../components/ExecutiveCarousel.jsx';
 					Diversity is our strength. Meet the vibrant community of SUDATA members.
 				</p>
 				
-				<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-8 auto-rows-fr">
 					<!-- Major Distribution -->
-					<div class="space-y-3">
-						<div class="font-mono-tech text-sudata-neon/90 text-xs tracking-[0.2em]">
-							FIELD_DISTRIBUTION
-						</div>
-						<img 
-							src="/society_data/major.png" 
-							alt="Major Distribution" 
-							class="w-full h-auto rounded-lg border border-sudata-neon/20 hover:border-sudata-neon/50 transition-all duration-300"
+					<div class="h-[580px]">
+						<InteractivePieChart 
+							data={majorData} 
+							title="FIELD_DISTRIBUTION" 
+							client:visible 
 						/>
 					</div>
 
 					<!-- Degree Level -->
-					<div class="space-y-3">
-						<div class="font-mono-tech text-sudata-neon/90 text-xs tracking-[0.2em]">
-							DEGREE_LEVEL
-						</div>
-						<img 
-							src="/society_data/degree_standardised.png" 
-							alt="Degree Level Distribution" 
-							class="w-full h-auto rounded-lg border border-sudata-neon/20 hover:border-sudata-neon/50 transition-all duration-300"
+					<div class="h-[580px]">
+						<InteractivePieChart 
+							data={degreeData} 
+							title="DEGREE_DISTRIBUTION" 
+							client:visible 
 						/>
 					</div>
 
 					<!-- Gender Balance -->
-					<div class="space-y-3">
-						<div class="font-mono-tech text-sudata-neon/90 text-xs tracking-[0.2em]">
-							GENDER_BALANCE
-						</div>
-						<img 
-							src="/society_data/gender.png" 
-							alt="Gender Distribution" 
-							class="w-full h-auto rounded-lg border border-sudata-neon/20 hover:border-sudata-neon/50 transition-all duration-300"
+					<div class="h-[580px]">
+						<InteractivePieChart 
+							data={genderData} 
+							title="GENDER_BALANCE" 
+							client:visible 
 						/>
 					</div>
 
 					<!-- Ethnicity Diversity -->
-					<div class="space-y-3">
-						<div class="font-mono-tech text-sudata-neon/90 text-xs tracking-[0.2em]">
-							ETHNICITY_DIVERSITY
-						</div>
-						<img 
-							src="/society_data/ethnicity.png" 
-							alt="Ethnicity Distribution" 
-							class="w-full h-auto rounded-lg border border-sudata-neon/20 hover:border-sudata-neon/50 transition-all duration-300"
+					<div class="h-[580px]">
+						<InteractivePieChart 
+							data={ethnicityData} 
+							title="ETHNICITY_DIVERSITY" 
+							client:visible 
 						/>
 					</div>
 				</div>
-				
-				<p class="text-sudata-grey/60 font-mono-tech text-xs italic mt-6 text-right">
-					*Note: Data is accurate as of 2025 Industry Networking Night.
-				</p>
 			</div>
 		</section>
 
