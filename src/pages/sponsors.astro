@@ -1,0 +1,229 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SponsorCard from '../components/SponsorCard.jsx';
+import PackageCard from '../components/PackageCard.jsx';
+import PastPartnersCarousel from '../components/PastPartnersCarousel.jsx';
+import CopyEmailButton from '../components/CopyEmailButton.jsx';
+---
+
+<Layout title="Sponsors | SUDATA">
+	<div class="flex flex-col w-full max-w-6xl mx-auto space-y-24 pt-32 pb-24 px-4">
+		<!-- Page title -->
+		<header class="reveal-on-scroll text-center space-y-4">
+			<h1 class="text-4xl md:text-6xl font-bold text-sudata-neon tracking-widest neon-text-shadow font-mono-tech">
+				OUR SPONSORS
+			</h1>
+			<p class="text-sudata-grey font-mono-tech text-lg tracking-wide">
+				[ Powering the Next Generation of Data Leaders ]
+			</p>
+		</header>
+
+		<!-- [SECTION: 2026_SPONSORS] -->
+		<section class="reveal-on-scroll terminal-block scanline-overlay p-8 md:p-12">
+			<div class="relative z-10">
+				<div class="font-mono-tech text-sudata-neon/80 text-sm tracking-[0.2em] mb-6 flex items-center gap-2">
+					<span class="animate-flicker">&gt;_</span>
+					<span>[SECTION: 2026_SPONSORS]</span>
+				</div>
+				<h2 class="text-2xl md:text-3xl font-bold text-white font-mono-tech tracking-widest mb-8">
+					2026 Strategic Partners
+				</h2>
+				
+				<div class="space-y-6">
+					<SponsorCard 
+						name="Jane Street"
+						tier="Industry Partner"
+						url="https://www.janestreet.com"
+						description="A quantitative trading firm and liquidity provider with a focus on technology and collaborative problem solving. Jane Street leads the frontier in applying functional programming and rigorous analytical thinking to global markets."
+						logoWhite="/sponsors/jane-street-white.png"
+						logoColor="/sponsors/jane-street-color.png"
+						client:visible
+					/>
+					
+					<SponsorCard 
+						name="Atlassian"
+						tier="Standard Sponsor"
+						url="https://www.atlassian.com"
+						description="The enterprise software powerhouse behind Jira, Confluence, and Trello. Atlassian builds collaboration tools that help teams organize, discuss, and complete shared work at scale across every industry."
+						logoWhite="/sponsors/atlassian-white.png"
+						logoColor="/sponsors/atlassian-color.png"
+						client:visible
+					/>
+					
+					<SponsorCard 
+						name="Westpac"
+						tier="Standard Sponsor"
+						url="https://www.westpac.com.au"
+						description="Australia's first bank and a leader in financial services innovation. Westpac is driving the future of banking through data analytics, machine learning, and customer-centric digital transformation."
+						logoWhite="/sponsors/westpac-white.png"
+						logoColor="/sponsors/westpac-color.png"
+						client:visible
+					/>
+					
+					<SponsorCard 
+						name="IMC Trading"
+						tier="Standard Sponsor"
+						url="https://www.imc.com"
+						description="A leading global trading firm and market maker, powered by advanced algorithms and cutting-edge technology. IMC combines deep quantitative research with high-performance engineering to provide liquidity across all major financial markets."
+						logoWhite="/sponsors/imc-trading-white.png"
+						logoColor="/sponsors/imc-trading-color.webp"
+						client:visible
+					/>
+				</div>
+			</div>
+		</section>
+
+		<!-- [SECTION: WHY_PARTNER] -->
+		<section class="reveal-on-scroll terminal-block scanline-overlay p-8 md:p-12">
+			<div class="relative z-10">
+				<div class="font-mono-tech text-sudata-neon/80 text-sm tracking-[0.2em] mb-6 flex items-center gap-2">
+					<span class="animate-flicker">_</span>
+					<span>[SECTION: WHY_PARTNER]</span>
+				</div>
+				<h2 class="text-2xl md:text-3xl font-bold text-white font-mono-tech tracking-widest mb-6">
+					Why Partner With SUDATA?
+				</h2>
+				<div class="space-y-4 text-sudata-grey font-mono-tech text-base md:text-lg leading-relaxed">
+					<p>
+						We are the <span class="text-sudata-neon">direct pipeline</span> to Sydney's most ambitious analytical minds. Our 2,000+ active members span Computer Science, Engineering, Mathematics, Finance, and beyond—united by a shared drive to master the technologies defining the next decade.
+					</p>
+					<p>
+						Through SUDATA, you gain access to <span class="text-white">high-potential talent</span> who combine technical ability with commercial awareness. We don't just teach theory; we cultivate problem-solvers ready to tackle real-world challenges from day one.
+					</p>
+					<p>
+						Our partnerships are built on <span class="text-sudata-neon">flexibility and impact</span>. Whether you're looking to lead technical workshops, host competitions, or build a sustained recruitment presence, we design engagements that create genuine value for your organization and our students.
+					</p>
+				</div>
+			</div>
+		</section>
+
+		<!-- [SECTION: PACKAGES] -->
+		<section class="reveal-on-scroll terminal-block scanline-overlay p-8 md:p-12">
+			<div class="relative z-10">
+				<div class="font-mono-tech text-sudata-neon/80 text-sm tracking-[0.2em] mb-6 flex items-center gap-2">
+					<span class="animate-flicker">_</span>
+					<span>[SECTION: PARTNERSHIP_PACKAGES]</span>
+				</div>
+				<h2 class="text-2xl md:text-3xl font-bold text-white font-mono-tech tracking-widest mb-8">
+					Partnership Packages
+				</h2>
+				
+				<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+					<PackageCard 
+						name="Industry Partner"
+						price="$2,000"
+						tagline="Maximum Brand Integration"
+						highlights={[
+							"Dedicated Account Manager",
+							"Year-round marketing access",
+							"Exclusive bespoke event per semester",
+							"Guaranteed thought leadership spots",
+							"VIP access to all SUDATA events",
+							"Premier brand placement"
+						]}
+						client:visible
+					/>
+					
+					<PackageCard 
+						name="Technical Excellence"
+						price="$1,250"
+						tagline="Showcase Your Engineering Culture"
+						highlights={[
+							"Guaranteed judging position in major competition",
+							"Dedicated technical workshop slot",
+							"Thought leadership seminar opportunity",
+							"Two marketing features across channels",
+							"Access to Datathons & Case Competitions"
+						]}
+						client:visible
+					/>
+					
+					<PackageCard 
+						name="Talent Pipeline"
+						price="$1,250"
+						tagline="Drive Your Recruitment Strategy"
+						highlights={[
+							"Comprehensive recruitment campaign (6 Instagram posts)",
+							"'Pathways in Data' industry spotlight",
+							"Newsletter feature & brand placement",
+							"Direct access to penultimate year students",
+							"Priority logo placement"
+						]}
+						client:visible
+					/>
+				</div>
+
+				<div class="mt-12 text-center">
+					<p class="text-sudata-grey font-mono-tech text-sm mb-6">
+						All sponsors receive: Free introductory post • Invitation to Careers in Data Science • Brand on website
+					</p>
+					<div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-6">
+						<a 
+							href="/SUDATA_Sponsorships_Prospectus_2026.pdf" 
+							download="SUDATA_Sponsorships_Prospectus_2026.pdf"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="group relative px-8 py-3 bg-transparent border-2 border-sudata-neon text-sudata-neon font-mono-tech tracking-wider hover:bg-sudata-neon/10 transition-all duration-300 flex items-center gap-2"
+						>
+							<span>DOWNLOAD PROSPECTUS</span>
+							<svg class="w-4 h-4 group-hover:translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10" />
+							</svg>
+						</a>
+						<a 
+							href="mailto:sponsorships@sudata.org?subject=Partnership%20Inquiry%20-%20SUDATA%202026"
+							class="group relative px-8 py-3 bg-sudata-neon text-black font-mono-tech font-bold tracking-wider hover:bg-sudata-neon/90 transition-all duration-300 flex items-center gap-2"
+						>
+							<span>GET IN TOUCH</span>
+							<svg class="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+							</svg>
+						</a>
+					</div>
+					<div class="flex justify-center">
+						<CopyEmailButton client:visible />
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- [SECTION: PAST_PARTNERS] -->
+		<section class="reveal-on-scroll w-full">
+			<div class="font-mono-tech text-sudata-neon/80 text-sm tracking-[0.2em] mb-6 flex justify-center gap-2">
+				<span class="animate-flicker">_</span>
+				<span>[SECTION: LEGACY_PARTNERS]</span>
+			</div>
+			<h2 class="text-2xl md:text-3xl font-bold text-white font-mono-tech tracking-widest mb-4 text-center">
+				Our Network
+			</h2>
+			<p class="text-sudata-grey font-mono-tech text-sm md:text-base tracking-wide text-center mb-10 max-w-2xl mx-auto">
+				Companies, speakers, and partners who have collaborated with SUDATA to shape the future of data science.
+			</p>
+			<PastPartnersCarousel client:visible />
+		</section>
+
+		<!-- [FOOTER: CALL_TO_ACTION] -->
+		<footer class="reveal-on-scroll terminal-block scanline-overlay p-8 md:p-12">
+			<div class="relative z-10 text-center">
+				<div class="font-mono-tech text-sudata-neon/80 text-sm tracking-[0.2em] mb-6 flex items-center justify-center gap-2">
+					<span>// BUILD_THE_FUTURE_TOGETHER</span>
+				</div>
+				<h3 class="text-xl md:text-2xl font-bold text-white font-mono-tech tracking-wider mb-4">
+					Ready to Connect With Tomorrow's Data Leaders?
+				</h3>
+				<p class="text-sudata-grey font-mono-tech text-base max-w-2xl mx-auto mb-8">
+					Join the organizations shaping the next generation of analytical thinkers. Partner with SUDATA to access Sydney's brightest minds and drive real impact.
+				</p>
+				<div class="flex flex-col items-center gap-4">
+					<a 
+						href="mailto:sponsorships@sudata.org?subject=Sponsorship%20Inquiry%20-%20SUDATA%202026&body=Hi%20SUDATA%20Team%2C%0A%0AI'm%20interested%20in%20learning%20more%20about%20sponsorship%20opportunities%20for%202026.%0A%0AThank%20you!"
+						class="inline-block px-10 py-4 bg-sudata-neon text-black font-mono-tech font-bold tracking-wider hover:bg-sudata-neon/90 transition-all duration-300 text-lg"
+					>
+						BECOME A SPONSOR
+					</a>
+					<CopyEmailButton client:visible />
+				</div>
+			</div>
+		</footer>
+	</div>
+</Layout>
