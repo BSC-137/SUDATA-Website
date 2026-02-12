@@ -130,7 +130,7 @@ const EventCalendar = ({ events }) => {
   return (
     <div className="space-y-8">
       {/* Filters */}
-      <div className="flex flex-wrap justify-center gap-4">
+      <div className="reveal-on-scroll flex flex-wrap justify-center gap-4">
         {Object.entries(filterConfig).map(([type, config]) => (
           <button
             key={type}
@@ -158,7 +158,7 @@ const EventCalendar = ({ events }) => {
       </div>
 
       {/* Year Selector - Current Year + Archive Dropdown */}
-      <div className="flex justify-center items-center gap-4">
+      <div className="reveal-on-scroll flex justify-center items-center gap-4">
         <button
           onClick={() => {
             setSelectedYear(currentYear);
@@ -219,7 +219,7 @@ const EventCalendar = ({ events }) => {
       </div>
 
       {/* Month Navigation */}
-      <div className="flex items-center justify-between max-w-2xl mx-auto">
+      <div className="reveal-on-scroll flex items-center justify-between max-w-2xl mx-auto">
         <button
           onClick={() => {
             if (selectedMonth === 0) {
@@ -274,7 +274,7 @@ const EventCalendar = ({ events }) => {
       </div>
 
       {/* Calendar Grid */}
-      <div className="bg-[#020617] rounded-2xl border border-[#00F0FF]/20 p-6 backdrop-blur-2xl"
+      <div className="reveal-on-scroll bg-[#020617] rounded-2xl border border-[#00F0FF]/20 p-6 backdrop-blur-2xl"
            style={{ boxShadow: '0 0 40px rgba(0,240,255,0.1)' }}>
         {/* Day Headers */}
         <div className="grid grid-cols-7 gap-2 mb-4">
