@@ -25,12 +25,45 @@ const eventsData = JSON.parse(readFileSync(eventsPath, 'utf-8'));
             Events Calendar
           </span>
         </h1>
-        <p class="text-xl text-[#94a3b8] max-w-3xl mx-auto mb-3">
-          Explore SUDATA events across multiple years. Filter by type and dive into past workshops, social mixers, and industry collaborations.
+        <p class="text-[#94a3b8] font-mono-tech text-lg tracking-wide mb-6">
+          [ Temporal Data Stream ]
         </p>
-        <p class="text-sm text-[#94a3b8]/80 max-w-2xl mx-auto">
-          Click on any event to view full details and sign-up information. Use the filters to find events that match your interests.
-        </p>
+        
+        <!-- Navigation Protocol Section -->
+        <div class="reveal-on-scroll terminal-block scanline-overlay p-8 max-w-3xl mx-auto mb-8">
+          <div class="relative z-10">
+            <div class="font-mono-tech text-sudata-neon/80 text-sm tracking-[0.2em] mb-4 flex items-center gap-2">
+              <span class="animate-flicker">&gt;_</span>
+              <span>[SECTION: NAVIGATION_PROTOCOL]</span>
+            </div>
+            <h2 class="text-xl font-bold text-white font-mono-tech tracking-widest mb-4 text-left">
+              Interface Guide
+            </h2>
+            <div class="text-sudata-grey font-mono-tech text-sm leading-relaxed space-y-3 text-left">
+              <p>
+                Navigate through SUDATA's temporal event stream spanning multiple years. The calendar interface allows you to filter events by type—whether you're hunting for technical workshops, social mixers, or industry networking opportunities.
+              </p>
+              <div class="text-sudata-neon/70 text-xs tracking-wider space-y-1">
+                <div class="flex items-start gap-2">
+                  <span class="text-sudata-neon mt-0.5">&gt;</span>
+                  <span>Click any event card to expand full details and registration info</span>
+                </div>
+                <div class="flex items-start gap-2">
+                  <span class="text-sudata-neon mt-0.5">&gt;</span>
+                  <span>Use category filters to isolate event types</span>
+                </div>
+                <div class="flex items-start gap-2">
+                  <span class="text-sudata-neon mt-0.5">&gt;</span>
+                  <span>Scroll through past archives or upcoming sessions</span>
+                </div>
+                <div class="flex items-start gap-2">
+                  <span class="text-sudata-neon mt-0.5">&gt;</span>
+                  <span>All timestamps synced to local timezone</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
