@@ -4,12 +4,17 @@ import AlbumCarousel from "../components/AlbumCarousel.astro";
 import { loadAlbum } from "../lib/albums";
 
 // For some reason we need to add every other file ext?? Doesn't show image otherwise
-const innGlob = import.meta.glob("../assets/albums/inn-temp/*.{jpg,jpeg,png,webp,avif}", {
+const innGlob = import.meta.glob("../assets/albums/inn/*.{jpg,jpeg,png,webp,avif}", {
   eager: true,
   import: "default",
 });
 
-const ballGlob = import.meta.glob("../assets/albums/ball-temp/*.{jpg,jpeg,png,webp,avif}", {
+const ballGlob = import.meta.glob("../assets/albums/ball/*.{jpg,jpeg,png,webp,avif}", {
+  eager: true,
+  import: "default",
+});
+
+const startupGlob = import.meta.glob("../assets/albums/startup/*.{jpg,jpeg,png,webp,avif}", {
   eager: true,
   import: "default",
 });
@@ -22,7 +27,13 @@ const albums = [
     link: "https://photos.app.goo.gl/sPAGscihAqiscHNU6"
   },
   {
-    name: "SUDATA x SUMATH x UNSWMATH Ball 2025",
+    name: "Startup Night",
+    date: "Sept 2025",
+    images: loadAlbum(startupGlob, "Startup Night"),
+    link: "https://photos.app.goo.gl/Ts9CYAZnoeQV1dsS9"
+  },
+  {
+    name: "SUDATA x SUMATH x UNSWMATH Ball '25",
     date: "Oct 2025",
     images: loadAlbum(ballGlob, "Ball 2025"),
     link: "https://photos.app.goo.gl/KkFssZJXDh3iFj2M9"
