@@ -13,6 +13,159 @@
 }
 
 @layer components {
+
+  /* retro glutch effect on SUDATA text on navbar */
+  .logo-glitch {
+    position: relative;
+    display: inline-block;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: rgba(255,255,255,0.95);
+    text-decoration: none;
+    transition: color 200ms ease;
+  }
+
+  .logo-glitch:hover {
+    /* kinda like the sudata cyan? tweak if others don't like */
+    color: rgba(0, 255, 255, 0.95);
+  }
+
+  .logo-text {
+    position: relative;
+    display: inline-block;
+    padding: 2px 0;
+    will-change: transform, filter;
+  }
+
+  /* make stronger glow on hover */
+  .logo-glitch:hover .logo-text {
+    text-shadow:
+      0 0 10px rgba(0,255,255,0.35),
+      0 0 24px rgba(0,255,255,0.20);
+  }
+
+  .logo-text::before,
+  .logo-text::after {
+    content: attr(data-text);
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    mix-blend-mode: screen;
+  }
+
+  .logo-text::before {
+    /* cyan colour */
+    color: rgba(0, 255, 255, 0.95);
+    transform: translate(0, 0);
+  }
+
+  .logo-text::after {
+    /* pink kinda magenta ish colour */
+    color: rgba(255, 0, 200, 0.85);
+    transform: translate(0, 0);
+  }
+
+  /* scanline overlay */
+  .logo-glitch::after {
+    content: "";
+    position: absolute;
+    left: -10%;
+    right: -10%;
+    top: 0;
+    height: 2px;
+    opacity: 0;
+    background: linear-gradient(90deg,
+      transparent,
+      rgba(0,255,255,0.8),
+      transparent
+    );
+    filter: blur(0.2px);
+    pointer-events: none;
+  }
+
+  /* hover animations */
+  .logo-glitch:hover .logo-text::before {
+    opacity: 0.9;
+    animation: sudata-glitch-shift 650ms steps(2, end) infinite;
+  }
+
+  .logo-glitch:hover .logo-text::after {
+    opacity: 0.7;
+    animation: sudata-glitch-shift 500ms steps(2, end) infinite reverse;
+  }
+
+  .logo-glitch:hover .logo-text {
+    animation:
+      sudata-jitter 900ms steps(2, end) infinite,
+      sudata-flicker 1.4s linear infinite;
+  }
+
+  /* moving scanline */
+  .logo-glitch:hover::after {
+    opacity: 0.9;
+    /* tweak for time it takes to travel down, lower is faster */
+    animation: sudata-scan 900ms linear infinite;
+  }
+
+  /* a cool hue rotation, remove if others don't like*/
+  .logo-glitch:hover .logo-text {
+    filter: hue-rotate(0deg);
+    animation:
+      sudata-jitter 900ms steps(2, end) infinite,
+      sudata-flicker 1.4s linear infinite,
+      sudata-hue 2.2s linear infinite;
+  }
+
+  @keyframes sudata-glitch-shift {
+    0%   { transform: translate(1px, -1px); clip-path: inset(0 0 70% 0); }
+    20%  { transform: translate(-2px, 0px); clip-path: inset(10% 0 45% 0); }
+    40%  { transform: translate(2px, 1px); clip-path: inset(35% 0 20% 0); }
+    60%  { transform: translate(-1px, 1px); clip-path: inset(55% 0 10% 0); }
+    80%  { transform: translate(2px, -1px); clip-path: inset(15% 0 55% 0); }
+    100% { transform: translate(0px, 0px); clip-path: inset(0 0 0 0); }
+  }
+
+  @keyframes sudata-jitter {
+    0%, 100% { transform: translate(0,0); }
+    10% { transform: translate( -.5px,  0px ); }
+    20% { transform: translate(  .5px, -.5px ); }
+    30% { transform: translate( -.5px,  .5px ); }
+    40% { transform: translate(  1px,  0px ); }
+    50% { transform: translate( -.5px, -.5px ); }
+    60% { transform: translate(  .5px,  .5px ); }
+    70% { transform: translate( -1px,  0px ); }
+    80% { transform: translate(  1px, -1px ); }
+    90% { transform: translate( -.5px,  .5px ); }
+  }
+
+  @keyframes sudata-flicker {
+    0%, 100% { opacity: 1; }
+    92% { opacity: 0.95; }
+    94% { opacity: 0.75; }
+    96% { opacity: 0.98; }
+    98% { opacity: 0.85; }
+  }
+
+  @keyframes sudata-scan {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(1.6em); }
+  }
+
+  @keyframes sudata-hue {
+    0% { filter: hue-rotate(0deg); }
+    100% { filter: hue-rotate(360deg); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .logo-glitch:hover .logo-text,
+    .logo-glitch:hover .logo-text::before,
+    .logo-glitch:hover .logo-text::after,
+    .logo-glitch:hover::after {
+      animation: none !important;
+    }
+  }
+
   .pixel-trail {
     @apply fixed w-1 h-1 bg-sudata-neon pointer-events-none z-[100];
     animation: fadeOut 0.8s forwards;
