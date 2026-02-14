@@ -1,0 +1,440 @@
+---
+import { Image } from "astro:assets";
+
+type Props = {
+  title?: string;
+  description?: string;
+  images: Array<{ src: any; alt?: string }>;
+  height?: number;
+  crtWarp?: number;
+  crtEdge?: number;
+  scanStrength?: number;
+};
+
+const {
+  title = "",
+  description = "Tap to view!",
+  images,
+  height = 420,
+  crtWarp = 0.28,
+  crtEdge = 0.45,
+  scanStrength = 0.35,
+} = Astro.props;
+
+const uid = `carousel-${Math.random().toString(36).slice(2)}`;
+---
+
+<div class="album-shell">
+  <div
+    class="album-card w-full max-w-3xl rounded-2xl"
+    id={uid}
+    data-carousel-root
+    style={`--crt-warp:${crtWarp}; --crt-edge:${crtEdge}; --scan-strength:${scanStrength};`}
+  >
+    <div class="relative crt-container">
+      <div class="crt-stage">
+        <div class="carousel" style={`height:${height}px`} data-carousel>
+          {images.map((img, i) => (
+            <div class="slide" data-slide>
+              <Image
+                src={img.src}
+                alt={img.alt ?? ""}
+                loading={i === 0 ? "eager" : "lazy"}
+                decoding="async"
+                class="h-full w-full object-contain"
+                widths={[640, 800, 1200, 1600]}
+                sizes="(max-width: 768px) 100vw, 768px"
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <button class="nav left" type="button" data-prev aria-label="Previous">‹</button>
+      <button class="nav right" type="button" data-next aria-label="Next">›</button>
+
+      <div class="dots" data-dots>
+        <span class="dot-indicator" aria-hidden="true">
+          <span class="dot-indicator-dot"></span>
+        </span>
+
+        {images.map((_, i) => (
+          <button class="dot" type="button" data-dot={i} aria-label={`Go to slide ${i + 1}`} />
+        ))}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .album-shell {
+    position: relative;
+  }
+
+  .album-card {
+    --sudata-neon: 0, 240, 255;
+    --sudata-navy: 2, 6, 23;
+    --sudata-grey: 148, 163, 184;
+    --dot-size: 8px;
+    --ease-mech: cubic-bezier(0.16, 1, 0.3, 1);
+
+    border: 1px solid rgba(var(--sudata-neon), 0.22);
+    background: rgba(var(--sudata-navy), 0.55);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.05) inset,
+      0 0 26px rgba(var(--sudata-neon), 0.14),
+      0 0 80px rgba(var(--sudata-neon), 0.08);
+
+    transform: translateY(0) scale(1);
+    transition:
+      transform 900ms var(--ease-mech),
+      box-shadow 900ms var(--ease-mech),
+      border-color 600ms var(--ease-mech);
+    will-change: transform, box-shadow;
+
+    position: relative;
+    isolation: isolate;
+  }
+
+  .album-card:hover {
+    transform: translateY(-6px) scale(1.01);
+    border-color: rgba(var(--sudata-neon), 0.38);
+    box-shadow:
+      0 0 0 1px rgba(var(--sudata-neon), 0.14) inset,
+      0 0 38px rgba(var(--sudata-neon), 0.22),
+      0 0 120px rgba(var(--sudata-neon), 0.12);
+  }
+
+  .crt-container {
+    overflow: hidden;
+    border-radius: 1rem;
+  }
+
+  .crt-stage {
+    position: relative;
+    z-index: 0;
+  }
+
+  .crt-stage::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+    
+    box-shadow: 
+      inset 0 0 calc(var(--crt-warp) * 150px) calc(var(--crt-warp) * 80px) rgba(0, 0, 0, 0.6),
+      inset 0 0 calc(var(--crt-warp) * 100px) calc(var(--crt-warp) * 50px) rgba(0, 0, 0, 0.4);
+    
+    border-radius: calc(var(--crt-warp) * 60px);
+  }
+
+  .crt-stage::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 3;
+
+    background: repeating-linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.10) 0px,
+      rgba(255, 255, 255, 0.10) 3px,
+      rgba(0, 0, 0, 0.22) 3px,
+      rgba(0, 0, 0, 0.22) 6px,
+      rgba(0, 0, 0, 0) 6px,
+      rgba(0, 0, 0, 0) 14px
+    );
+
+    opacity: var(--scan-strength, 0.35);
+    mix-blend-mode: soft-light;
+    image-rendering: pixelated;
+    animation: scan-drift 5s linear infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .crt-stage::after { animation: none; }
+  }
+
+  @keyframes scan-drift {
+    from { background-position: 0 0; }
+    to   { background-position: 0 56px; }
+  }
+
+  .carousel {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    background: rgba(0, 0, 0, 0.18);
+  }
+  .carousel::-webkit-scrollbar { display: none; }
+
+  .slide {
+    flex: 0 0 100%;
+    scroll-snap-align: center;
+    background: rgba(0, 0, 0, 0.18);
+  }
+
+  .nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 44px;
+    border-radius: 999px;
+
+    border: 1px solid rgba(var(--sudata-neon), 0.26);
+    background: rgba(var(--sudata-navy), 0.55);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+
+    color: rgba(255, 255, 255, 0.92);
+    font-size: 28px;
+    line-height: 1;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    user-select: none;
+    z-index: 10;
+
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+    transition:
+      transform 220ms var(--ease-mech),
+      border-color 400ms var(--ease-mech),
+      box-shadow 500ms var(--ease-mech),
+      background 500ms var(--ease-mech);
+  }
+  .nav:hover {
+    border-color: rgba(var(--sudata-neon), 0.46);
+    box-shadow:
+      0 0 0 1px rgba(var(--sudata-neon), 0.12) inset,
+      0 0 18px rgba(var(--sudata-neon), 0.22);
+    transform: translateY(-50%) scale(1.06);
+  }
+  .nav:active { transform: translateY(-50%) scale(0.96); }
+  .nav:focus-visible {
+    outline: 2px solid rgba(var(--sudata-neon), 0.60);
+    outline-offset: 3px;
+  }
+  .nav.left { left: 12px; }
+  .nav.right { right: 12px; }
+
+  .dots {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    border-radius: 999px;
+
+    background: rgba(var(--sudata-navy), 0.50);
+    border: 1px solid rgba(var(--sudata-neon), 0.16);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+    z-index: 10;
+  }
+
+  .dot {
+    width: var(--dot-size);
+    height: var(--dot-size);
+    border-radius: 999px;
+    border: 0;
+    background: rgba(var(--sudata-grey), 0.65);
+    cursor: pointer;
+    position: relative;
+    z-index: 2;
+    transition: transform 220ms var(--ease-mech), background 300ms var(--ease-mech);
+  }
+
+  .dot:hover  { transform: scale(1.35); }
+  .dot:active { transform: scale(0.92); }
+
+  .dot[data-active="true"] {
+    background: rgba(var(--sudata-grey), 0.65);
+    transform: none;
+  }
+
+  .dot-indicator {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translate3d(0, -50%, 0);
+    pointer-events: none;
+    z-index: 5;
+    width: var(--dot-size);
+    height: var(--dot-size);
+    will-change: transform;
+  }
+
+  .dot-indicator-dot {
+    display: block;
+    width: var(--dot-size);
+    height: var(--dot-size);
+    border-radius: 999px;
+    background: rgba(var(--sudata-neon), 0.95);
+    box-shadow:
+      0 0 10px rgba(var(--sudata-neon), 0.55),
+      0 0 22px rgba(var(--sudata-neon), 0.22);
+
+    transform: scale(1.35);
+    transform-origin: center;
+    transition: transform 90ms ease;
+  }
+
+  .dot-indicator.is-moving .dot-indicator-dot { transform: scale(1); }
+
+  .dot-indicator.is-pop .dot-indicator-dot {
+    animation: dot-pop 140ms cubic-bezier(0.2, 0.9, 0.2, 1);
+  }
+
+  @keyframes dot-pop {
+    0%   { transform: scale(1.05); }
+    60%  { transform: scale(1.48); }
+    100% { transform: scale(1.35); }
+  }
+</style>
+
+<script is:inline>
+  function initCarousel(root) {
+    if (root.dataset.carouselInited === "true") return;
+    root.dataset.carouselInited = "true";
+
+    const track = root.querySelector("[data-carousel]");
+    const slides = Array.from(root.querySelectorAll("[data-slide]"));
+    const dots = Array.from(root.querySelectorAll("[data-dot]"));
+    const dotsWrap = root.querySelector("[data-dots]");
+    const indicator = dotsWrap?.querySelector(".dot-indicator");
+
+    if (!track || slides.length === 0 || !dotsWrap || !indicator || dots.length === 0) return;
+
+    const prefersReduced = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+    const clamp = (n, lo, hi) => Math.max(lo, Math.min(hi, n));
+
+    const getIndex = () => {
+      const w = track.clientWidth || 1;
+      return clamp(Math.round(track.scrollLeft / w), 0, slides.length - 1);
+    };
+
+    const setDotsActive = (idx) => {
+      dots.forEach((d, i) => (d.dataset.active = String(i === idx)));
+    };
+
+    let centers = [];
+    const recomputeCenters = () => {
+      const wrapRect = dotsWrap.getBoundingClientRect();
+      const wrapLeft = wrapRect.left + dotsWrap.clientLeft;
+      centers = dots.map((d) => {
+        const r = d.getBoundingClientRect();
+        return (r.left - wrapLeft) + r.width / 2;
+      });
+    };
+
+    const setIndicatorProgress = (t) => {
+      if (!centers.length) return;
+      const n = centers.length;
+      const clampedT = Math.max(0, Math.min(n - 1, t));
+
+      const i0 = Math.floor(clampedT);
+      const i1 = Math.min(i0 + 1, n - 1);
+      const frac = clampedT - i0;
+
+      const center = centers[i0] * (1 - frac) + centers[i1] * frac;
+      const x = center - indicator.offsetWidth / 2;
+
+      indicator.style.transition = "none";
+      indicator.style.transform = `translate3d(${x}px, -50%, 0)`;
+    };
+
+    let scrollEndTimer = null;
+    let popTimer = null;
+
+    const markMoving = () => {
+      if (prefersReduced) return;
+
+      indicator.classList.add("is-moving");
+      indicator.classList.remove("is-pop");
+
+      clearTimeout(scrollEndTimer);
+      scrollEndTimer = setTimeout(() => {
+        indicator.classList.remove("is-moving");
+        indicator.classList.add("is-pop");
+        clearTimeout(popTimer);
+        popTimer = setTimeout(() => indicator.classList.remove("is-pop"), 220);
+      }, 1);
+    };
+
+    const goTo = (idx) => {
+      const current = getIndex();
+      const next = clamp(idx, 0, slides.length - 1);
+      if (next === current) return;
+
+      markMoving();
+      const w = track.clientWidth || 1;
+      track.scrollTo({ left: next * w, behavior: "smooth" });
+    };
+
+    root.querySelector("[data-prev]")?.addEventListener("click", (e) => {
+      e.preventDefault();
+      goTo(getIndex() - 1);
+    });
+
+    root.querySelector("[data-next]")?.addEventListener("click", (e) => {
+      e.preventDefault();
+      goTo(getIndex() + 1);
+    });
+
+    dots.forEach((d) => {
+      d.addEventListener("click", (e) => {
+        e.preventDefault();
+        goTo(Number(d.dataset.dot));
+      });
+    });
+
+    const onScroll = () => {
+      const w = track.clientWidth || 1;
+      const t = track.scrollLeft / w;
+
+      setIndicatorProgress(t);
+      setDotsActive(clamp(Math.round(t), 0, slides.length - 1));
+      markMoving();
+    };
+
+    track.addEventListener("scroll", onScroll, { passive: true });
+
+    new ResizeObserver(() => {
+      recomputeCenters();
+      const w = track.clientWidth || 1;
+      setIndicatorProgress(track.scrollLeft / w);
+      setDotsActive(getIndex());
+    }).observe(track);
+
+    recomputeCenters();
+    setIndicatorProgress(0);
+    setDotsActive(0);
+  }
+
+  function initAllCarousels() {
+    document.querySelectorAll("[data-carousel-root]").forEach(initCarousel);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initAllCarousels, { once: true });
+  } else {
+    initAllCarousels();
+  }
+
+  document.addEventListener("astro:page-load", initAllCarousels);
+</script>
