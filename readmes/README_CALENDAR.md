@@ -14,7 +14,7 @@ src/
 ├── pages/
     └── events.astro            # Events calendar page
 |
-├── convertExcelToJson.py       # `python3 convertExcelToJson.py events_template.xlsx src/data/events.json` (excel -> json)
+├── convertExcelToJson.py       # `python3 scripts/convertExcelToJson.py src/data/events_template.xlsx src/data/events.json` (excel -> json)
 ├── createMultiYearTemplate.py  # `python3 createMultiYearTemplate.py events_copy.json events_template.xlsx` (json -> excel in python)
 └── events_template.xlsx        # Excel template for SUDATA directors to fill in their event details of the year 
 ```

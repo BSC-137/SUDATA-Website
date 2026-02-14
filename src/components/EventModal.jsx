@@ -18,10 +18,11 @@ const EventModal = ({ event, onClose }) => {
     };
   }, []);
 
+  // THREE DIFFERENT BLUE/TEAL COLORS matching EventCalendar
   const typeColors = {
-    academic: '#00F0FF',
-    social: '#FF00FF',
-    industry: '#FFD700'
+    academic: '#00F0FF',  // Bright cyan
+    social: '#06B6D4',    // Cyan-500
+    industry: '#0EA5E9'   // Sky-500
   };
 
   const typeIcons = {
@@ -144,7 +145,7 @@ const EventModal = ({ event, onClose }) => {
         }}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Close Button */}
+        {/* Close Button (X) - Only this one remains */}
         <button
           onClick={onClose}
           className="absolute top-4 right-4 p-2 rounded-lg bg-[#00F0FF]/10 border border-[#00F0FF]/30 text-[#00F0FF] 
@@ -156,7 +157,7 @@ const EventModal = ({ event, onClose }) => {
           </svg>
         </button>
 
-        {/* Event Type Badge */}
+        {/* Event Type Badge - NO attendee count */}
         <div className="flex items-center gap-3 mb-6">
           <div 
             className="px-4 py-2 rounded-lg border-2 flex items-center gap-2 font-bold text-sm uppercase"
@@ -172,14 +173,6 @@ const EventModal = ({ event, onClose }) => {
             </svg>
             {event.type}
           </div>
-          {event.attendees && (
-            <div className="text-[#94a3b8] text-sm flex items-center gap-2">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style={{ imageRendering: 'pixelated' }}>
-                <path d="M16 11C17.66 11 18.99 9.66 18.99 8C18.99 6.34 17.66 5 16 5C14.34 5 13 6.34 13 8C13 9.66 14.34 11 16 11ZM8 11C9.66 11 10.99 9.66 10.99 8C10.99 6.34 9.66 5 8 5C6.34 5 5 6.34 5 8C5 9.66 6.34 11 8 11ZM8 13C5.67 13 1 14.17 1 16.5V19H15V16.5C15 14.17 10.33 13 8 13ZM16 13C15.71 13 15.38 13.02 15.03 13.05C16.19 13.89 17 15.02 17 16.5V19H23V16.5C23 14.17 18.33 13 16 13Z" />
-              </svg>
-              {event.attendees} attendees
-            </div>
-          )}
         </div>
 
         {/* Event Title */}
@@ -267,7 +260,7 @@ const EventModal = ({ event, onClose }) => {
           </div>
         )}
 
-        {/* Action Buttons */}
+        {/* Action Buttons - BOLD TEAL STYLE (like original View Sign-Up Form) */}
         <div className="flex flex-col sm:flex-row gap-4">
           <a
             href={event.signupLink}
@@ -282,22 +275,14 @@ const EventModal = ({ event, onClose }) => {
           
           <button
             onClick={downloadICS}
-            className="px-6 py-4 rounded-lg bg-[#FF00FF]/20 border-2 border-[#FF00FF]/50 text-[#FF00FF] font-bold
-                     hover:bg-[#FF00FF]/30 hover:border-[#FF00FF] hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2"
-            style={{ boxShadow: '0 0 20px rgba(255,0,255,0.3)' }}
+            className="flex-1 px-6 py-4 rounded-lg bg-[#00F0FF] text-[#020617] font-bold
+                     hover:bg-[#00F0FF]/90 hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2"
+            style={{ boxShadow: '0 0 30px rgba(0,240,255,0.5)' }}
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style={{ imageRendering: 'pixelated' }}>
               <path d="M19 3H18V1H16V3H8V1H6V3H5C3.89 3 3 3.9 3 5V19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3ZM19 19H5V9H19V19ZM19 7H5V5H19V7Z" />
             </svg>
             Add to Calendar
-          </button>
-          
-          <button
-            onClick={onClose}
-            className="px-6 py-4 rounded-lg bg-[#00F0FF]/10 border-2 border-[#00F0FF]/30 text-[#00F0FF] font-bold
-                     hover:bg-[#00F0FF]/20 transition-all duration-300"
-          >
-            Close
           </button>
         </div>
       </div>
