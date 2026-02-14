@@ -8,6 +8,7 @@ const EventCalendar = ({ events }) => {
   const [selectedYear, setSelectedYear] = useState(currentYear);
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth()); // 0 = January
   const [selectedEvent, setSelectedEvent] = useState(null);
+  // ALL TAGS SELECTED BY DEFAULT
   const [activeFilters, setActiveFilters] = useState(new Set(['academic', 'social', 'industry']));
 
   const months = [
@@ -33,7 +34,15 @@ const EventCalendar = ({ events }) => {
   const filteredEvents = useMemo(() => {
     return events.filter(event => {
       const eventYear = new Date(event.date).getFullYear();
-      return activeFilters.has(event.type) && eventYear === selectedYear;
+      const yearMatches = eventYear === selectedYear;
+      
+      // If no filters are active, show no events
+      if (activeFilters.size === 0) {
+        return false;
+      }
+      
+      // Only show events that match the active filters
+      return yearMatches && activeFilters.has(event.type);
     });
   }, [events, activeFilters, selectedYear]);
 
@@ -91,18 +100,28 @@ const EventCalendar = ({ events }) => {
   const toggleFilter = (type) => {
     setActiveFilters(prev => {
       const newFilters = new Set(prev);
+      
+      // If all three filters are currently active (initial state),
+      // clicking one should show ONLY that one
+      if (newFilters.size === 3) {
+        return new Set([type]);
+      }
+      
+      // Otherwise, toggle the clicked filter on/off (multi-select mode)
       if (newFilters.has(type)) {
         newFilters.delete(type);
       } else {
         newFilters.add(type);
       }
+      
       return newFilters;
     });
   };
 
+  // THREE DIFFERENT BLUE/TEAL COLORS
   const filterConfig = {
     academic: { 
-      color: '#00F0FF', 
+      color: '#00F0FF',  // Bright cyan
       bgActive: 'bg-[#00F0FF]/20',
       borderActive: 'border-[#00F0FF]',
       textActive: 'text-[#00F0FF]',
@@ -110,7 +129,7 @@ const EventCalendar = ({ events }) => {
       icon: 'M12 2L2 7V11C2 16.55 6.84 21.74 12 23C17.16 21.74 22 16.55 22 11V7L12 2Z' 
     },
     social: { 
-      color: '#06B6D4', 
+      color: '#06B6D4',  // Cyan-500 (slightly darker, more saturated)
       bgActive: 'bg-[#06B6D4]/20',
       borderActive: 'border-[#06B6D4]',
       textActive: 'text-[#06B6D4]',
@@ -118,7 +137,7 @@ const EventCalendar = ({ events }) => {
       icon: 'M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2Z' 
     },
     industry: { 
-      color: '#0EA5E9', 
+      color: '#0EA5E9',  // Sky-500 (lighter blue)
       bgActive: 'bg-[#0EA5E9]/20',
       borderActive: 'border-[#0EA5E9]',
       textActive: 'text-[#0EA5E9]',
@@ -140,7 +159,7 @@ const EventCalendar = ({ events }) => {
               transition-all duration-300 ease-out
               ${activeFilters.has(type)
                 ? `${config.bgActive} border-2 ${config.borderActive} ${config.textActive} ${config.shadow}`
-                : 'bg-[#020617] border-2 border-[#94a3b8]/30 text-[#94a3b8] hover:border-[#94a3b8]/50 opacity-50'
+                : 'bg-[#020617] border-2 border-[#94a3b8]/30 text-[#94a3b8] hover:border-[#94a3b8]/50'
               }
             `}
             style={{

@@ -739,34 +739,84 @@
       "id": "event_047"
     },
     {
-      "title": "Welcome Week 2026",
-      "date": "2026-02-23",
-      "time": "18:00",
-      "venue": "TBA",
+      "title": "SUDATA Speed Friending",
+      "date": "2026-02-19",
+      "time": "14:00",
+      "venue": "Carslaw Seminar Room 350",
       "type": "social",
-      "description": "Kick off 2026 with new members!",
+      "description": "Meet new people and make friends through quick activities and games",
       "collaborators": [
         "SUDATA"
       ],
-      "catering": "Pizza and drinks",
-      "signupLink": "https://forms.google.com/example",
+      "catering": "Snacks and drinks",
+      "signupLink": "https://docs.google.com/forms/d/e/1FAIpQLSeduhevat2fDYJJUjY6mECZbH3QXoC_0hNrDCHVqyYdwnAiqg/viewform?usp=dialog",
       "attendees": 0,
       "id": "event_048"
     },
     {
-      "title": "Data Science Workshop 2026",
-      "date": "2026-03-10",
-      "time": "18:00",
+      "title": "SUDATA x SUBAA Welcome Drinks",
+      "date": "2026-02-26",
+      "time": "17:00",
+      "venue": "Courtyard Cafe, USU",
+      "type": "social",
+      "description": "Casual drinks and networking with new or existing members from SUDATA and SUBAA",
+      "collaborators": [
+        "SUDATA",
+        "SUBAA"
+      ],
+      "catering": "One free Drink provided",
+      "signupLink": "TBA",
+      "attendees": 0,
+      "id": "event_049"
+    },
+    {
+      "title": "SUDATA x CommSTEM Coffee Chat",
+      "date": "2026-03-05",
+      "time": "12:00",
+      "venue": "Ralph’s Cafe on the Boardwalk",
+      "type": "social",
+      "description": "Coffee catch up with students from SUDATA and CommStem offering a chance to connect, network and share career insights",
+      "collaborators": [
+        "SUDATA",
+        "CommSTEM"
+      ],
+      "catering": "Coffee availble for purchase on a society tab",
+      "signupLink": "TBA",
+      "attendees": 0,
+      "id": "event_050"
+    },
+    {
+      "title": "SUDATA Pub Crawl",
+      "date": "2026-03-20",
+      "time": "TBD",
       "venue": "TBA",
-      "type": "academic",
-      "description": "Advanced data science techniques for 2026.",
+      "type": "social",
+      "description": "A social night out hopping between venues with SUDATA members to unwind and meet new people",
       "collaborators": [
         "SUDATA"
       ],
-      "catering": "Snacks",
-      "signupLink": "https://forms.google.com/example",
+      "catering": "Drinks available for purchase",
+      "signupLink": "TBA",
       "attendees": 0,
-      "id": "event_049"
+      "id": "event_051"
+    },
+    {
+      "title": "Total Drama Island 2026 Camp",
+      "date": "2026-03-27",
+      "time": "TBD",
+      "venue": "Great Aussie Bush Camp Lake Macquarie (Morisset)",
+      "type": "social",
+      "description": "A weekend camp with games, challenges, team activities and social bonding with multiple societies with the theme of Total Drama Island",
+      "collaborators": [
+        "SUDATA",
+        "SUMS",
+        "BIOSOC",
+        "BISA"
+      ],
+      "catering": "Meals provided",
+      "signupLink": "TBA",
+      "attendees": 0,
+      "id": "event_052"
     }
   ]
 }
