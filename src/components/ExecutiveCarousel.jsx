@@ -99,9 +99,11 @@ function ArrowButton({ direction, onClick }) {
 // Ease out quint (approximation of cubic-bezier(0.23, 1, 0.32, 1) for the feel)
 const easeOutQuint = (t) => 1 - Math.pow(1 - t, 5);
 
-export default function ExecutiveCarousel() {
+export default function ExecutiveCarousel({ executives = null }) {
   const scrollRef = useRef(null);
   // Removed canScroll states since we loop now
+  
+  const items = executives || EXECUTIVES;
 
   const scrollAmount = CARD_WIDTH_PX + CARD_GAP_PX;
 
@@ -162,7 +164,7 @@ export default function ExecutiveCarousel() {
           WebkitOverflowScrolling: 'touch',
         }}
       >
-        {EXECUTIVES.map((exec, i) => (
+        {items.map((exec, i) => (
           <ExecutiveCard key={`${exec.name}-${i}`} executive={exec} />
         ))}
       </div>
