@@ -9,7 +9,7 @@ const EventCalendar = ({ events }) => {
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth()); // 0 = January
   const [selectedEvent, setSelectedEvent] = useState(null);
   // ALL TAGS SELECTED BY DEFAULT
-  const [activeFilters, setActiveFilters] = useState(new Set(['academic', 'social', 'industry']));
+  const [activeFilters, setActiveFilters] = useState(new Set(['academic', 'social']));
 
   const months = [
     'January', 'February', 'March', 'April', 'May', 'June',
@@ -101,9 +101,9 @@ const EventCalendar = ({ events }) => {
     setActiveFilters(prev => {
       const newFilters = new Set(prev);
       
-      // If all three filters are currently active (initial state),
+      // If all two filters are currently active (initial state),
       // clicking one should show ONLY that one
-      if (newFilters.size === 3) {
+      if (newFilters.size === 2) {
         return new Set([type]);
       }
       
@@ -118,7 +118,7 @@ const EventCalendar = ({ events }) => {
     });
   };
 
-  // THREE DIFFERENT BLUE/TEAL COLORS
+  // TWO COLORS: bright teal for academic, light blue for social
   const filterConfig = {
     academic: { 
       color: '#00F0FF',  // Bright cyan
@@ -129,21 +129,13 @@ const EventCalendar = ({ events }) => {
       icon: 'M12 2L2 7V11C2 16.55 6.84 21.74 12 23C17.16 21.74 22 16.55 22 11V7L12 2Z' 
     },
     social: { 
-      color: '#06B6D4',  // Cyan-500 (slightly darker, more saturated)
-      bgActive: 'bg-[#06B6D4]/20',
-      borderActive: 'border-[#06B6D4]',
-      textActive: 'text-[#06B6D4]',
-      shadow: 'shadow-[0_0_20px_rgba(6,182,212,0.5)]',
+      color: '#3B82F6',  // Bold blue
+      bgActive: 'bg-[#3B82F6]/20',
+      borderActive: 'border-[#3B82F6]',
+      textActive: 'text-[#3B82F6]',
+      shadow: 'shadow-[0_0_20px_rgba(59,130,246,0.5)]',
       icon: 'M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2Z' 
     },
-    industry: { 
-      color: '#0EA5E9',  // Sky-500 (lighter blue)
-      bgActive: 'bg-[#0EA5E9]/20',
-      borderActive: 'border-[#0EA5E9]',
-      textActive: 'text-[#0EA5E9]',
-      shadow: 'shadow-[0_0_20px_rgba(14,165,233,0.5)]',
-      icon: 'M12 2L1 7V11C1 16 5 21 12 23C19 21 23 16 23 11V7L12 2Z' 
-    }
   };
 
   return (
