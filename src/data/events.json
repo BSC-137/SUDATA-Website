@@ -770,6 +770,22 @@
       "id": "event_049"
     },
     {
+      "title": "Poker Workshop",
+      "date": "2026-03-04",
+      "time": "TBA",
+      "venue": "TBA",
+      "type": "social",
+      "description": "Crash course in poker ahead of our poker tournament",
+      "collaborators": [
+        "SUDATA",
+        "SQT"
+      ],
+      "catering": "TBA",
+      "signupLink": "TBA",
+      "attendees": 0,
+      "id": "event_050"
+    },
+    {
       "title": "SUDATA x CommSTEM Coffee Chat",
       "date": "2026-03-05",
       "time": "12:00",
@@ -783,7 +799,40 @@
       "catering": "Coffee availble for purchase on a society tab",
       "signupLink": "TBA",
       "attendees": 0,
-      "id": "event_050"
+      "id": "event_051"
+    },
+    {
+      "title": "Introduction to R Workshop",
+      "date": "2026-03-06",
+      "time": "16:00",
+      "venue": "TBA",
+      "type": "academic",
+      "description": "Learn the fundamentals of R programming for data analysis, and connect with new friends in a relaxed, supportive environment",
+      "collaborators": [
+        "SUDATA"
+      ],
+      "catering": "Snacks",
+      "signupLink": "TBA",
+      "attendees": 0,
+      "id": "event_052"
+    },
+    {
+      "title": "Meet The Startups",
+      "date": "2026-03-16",
+      "time": "TBA",
+      "venue": "TBA",
+      "type": "academic",
+      "description": "Panel discussion with startup founders about data science in entrepreneurship.",
+      "collaborators": [
+        "SUDATA",
+        "SUSMI",
+        "STARTUPLINK",
+        "MEDSCISOC"
+      ],
+      "catering": "TBA",
+      "signupLink": "TBA",
+      "attendees": 0,
+      "id": "event_053"
     },
     {
       "title": "SUDATA Pub Crawl",
@@ -798,7 +847,7 @@
       "catering": "Drinks available for purchase",
       "signupLink": "TBA",
       "attendees": 0,
-      "id": "event_051"
+      "id": "event_054"
     },
     {
       "title": "Total Drama Island 2026 Camp",
@@ -816,7 +865,86 @@
       "catering": "Meals provided",
       "signupLink": "TBA",
       "attendees": 0,
-      "id": "event_052"
+      "id": "event_055"
+    },
+    {
+      "title": "Datathon",
+      "date": "2026-03-30",
+      "time": "TBA",
+      "venue": "TBA",
+      "type": "academic",
+      "description": "Multi-day datathon competition. Solve real-world data problems and win prizes!",
+      "collaborators": [
+        "SUDATA",
+        "COMM-STEM",
+        "SYNCS"
+      ],
+      "catering": "Lunch and Snacks",
+      "signupLink": "TBA",
+      "attendees": 0,
+      "id": "event_056"
+    },
+    {
+      "title": "Amstelveen Consulting Workshop",
+      "date": "2026-04-20",
+      "time": "TBA",
+      "venue": "TBA",
+      "type": "academic",
+      "description": "Consulting workshop and short case competition practice in collaboration with Amstelveen",
+      "collaborators": [
+        "SUDATA",
+        "BISA"
+      ],
+      "catering": "TBA",
+      "signupLink": "TBA",
+      "attendees": 0,
+      "id": "event_057"
+    },
+    {
+      "title": "Data Science Careers Panel",
+      "date": "2026-05-04",
+      "time": "TBA",
+      "venue": "TBA",
+      "type": "academic",
+      "description": "Learn about data science fundamentals and hear from industry professionals about career paths.",
+      "collaborators": [
+        "SUDATA",
+        "180 Degrees"
+      ],
+      "catering": "TBA",
+      "signupLink": "TBA",
+      "attendees": 0,
+      "id": "event_058"
+    },
+    {
+      "title": "Industry Networking Night",
+      "date": "2026-05-18",
+      "time": "TBA",
+      "venue": "TBA",
+      "type": "academic",
+      "description": "Major networking event with industry professionals from various data science companies.",
+      "collaborators": [
+        "SUDATA"
+      ],
+      "catering": "Canapés and drinks",
+      "signupLink": "TBA",
+      "attendees": 0,
+      "id": "event_059"
+    },
+    {
+      "title": "DATA1001/2001 Revision Session",
+      "date": "2026-06-01",
+      "time": "TBA",
+      "venue": "TBA",
+      "type": "academic",
+      "description": "STUVAC revision session for DATA1001 and DATA2001 final exam preparation.",
+      "collaborators": [
+        "SUDATA"
+      ],
+      "catering": "Lunch and Snacks",
+      "signupLink": "TBA",
+      "attendees": 0,
+      "id": "event_060"
     }
   ]
 }
