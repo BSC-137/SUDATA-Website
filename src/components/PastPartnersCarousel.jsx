@@ -1,117 +1,100 @@
 import React, { useState, useEffect, useRef } from 'react';
 
+const partners = [
+  { name: 'Accenture',              logo: '/sponsors/past-partners/accenture.png' },
+  { name: 'Amazon',                 logo: '/sponsors/past-partners/amazon.png' },
+  { name: 'Aptent Digital',         logo: '/sponsors/past-partners/aptent.png' },
+  { name: 'Canva',                  logo: '/sponsors/past-partners/canva.png' },
+  { name: 'CBA',                    logo: '/sponsors/past-partners/cba.png' },
+  { name: 'Comet CS',               logo: '/sponsors/past-partners/comet.png' },
+  { name: 'Digital Health CRC',     logo: '/sponsors/past-partners/digital-health-crc.png' },
+  { name: 'Dvuln',                  logo: '/sponsors/past-partners/dvuln.png' },
+  { name: 'Gridware',               logo: '/sponsors/past-partners/gridware.png' },
+  { name: 'Heidi Health',           logo: '/sponsors/past-partners/heidi.png' },
+  { name: 'Lymbase',                logo: '/sponsors/past-partners/lymbase.png' },
+  { name: 'Lyra',                   logo: '/sponsors/past-partners/lyra.png' },
+  { name: 'Macquarie',              logo: '/sponsors/past-partners/macquarie.png' },
+  { name: 'McGrathNicol',           logo: '/sponsors/past-partners/mcgrathnicol.png' },
+  { name: 'Notion',                 logo: '/sponsors/past-partners/notion.png' },
+  { name: 'NSW Ministry of Health', logo: '/sponsors/past-partners/nsw-health.png' },
+  { name: 'Quantium',               logo: '/sponsors/past-partners/quantium.png' },
+  { name: 'Rhombus AI',             logo: '/sponsors/past-partners/rhombus.png' },
+  { name: 'Telstra',                logo: '/sponsors/past-partners/telstra.png' },
+  { name: 'Tibra',                  logo: '/sponsors/past-partners/tibra.png' },
+  { name: 'TikTok',                 logo: '/sponsors/past-partners/tiktok.png' },
+  { name: 'Visagio',                logo: '/sponsors/past-partners/visagio.png' },
+  { name: 'WayScape',               logo: '/sponsors/past-partners/wayscape.png' },
+  { name: 'Woolworths Group',       logo: '/sponsors/past-partners/woolworths.png' },
+];
+
+const duplicated = [...partners, ...partners];
+
+const LOGO_WIDTH = 160;
+const GAP = 48;
+
 const PastPartnersCarousel = () => {
-  const [scrollSpeed, setScrollSpeed] = useState(1);
-  const [isPaused, setIsPaused] = useState(false);
-  const scrollContainerRef = useRef(null);
-  const animationRef = useRef(null);
-
-  // List of past partners (duplicated for seamless loop)
-  const partners = [
-    'Canva', 'Amazon', 'TikTok', 'Aptent Digital', 'Digital Health CRC',
-    'Lymbase', 'Rhombus AI', 'Woolworths Group', 'Telstra', 'NSW Ministry of Health',
-    'Accenture', 'Tibra', 'Quantium', 'Westpac', 'Macquarie',
-    'CBA', 'Visagio', 'McGrathNicol', 'Comet CS', 'Notion',
-    'Lyra', 'WayScape', 'Heidi Health', 'Gridware Cybersecurity', 'Dvuln', 'Talentsheet'
-  ];
-
-  // Duplicate partners array for seamless scrolling
-  const duplicatedPartners = [...partners, ...partners];
+  const trackRef = useRef(null);
+  const rafRef = useRef(null);
+  const posRef = useRef(0);
+  const pausedRef = useRef(false);
+  const [paused, setPaused] = useState(false);
 
   useEffect(() => {
-    const container = scrollContainerRef.current;
-    if (!container) return;
+    pausedRef.current = paused;
+  }, [paused]);
 
-    let scrollPosition = 0;
-    const maxScroll = container.scrollWidth / 2;
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
 
-    const scroll = () => {
-      if (!isPaused) {
-        scrollPosition += scrollSpeed;
-        
-        // Reset to beginning when we've scrolled through first set
-        if (scrollPosition >= maxScroll) {
-          scrollPosition = 0;
-        }
-        
-        container.scrollLeft = scrollPosition;
+    const speed = 0.5;
+
+    const tick = () => {
+      if (!pausedRef.current) {
+        posRef.current += speed;
+        const half = track.scrollWidth / 2;
+        if (posRef.current >= half) posRef.current = 0;
+        track.style.transform = `translateX(-${posRef.current}px)`;
       }
-      animationRef.current = requestAnimationFrame(scroll);
+      rafRef.current = requestAnimationFrame(tick);
     };
 
-    animationRef.current = requestAnimationFrame(scroll);
-
-    return () => {
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
-      }
-    };
-  }, [scrollSpeed, isPaused]);
-
-  const handleSpeedChange = (newSpeed) => {
-    setScrollSpeed(newSpeed);
-  };
+    rafRef.current = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(rafRef.current);
+  }, []);
 
   return (
     <div className="w-full">
-      {/* Speed Controls */}
-      <div className="flex justify-center items-center gap-4 mb-8">
-        <span className="text-sudata-grey font-mono-tech text-xs tracking-wider">SCROLL SPEED:</span>
-        <div className="flex gap-2">
-          {[0.5, 1, 2, 3].map((speed) => (
-            <button
-              key={speed}
-              onClick={() => handleSpeedChange(speed)}
-              className={`px-3 py-1 font-mono-tech text-xs border transition-all duration-200 ${
-                scrollSpeed === speed
-                  ? 'border-sudata-neon bg-sudata-neon/20 text-sudata-neon'
-                  : 'border-sudata-grey/30 text-sudata-grey hover:border-sudata-neon/50 hover:text-white'
-              }`}
-            >
-              {speed}x
-            </button>
-          ))}
-        </div>
-        <button
-          onClick={() => setIsPaused(!isPaused)}
-          className={`px-4 py-1 font-mono-tech text-xs border transition-all duration-200 ${
-            isPaused
-              ? 'border-sudata-neon bg-sudata-neon/20 text-sudata-neon'
-              : 'border-sudata-grey/30 text-sudata-grey hover:border-sudata-neon/50 hover:text-white'
-          }`}
-        >
-          {isPaused ? 'RESUME' : 'PAUSE'}
-        </button>
-      </div>
-
-      {/* Scrolling Container */}
       <div className="relative overflow-hidden">
-        {/* Gradient fade edges */}
-        <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
-        
+        {/* Fade edges */}
+        <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-[#09090b] to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-[#09090b] to-transparent z-10 pointer-events-none" />
+
         <div
-          ref={scrollContainerRef}
-          className="flex gap-8 overflow-x-hidden py-8"
-          style={{ scrollBehavior: 'auto' }}
+          ref={trackRef}
+          className="flex items-center py-8"
+          style={{ width: 'max-content', willChange: 'transform', gap: `${GAP}px` }}
         >
-          {duplicatedPartners.map((partner, index) => (
+          {duplicated.map((partner, i) => (
             <div
-              key={`${partner}-${index}`}
-              className="flex-shrink-0 px-8 py-4 border border-sudata-neon/20 bg-black/40 hover:border-sudata-neon hover:bg-black/60 transition-all duration-300 group cursor-default"
-              onMouseEnter={() => setIsPaused(true)}
-              onMouseLeave={() => setIsPaused(false)}
+              key={`${partner.name}-${i}`}
+              className="flex-shrink-0 flex items-center justify-center opacity-40 hover:opacity-100 transition-opacity duration-300 cursor-default"
+              style={{ width: `${LOGO_WIDTH}px`, height: '48px' }}
+              onMouseEnter={() => setPaused(true)}
+              onMouseLeave={() => setPaused(false)}
             >
-              <span className="text-white font-mono-tech text-lg tracking-wider whitespace-nowrap group-hover:text-sudata-neon transition-colors duration-300">
-                {partner}
-              </span>
+              <img
+                src={partner.logo}
+                alt={partner.name}
+                className="w-full h-full object-contain"
+              />
             </div>
           ))}
         </div>
       </div>
 
-      <p className="text-center text-sudata-grey font-mono-tech text-xs mt-6 tracking-wide">
-        Hover to pause • Adjust speed to explore
+      <p className="text-center text-sudata-grey font-mono-tech text-xs mt-6 tracking-wide opacity-50">
+        Hover to pause
       </p>
     </div>
   );
