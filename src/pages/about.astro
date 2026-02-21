@@ -13,6 +13,12 @@ const csvPath = join(__dirname, '../../public/society_data/sudata_members_cleane
 
 // Load and process CSV data
 const { majorData, degreeData, genderData, ethnicityData } = processChartData(csvPath);
+
+const webArchitects = [
+  { name: 'Olivia Peng', role: 'Technical Lead', linkedin: 'https://www.linkedin.com/in/oliviapeng26/', image: '/assets/execs/olivia.png' },
+  { name: 'Bharat Sharma', role: 'Web Architect', linkedin: 'https://www.linkedin.com/in/bharat-sharma-1150ba285/', image: '/assets/execs/bharat.png' },
+  { name: 'Shreejit Murthy', role: 'Web Architect', linkedin: 'https://www.linkedin.com/in/shreejit-murthy/', image: '/assets/execs/shreejit.png' },
+];
 ---
 
 <Layout title="About | SUDATA">
@@ -162,6 +168,23 @@ const { majorData, degreeData, genderData, ethnicityData } = processChartData(cs
 			</p>
 			<div class="w-full overflow-hidden px-2">
 				<ExecutiveCarousel client:visible />
+			</div>
+		</section>
+
+		<!-- [SECTION: WEB_ARCHITECTS] -->
+		<section class="reveal-on-scroll w-full">
+			<div class="font-mono-tech text-sudata-neon/80 text-sm tracking-[0.2em] mb-4 flex justify-center gap-2">
+				<span class="animate-flicker">_</span>
+				<span>[SECTION: WEB_ARCHITECTS]</span>
+			</div>
+			<h2 class="text-2xl md:text-4xl font-bold text-white font-mono-tech tracking-widest mb-2 text-center">
+				Web Architects
+			</h2>
+			<p class="text-sudata-grey font-mono-tech text-sm md:text-base tracking-wide text-center mb-10 max-w-2xl mx-auto">
+				The team that built this digital experience.
+			</p>
+			<div class="w-full overflow-hidden px-2">
+				<ExecutiveCarousel executives={webArchitects} client:visible />
 			</div>
 		</section>
 

@@ -1,22 +1,22 @@
 import { useRef, useState, useEffect } from 'react';
 
 const EXECUTIVES = [
-  { name: 'Cecilia Ma', role: 'President', linkedin: '#' },
-  { name: 'Xiaochen Chen', role: 'President', linkedin: '#' },
-  { name: 'Yanney Ou', role: 'Vice President', linkedin: '#' },
-  { name: 'Tianna Lu', role: 'Vice President', linkedin: '#' },
-  { name: 'Audrey Shan', role: 'Vice President', linkedin: '#' },
-  { name: 'Felix Chan', role: 'Secretary', linkedin: '#' },
-  { name: 'Rhea Kumar', role: 'Treasurer', linkedin: '#' },
-  { name: 'Reuben Thomas', role: 'Sponsorships Director', linkedin: '#' },
-  { name: 'Olivia Peng', role: 'Technology Director', linkedin: '#' },
-  { name: 'Lucas Fishburn', role: 'First-Year Representative', linkedin: '#' },
-  { name: 'Florencia Huang', role: 'Diversity Officer', linkedin: '#' },
-  { name: 'Lucas Sue', role: 'International Director', linkedin: '#' },
-  { name: 'Margaret Zhao', role: 'Academic Events Director', linkedin: '#' },
-  { name: 'Emma Shan', role: 'Social Events Director', linkedin: '#' },
-  { name: 'Allayna Sachin', role: 'Marketing Director', linkedin: '#' },
-  { name: 'Madison Kim', role: 'Marketing Director', linkedin: '#' },
+  { name: 'Cecilia Ma', role: 'President', linkedin: 'https://www.linkedin.com/in/cecilia-ma-usyd/', image: '/assets/execs/cecilia.png' },
+  { name: 'Xiaochen Chen', role: 'President', linkedin: 'https://www.linkedin.com/in/xiaochen-chen-2b165628a/', image: '/assets/execs/xiaochen.png' },
+  { name: 'Yanney Ou', role: 'Vice President', linkedin: 'https://www.linkedin.com/in/yanney-ou-596a68238/', image: '/assets/execs/yanney.png' },
+  { name: 'Tianna Lu', role: 'Vice President', linkedin: 'https://www.linkedin.com/in/tianna-luangrath-46a01b322/', image: '/assets/execs/tianna.png' },
+  { name: 'Audrey Shan', role: 'Vice President', linkedin: 'https://www.linkedin.com/in/audrey-shan/', image: '/assets/execs/audrey.png' },
+  { name: 'Felix Chan', role: 'Secretary', linkedin: 'https://www.linkedin.com/in/felix-chan-ab0aa9242/', image: '/assets/execs/felix chan.png' },
+  { name: 'Rhea Kumar', role: 'Treasurer', linkedin: 'https://www.linkedin.com/in/rhea-kumar-1a7625272/', image: '/assets/execs/rhea.png' },
+  { name: 'Margaret Zhao', role: 'Academic Events Director', linkedin: 'https://www.linkedin.com/in/margaret-zhao-56a505291/', image: '/assets/execs/margaret.png' },
+  { name: 'Emma Shan', role: 'Social Events Director', linkedin: '#', image: null },
+  { name: 'Allayna Sachin', role: 'Marketing Director', linkedin: 'https://www.linkedin.com/in/allaynasachin/', image: '/assets/execs/allayna.png' },
+  { name: 'Madison Kim', role: 'Marketing Director', linkedin: 'https://www.linkedin.com/in/madison-kim-9319b7311/', image: null },
+  { name: 'Reuben Thomas', role: 'Sponsorships Director', linkedin: 'https://www.linkedin.com/in/reuben-t-231725347/', image: '/assets/execs/reuben.png' },
+  { name: 'Olivia Peng', role: 'Technology Director', linkedin: 'https://www.linkedin.com/in/oliviapeng26/', image: '/assets/execs/olivia.png' },
+  { name: 'Lucas Fishburn', role: 'First-Year Representative', linkedin: 'https://www.linkedin.com/in/lucas-fishburn-a4639b26b/', image: '/assets/execs/lucas fishburn.png' },
+  { name: 'Florencia Huang', role: 'Diversity Officer', linkedin: 'https://www.linkedin.com/in/florencia-huang-31a9092b9/', image: '/assets/execs/florencia.png' },
+  { name: 'Lucas Sue', role: 'International Director', linkedin: 'https://www.linkedin.com/in/lucas-sue-5aa720358/', image: '/assets/execs/lucas.png' },
 ];
 
 const CARD_WIDTH_PX = 300;
@@ -99,9 +99,11 @@ function ArrowButton({ direction, onClick }) {
 // Ease out quint (approximation of cubic-bezier(0.23, 1, 0.32, 1) for the feel)
 const easeOutQuint = (t) => 1 - Math.pow(1 - t, 5);
 
-export default function ExecutiveCarousel() {
+export default function ExecutiveCarousel({ executives = null }) {
   const scrollRef = useRef(null);
   // Removed canScroll states since we loop now
+  
+  const items = executives || EXECUTIVES;
 
   const scrollAmount = CARD_WIDTH_PX + CARD_GAP_PX;
 
@@ -162,7 +164,7 @@ export default function ExecutiveCarousel() {
           WebkitOverflowScrolling: 'touch',
         }}
       >
-        {EXECUTIVES.map((exec, i) => (
+        {items.map((exec, i) => (
           <ExecutiveCard key={`${exec.name}-${i}`} executive={exec} />
         ))}
       </div>
