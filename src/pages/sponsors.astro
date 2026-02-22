@@ -2,176 +2,139 @@
 import Layout from '../layouts/Layout.astro';
 import PastPartnersCarousel from '../components/PastPartnersCarousel.jsx';
 import CopyEmailButton from '../components/CopyEmailButton.jsx';
+
+const sponsors = [
+  {
+    name: 'Jane Street',
+    desc: 'Quantitative trading firm applying rigorous analytical thinking and functional programming to global markets.',
+    src: 'public/sponsors/current-sponsors/jane-street.png',
+    href: 'https://www.janestreet.com',
+    tag: '[ INDUSTRY_PARTNER ]',
+  },
+  {
+    name: 'Atlassian',
+    desc: 'Enterprise software powering team collaboration at scale across every industry.',
+    src: 'public/sponsors/current-sponsors/atlassian.png',
+    href: 'https://www.atlassian.com',
+    tag: '[ SPONSOR ]',
+  },
+  {
+    name: 'Westpac',
+    desc: "Australia's first bank driving digital transformation through data analytics and machine learning.",
+    src: 'public/sponsors/current-sponsors/westpac.png',
+    href: 'https://www.westpac.com.au',
+    tag: '[ SPONSOR ]',
+  },
+  {
+    name: 'IMC Trading',
+    desc: 'Global market maker powered by advanced algorithms and high-performance engineering.',
+    src: 'public/sponsors/current-sponsors/imc-trading.webp',
+    href: 'https://www.imc.com',
+    tag: '[ SPONSOR ]',
+  },
+];
+
+const delayClasses = ['delay-0', 'delay-100', 'delay-200', 'delay-300'];
 ---
 
 <Layout title="Sponsors | SUDATA">
-	<div class="flex flex-col w-full max-w-6xl mx-auto space-y-24 pt-32 pb-24 px-4">
+  <div class="flex flex-col w-full max-w-6xl mx-auto space-y-24 pt-32 pb-24 px-4">
 
-		<!-- Page title -->
-		<header class="reveal-on-scroll text-center space-y-4">
-			<h1 class="text-4xl md:text-6xl font-bold text-sudata-neon tracking-widest neon-text-shadow font-mono-tech">
-				OUR SPONSORS
-			</h1>
-			<p class="text-sudata-grey font-mono-tech text-lg tracking-wide">
-				[ Powering the Next Generation of Data Leaders ]
-			</p>
-		</header>
+    <!-- Page title -->
+    <header class="reveal-on-scroll text-center space-y-4">
+      <h1 class="text-4xl md:text-6xl font-bold text-sudata-neon tracking-widest neon-text-shadow font-mono-tech">
+        OUR SPONSORS
+      </h1>
+      <p class="text-sudata-grey font-mono-tech text-lg tracking-wide">
+        [ Powering the Next Generation of Data Leaders ]
+      </p>
+    </header>
 
-		<!-- [SECTION: 2026_SPONSORS] -->
-		<section class="reveal-on-scroll terminal-block scanline-overlay p-8 md:p-12">
-			<div class="relative z-10">
-				<div class="font-mono-tech text-sudata-neon/80 text-sm tracking-[0.2em] mb-6 flex items-center gap-2">
-					<span class="animate-flicker">&gt;_</span>
-					<span>[SECTION: 2026_SPONSORS]</span>
-				</div>
-				<h2 class="text-2xl md:text-3xl font-bold text-white font-mono-tech tracking-widest mb-8">
-					2026 SUDATA Sponsors
-				</h2>
+    <section class="reveal-on-scroll terminal-block scanline-overlay p-8 md:p-12">
+      <div class="relative z-10">
+        <div class="font-mono-tech text-sudata-neon/80 text-sm tracking-[0.2em] mb-6 flex items-center gap-2">
+          <span class="animate-flicker">&gt;_</span>
+          <span>[SECTION: 2026_SPONSORS]</span>
+        </div>
 
-				<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-white font-mono-tech tracking-widest mb-8">
+          2026 SUDATA Sponsors
+        </h2>
 
-					<!-- Jane Street -->
-					<a
-						href="https://www.janestreet.com"
-						target="_blank"
-						rel="noopener noreferrer"
-						class="group glass-panel-3d p-8 flex flex-col items-start text-left h-full relative overflow-hidden scanline-overlay"
-					>
-						<div class="relative z-10 mb-6 font-mono-tech text-sudata-neon text-xs tracking-[0.2em] opacity-80 whitespace-nowrap">
-							[ INDUSTRY_PARTNER ]
-						</div>
-						<div class="relative z-10 mb-6 flex justify-center w-full">
-							<img
-								src="/sponsors/current-sponsors/jane-street.png"
-								alt="Jane Street"
-								class="w-28 h-14 object-contain"
-							/>
-						</div>
-						<h3 class="relative z-10 text-lg font-bold text-white mb-3 tracking-widest group-hover:text-sudata-neon transition-colors">
-							Jane Street
-						</h3>
-						<p class="relative z-10 text-xs font-mono-tech text-sudata-grey/90 leading-relaxed">
-							Quantitative trading firm applying rigorous analytical thinking and functional programming to global markets.
-						</p>
-					</a>
+        <!-- [SECTION: 2026_SPONSORS] -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {sponsors.map((s, i) => (
+            <a
+              href={s.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              class={`group glass-panel-3d p-8 flex flex-col items-start text-left h-full relative overflow-hidden scanline-overlay ${delayClasses[i % delayClasses.length]}`}
+            >
+              <div class="relative z-10 mb-6 font-mono-tech text-sudata-neon text-xs tracking-[0.2em] opacity-80 whitespace-nowrap">
+                {s.tag ?? '[ SPONSOR ]'}
+              </div>
 
-					<!-- Atlassian -->
-					<a
-						href="https://www.atlassian.com"
-						target="_blank"
-						rel="noopener noreferrer"
-						class="group glass-panel-3d p-8 flex flex-col items-start text-left h-full relative overflow-hidden delay-100 scanline-overlay"
-					>
-						<div class="relative z-10 mb-6 font-mono-tech text-sudata-neon text-xs tracking-[0.2em] opacity-80 whitespace-nowrap">
-							[ SPONSOR ]
-						</div>
-						<div class="relative z-10 mb-6 flex justify-center w-full">
-							<img
-								src="/sponsors/current-sponsors/atlassian.png"
-								alt="Atlassian"
-								class="w-28 h-14 object-contain"
-							/>
-						</div>
-						<h3 class="relative z-10 text-lg font-bold text-white mb-3 tracking-widest group-hover:text-sudata-neon transition-colors">
-							Atlassian
-						</h3>
-						<p class="relative z-10 text-xs font-mono-tech text-sudata-grey/90 leading-relaxed">
-							Enterprise software powering team collaboration at scale across every industry.
-						</p>
-					</a>
+              <div class="relative z-10 mb-6 flex justify-center w-full">
+                <img
+                  src={s.src}
+                  alt={s.name}
+                  class="w-28 h-14 object-contain"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
 
-					<!-- Westpac -->
-					<a
-						href="https://www.westpac.com.au"
-						target="_blank"
-						rel="noopener noreferrer"
-						class="group glass-panel-3d p-8 flex flex-col items-start text-left h-full relative overflow-hidden delay-200 scanline-overlay"
-					>
-						<div class="relative z-10 mb-6 font-mono-tech text-sudata-neon text-xs tracking-[0.2em] opacity-80 whitespace-nowrap">
-							[ SPONSOR ]
-						</div>
-						<div class="relative z-10 mb-6 flex justify-center w-full">
-							<img
-								src="/sponsors/current-sponsors/westpac.png"
-								alt="Westpac"
-								class="w-28 h-14 object-contain"
-							/>
-						</div>
-						<h3 class="relative z-10 text-lg font-bold text-white mb-3 tracking-widest group-hover:text-sudata-neon transition-colors">
-							Westpac
-						</h3>
-						<p class="relative z-10 text-xs font-mono-tech text-sudata-grey/90 leading-relaxed">
-							Australia's first bank driving digital transformation through data analytics and machine learning.
-						</p>
-					</a>
+              <h3 class="relative z-10 text-lg font-bold text-white mb-3 tracking-widest group-hover:text-sudata-neon transition-colors">
+                {s.name}
+              </h3>
 
-					<!-- IMC Trading -->
-					<a
-						href="https://www.imc.com"
-						target="_blank"
-						rel="noopener noreferrer"
-						class="group glass-panel-3d p-8 flex flex-col items-start text-left h-full relative overflow-hidden delay-200 scanline-overlay"
-					>
-						<div class="relative z-10 mb-6 font-mono-tech text-sudata-neon text-xs tracking-[0.2em] opacity-80 whitespace-nowrap">
-							[ SPONSOR ]
-						</div>
-						<div class="relative z-10 mb-6 flex justify-center w-full">
-							<img
-								src="/sponsors/current-sponsors/imc-trading.webp"
-								alt="IMC Trading"
-								class="w-28 h-14 object-contain"
-							/>
-						</div>
-						<h3 class="relative z-10 text-lg font-bold text-white mb-3 tracking-widest group-hover:text-sudata-neon transition-colors">
-							IMC Trading
-						</h3>
-						<p class="relative z-10 text-xs font-mono-tech text-sudata-grey/90 leading-relaxed">
-							Global market maker powered by advanced algorithms and high-performance engineering.
-						</p>
-					</a>
+              <p class="relative z-10 text-xs font-mono-tech text-sudata-grey/90 leading-relaxed">
+                {s.desc}
+              </p>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
 
-				</div>
-			</div>
-		</section>
+    <!-- [SECTION: LEGACY_PARTNERS] -->
+    <section class="reveal-on-scroll w-full">
+      <div class="font-mono-tech text-sudata-neon/80 text-sm tracking-[0.2em] mb-6 flex justify-center gap-2">
+        <span class="animate-flicker">_</span>
+        <span>[SECTION: LEGACY_PARTNERS]</span>
+      </div>
+      <h2 class="text-2xl md:text-3xl font-bold text-white font-mono-tech tracking-widest mb-4 text-center">
+        Our Network
+      </h2>
+      <p class="text-sudata-grey font-mono-tech text-sm md:text-base tracking-wide text-center mb-10 max-w-2xl mx-auto">
+        Companies, speakers, and partners who have collaborated with SUDATA to shape the future of data science.
+      </p>
+      <PastPartnersCarousel client:visible />
+    </section>
 
-		<!-- [SECTION: LEGACY_PARTNERS] -->
-		<section class="reveal-on-scroll w-full">
-			<div class="font-mono-tech text-sudata-neon/80 text-sm tracking-[0.2em] mb-6 flex justify-center gap-2">
-				<span class="animate-flicker">_</span>
-				<span>[SECTION: LEGACY_PARTNERS]</span>
-			</div>
-			<h2 class="text-2xl md:text-3xl font-bold text-white font-mono-tech tracking-widest mb-4 text-center">
-				Our Network
-			</h2>
-			<p class="text-sudata-grey font-mono-tech text-sm md:text-base tracking-wide text-center mb-10 max-w-2xl mx-auto">
-				Companies, speakers, and partners who have collaborated with SUDATA to shape the future of data science.
-			</p>
-			<PastPartnersCarousel client:visible />
-		</section>
-
-		<!-- [SECTION: WHY_PARTNER] -->
-		<section class="reveal-on-scroll terminal-block scanline-overlay p-8 md:p-12">
-			<div class="relative z-10">
-				<div class="font-mono-tech text-sudata-neon/80 text-sm tracking-[0.2em] mb-6 flex items-center gap-2">
-					<span class="animate-flicker">_</span>
-					<span>[SECTION: WHY_PARTNER]</span>
-				</div>
-				<h2 class="text-2xl md:text-3xl font-bold text-white font-mono-tech tracking-widest mb-6">
-					Why Partner With SUDATA?
-				</h2>
-				<div class="space-y-4 text-sudata-grey font-mono-tech text-base md:text-lg leading-relaxed">
-					<p>
-						We are the <span class="text-sudata-neon">direct pipeline</span> to Sydney's most ambitious analytical minds. Our 2,000+ active members span Computer Science, Engineering, Mathematics, Finance, and beyond—united by a shared drive to master the technologies defining the next decade.
-					</p>
-					<p>
-						Through SUDATA, you gain access to <span class="text-white">high-potential talent</span> who combine technical ability with commercial awareness. We don't just teach theory; we cultivate problem-solvers ready to tackle real-world challenges from day one.
-					</p>
-					<p>
-						Our partnerships are built on <span class="text-sudata-neon">flexibility and impact</span>. Whether you're looking to lead technical workshops, host competitions, or build a sustained recruitment presence, we design engagements that create genuine value for your organization and our students.
-					</p>
-				</div>
-			</div>
-		</section>
+    <!-- [SECTION: WHY_PARTNER] -->
+    <section class="reveal-on-scroll terminal-block scanline-overlay p-8 md:p-12">
+      <div class="relative z-10">
+        <div class="font-mono-tech text-sudata-neon/80 text-sm tracking-[0.2em] mb-6 flex items-center gap-2">
+          <span class="animate-flicker">_</span>
+          <span>[SECTION: WHY_PARTNER]</span>
+        </div>
+        <h2 class="text-2xl md:text-3xl font-bold text-white font-mono-tech tracking-widest mb-6">
+          Why Partner With SUDATA?
+        </h2>
+        <div class="space-y-4 text-sudata-grey font-mono-tech text-base md:text-lg leading-relaxed">
+          <p>
+            We are the <span class="text-sudata-neon">direct pipeline</span> to Sydney's most ambitious analytical minds...
+          </p>
+          <p>
+            Through SUDATA, you gain access to <span class="text-white">high-potential talent</span>...
+          </p>
+          <p>
+            Our partnerships are built on <span class="text-sudata-neon">flexibility and impact</span>...
+          </p>
+        </div>
+      </div>
+    </section>
 
 		<!-- [SECTION: PARTNERSHIP_PACKAGES] -->
 		<section class="reveal-on-scroll terminal-block scanline-overlay p-8 md:p-12">
