@@ -5,14 +5,7 @@ import UpcomingEvents from '../components/UpcomingEvents.jsx';
 
 const pageTitle = 'Events | SUDATA';
 
-import { readFileSync } from 'fs';
-import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-const eventsPath = join(__dirname, '..', 'data', 'events.json');
-const eventsData = JSON.parse(readFileSync(eventsPath, 'utf-8'));
+import eventsData from '../data/events.json';
 ---
 
 <Layout title={pageTitle}>

@@ -1,7 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
 
+// Category-specific pixel SVG icons — matching index.astro exactly
 const ICONS = {
   ACADEMIC: (
+    // Pixel Brain — same SVG as index.astro "The Hub" card
     <svg width="72" height="72" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"
       style={{ filter: 'drop-shadow(0 0 10px #00F0FF)' }}>
       <path fillRule="evenodd" clipRule="evenodd"
@@ -10,6 +12,7 @@ const ICONS = {
     </svg>
   ),
   SOCIAL: (
+    // Pixel Users — same SVG as index.astro "The Collective" card
     <svg width="72" height="72" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
       style={{ filter: 'drop-shadow(0 0 10px #a78bfa)' }}>
       <path
@@ -17,27 +20,28 @@ const ICONS = {
         fill="#a78bfa"/>
     </svg>
   ),
-  DEFAULT: (
-    <svg width="72" height="72" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
-      style={{ filter: 'drop-shadow(0 0 10px #00F0FF)' }}>
-      <path
-        d="M12 1h2v8h8v4h-2v-2h-8V5h-2V3h2V1zM8 7V5h2v2H8zM6 9V7h2v2H6zm-2 2V9h2v2H4zm10 8v2h-2v2h-2v-8H2v-4h2v2h8v6h2zm2-2v2h-2v-2h2zm2-2v2h-2v-2h2zm0 0h2v-2h-2v2z"
-        fill="#00F0FF"/>
-    </svg>
-  ),
 };
 
 const CATEGORY_CONFIG = {
-  ACADEMIC: { color: '#00F0FF' },
-  SOCIAL:   { color: '#a78bfa' },
+  ACADEMIC: { color: '#00F0FF', label: 'ACADEMIC' },
+  SOCIAL:   { color: '#a78bfa', label: 'SOCIAL' },
 };
 
-function getConfig(category) {
-  return CATEGORY_CONFIG[category?.toUpperCase()] || CATEGORY_CONFIG['ACADEMIC'];
+// EventCalendar uses event.type ("social"/"academic").
+// Support both event.type and event.category as fallback.
+function resolveCategory(ev) {
+  const raw = ev.type || ev.category || 'academic';
+  return raw.toUpperCase();
 }
 
-function getIcon(category) {
-  return ICONS[category?.toUpperCase()] || ICONS.DEFAULT;
+function getConfig(ev) {
+  const key = resolveCategory(ev);
+  return CATEGORY_CONFIG[key] || CATEGORY_CONFIG['ACADEMIC'];
+}
+
+function getIcon(ev) {
+  const key = resolveCategory(ev);
+  return ICONS[key] || ICONS.ACADEMIC;
 }
 
 function formatDate(dateStr) {
@@ -63,129 +67,96 @@ function daysUntil(dateStr) {
   return Math.round((evDate - today) / (1000 * 60 * 60 * 24));
 }
 
-// Card styling mirrors index.astro glass-panel-3d exactly via inline styles
-// so it is never dependent on a CSS class that might get clipped
-const cardStyle = {
-  width: '260px',
-  minWidth: '260px',
-  minHeight: '390px',
-  height: '390px',
-  background: 'linear-gradient(135deg, rgba(0,240,255,0.04) 0%, rgba(2,6,23,0.95) 60%)',
-  border: '1px solid rgba(0,240,255,0.25)',
-  borderRadius: '16px',
-  boxShadow: '0 0 0 0 rgba(0,240,255,0)',
-  transition: 'box-shadow 0.3s ease, border-color 0.3s ease',
-  padding: '36px 28px',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'flex-start',
-  textAlign: 'left',
-  position: 'relative',
-  cursor: 'pointer',
-  flexShrink: 0,
-  textDecoration: 'none',
-};
-
-const cardHoverStyle = {
-  boxShadow: '0 0 24px rgba(0,240,255,0.35), 0 0 48px rgba(0,240,255,0.12)',
-  borderColor: 'rgba(0,240,255,0.7)',
-};
-
 function EventCard({ ev, index }) {
-  const [hovered, setHovered] = useState(false);
   const days = daysUntil(ev.date);
   const dayLabel = days === 0 ? 'TODAY' : days === 1 ? 'TOMORROW' : `IN ${days} DAYS`;
-  const cfg = getConfig(ev.category);
-  const icon = getIcon(ev.category);
+  const cfg = getConfig(ev);
+  const icon = getIcon(ev);
   const hasLink = ev.registrationLink || ev.link;
   const paddedIndex = String(index + 1).padStart(2, '0');
 
-  const mergedStyle = {
-    ...cardStyle,
-    ...(hovered ? cardHoverStyle : {}),
-    borderColor: hovered ? cfg.color : `${cfg.color}40`,
-    boxShadow: hovered
-      ? `0 0 20px ${cfg.color}55, 0 0 40px ${cfg.color}20`
-      : '0 0 0 0 transparent',
-  };
+  // glass-panel-3d has overflow:hidden which clips the glow box-shadow on hover.
+  // Wrapping in a padded div gives the shadow room — negative margin keeps layout tight.
+  const cardInner = (
+    <div style={{ padding: '8px', margin: '-8px', flexShrink: 0 }}>
+      <div
+        className="group glass-panel-3d scanline-overlay flex flex-col items-start text-left relative"
+        style={{ width: '260px', minWidth: '260px', minHeight: '390px', padding: '36px 28px' }}
+      >
+        {/* Top block: category label on line 1, urgency badge on line 2 */}
+        <div className="relative z-10 flex flex-col gap-2 w-full mb-5">
+          <span
+            className="font-mono-tech text-xs tracking-[0.15em] opacity-80 whitespace-nowrap"
+            style={{ color: cfg.color }}
+          >
+            [ {paddedIndex}_{cfg.label} ]
+          </span>
+          <span
+            className="font-mono-tech text-[10px] tracking-[0.12em] px-2 py-0.5 whitespace-nowrap self-start"
+            style={{
+              color: cfg.color,
+              border: `1px solid ${cfg.color}55`,
+              background: `${cfg.color}15`,
+            }}
+          >
+            {dayLabel}
+          </span>
+        </div>
 
-  const content = (
-    <>
-      {/* Top label + urgency badge */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', marginBottom: '20px' }}>
-        <span style={{ fontFamily: 'monospace', fontSize: '11px', letterSpacing: '0.15em', color: cfg.color, opacity: 0.85, whiteSpace: 'nowrap' }}>
-          [{paddedIndex}]
-        </span>
-        <span style={{
-          fontFamily: 'monospace', fontSize: '10px', letterSpacing: '0.12em',
-          color: cfg.color, border: `1px solid ${cfg.color}55`,
-          background: `${cfg.color}15`, padding: '2px 8px', whiteSpace: 'nowrap',
-        }}>
-          {dayLabel}
-        </span>
+        {/* Icon — bracket style matching index.astro, category-aware */}
+        <div className="relative z-10 flex justify-center items-center w-full mb-5 neon-icon-glow">
+          <span className="font-mono text-white/40 text-6xl leading-none mr-2">[</span>
+          {icon}
+          <span className="font-mono text-white/40 text-6xl leading-none ml-2">]</span>
+        </div>
+
+        {/* Title — turns cyan on card hover */}
+        <h3
+          className="relative z-10 font-mono-tech font-bold text-sm text-white tracking-widest mb-3 transition-colors group-hover:text-sudata-neon leading-snug"
+          style={{
+            display: '-webkit-box',
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: 'vertical',
+            overflow: 'hidden',
+          }}
+        >
+          {ev.title || ev.name}
+        </h3>
+
+        {/* Meta */}
+        <div className="relative z-10 font-mono-tech text-[11px] text-sudata-grey leading-7 mb-4 flex-1">
+          <div>◈ {formatDate(ev.date)}</div>
+          {ev.time && (
+            <div>◷ {formatTime(ev.time)}{ev.endTime ? ` – ${formatTime(ev.endTime)}` : ''}</div>
+          )}
+          {ev.location && (
+            <div className="overflow-hidden text-ellipsis whitespace-nowrap max-w-full">◎ {ev.location}</div>
+          )}
+        </div>
+
+        {/* CTA */}
+        <div
+          className="relative z-10 font-mono-tech text-[11px] tracking-[0.15em] flex items-center gap-1 mt-auto"
+          style={{ color: hasLink ? cfg.color : 'rgba(255,255,255,0.25)' }}
+        >
+          <span>{hasLink ? 'SIGN UP' : 'SIGN UP COMING SOON'}</span>
+          {hasLink && (
+            <span className="inline-block transition-transform duration-200 group-hover:translate-x-1">→</span>
+          )}
+        </div>
       </div>
-
-      {/* Pixel icon */}
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', marginBottom: '20px' }}>
-        <span style={{ fontFamily: 'monospace', color: 'rgba(255,255,255,0.4)', fontSize: '52px', lineHeight: 1, marginRight: '8px' }}>[</span>
-        {icon}
-        <span style={{ fontFamily: 'monospace', color: 'rgba(255,255,255,0.4)', fontSize: '52px', lineHeight: 1, marginLeft: '8px' }}>]</span>
-      </div>
-
-      {/* Title */}
-      <h3 style={{
-        fontFamily: 'monospace', fontWeight: 'bold', fontSize: '15px',
-        color: hovered ? cfg.color : '#ffffff',
-        marginBottom: '12px', letterSpacing: '0.08em', lineHeight: 1.3,
-        transition: 'color 0.2s',
-        display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden',
-      }}>
-        {ev.title || ev.name}
-      </h3>
-
-      {/* Meta */}
-      <div style={{ fontFamily: 'monospace', fontSize: '11px', color: '#94a3b8', lineHeight: 1.8, marginBottom: '16px', flex: 1 }}>
-        <div>◈ {formatDate(ev.date)}</div>
-        {ev.time && <div>◷ {formatTime(ev.time)}{ev.endTime ? ` – ${formatTime(ev.endTime)}` : ''}</div>}
-        {ev.location && <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '100%' }}>◎ {ev.location}</div>}
-      </div>
-
-      {/* CTA */}
-      <div style={{
-        fontFamily: 'monospace', fontSize: '11px', letterSpacing: '0.15em',
-        color: hasLink ? cfg.color : 'rgba(255,255,255,0.25)',
-        display: 'flex', alignItems: 'center', gap: '4px', marginTop: 'auto',
-      }}>
-        <span>{hasLink ? 'SIGN UP' : 'SIGN UP COMING SOON'}</span>
-        {hasLink && <span style={{ display: 'inline-block', transform: hovered ? 'translateX(4px)' : 'translateX(0)', transition: 'transform 0.2s' }}>→</span>}
-      </div>
-    </>
+    </div>
   );
 
   if (hasLink) {
     return (
-      <a
-        href={hasLink}
-        target="_blank"
-        rel="noopener noreferrer"
-        style={mergedStyle}
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-      >
-        {content}
+      <a href={hasLink} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', flexShrink: 0 }}>
+        {cardInner}
       </a>
     );
   }
 
-  return (
-    <div
-      style={mergedStyle}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-    >
-      {content}
-    </div>
-  );
+  return <div style={{ flexShrink: 0 }}>{cardInner}</div>;
 }
 
 export default function UpcomingEvents({ events = [] }) {
@@ -217,16 +188,15 @@ export default function UpcomingEvents({ events = [] }) {
   };
 
   return (
-    // Outer wrapper — no overflow clipping at all
     <div style={{ marginBottom: '32px' }}>
 
-      {/* Header block — terminal style but no overflow:hidden */}
+      {/* Header — terminal block style */}
       <div
         className="terminal-block scanline-overlay"
-        style={{ padding: '32px 32px 24px 32px', marginBottom: '0', borderBottomLeftRadius: 0, borderBottomRightRadius: 0 }}
+        style={{ padding: '32px 32px 24px 32px', borderBottomLeftRadius: 0, borderBottomRightRadius: 0 }}
       >
         <div className="relative z-10">
-          <div className="font-mono-tech text-[#00F0FF]/80 text-sm tracking-[0.2em] mb-4 flex items-center gap-2">
+          <div className="font-mono-tech text-sudata-neon/80 text-sm tracking-[0.2em] mb-4 flex items-center gap-2">
             <span className="animate-flicker">&gt;_</span>
             <span>[SECTION: UPCOMING_EVENTS]</span>
           </div>
@@ -235,7 +205,7 @@ export default function UpcomingEvents({ events = [] }) {
               <h2 className="text-xl font-bold text-white font-mono-tech tracking-widest">
                 Next 14 Days
               </h2>
-              <p className="text-[#94a3b8] font-mono-tech text-sm mt-1">
+              <p className="text-sudata-grey font-mono-tech text-sm mt-1">
                 {upcoming.length} event{upcoming.length !== 1 ? 's' : ''} incoming — click a card to register
               </p>
             </div>
@@ -243,12 +213,12 @@ export default function UpcomingEvents({ events = [] }) {
               <div style={{ display: 'flex', gap: '8px' }}>
                 <button
                   onClick={() => scroll(-1)}
-                  className="w-8 h-8 flex items-center justify-center border border-[#00F0FF]/40 text-[#00F0FF] font-mono-tech hover:bg-[#00F0FF]/10 transition-colors text-lg"
+                  className="w-8 h-8 flex items-center justify-center border border-sudata-neon/40 text-sudata-neon font-mono-tech hover:bg-sudata-neon/10 transition-colors text-lg"
                   aria-label="Scroll left"
                 >‹</button>
                 <button
                   onClick={() => scroll(1)}
-                  className="w-8 h-8 flex items-center justify-center border border-[#00F0FF]/40 text-[#00F0FF] font-mono-tech hover:bg-[#00F0FF]/10 transition-colors text-lg"
+                  className="w-8 h-8 flex items-center justify-center border border-sudata-neon/40 text-sudata-neon font-mono-tech hover:bg-sudata-neon/10 transition-colors text-lg"
                   aria-label="Scroll right"
                 >›</button>
               </div>
@@ -257,7 +227,7 @@ export default function UpcomingEvents({ events = [] }) {
         </div>
       </div>
 
-      {/* Card scroll row — completely outside any clipping container */}
+      {/* Card scroll row — extra top padding so glow shadow is never clipped */}
       <div
         ref={scrollRef}
         style={{
@@ -265,7 +235,7 @@ export default function UpcomingEvents({ events = [] }) {
           gap: '24px',
           overflowX: 'auto',
           overflowY: 'visible',
-          padding: '24px 32px 28px 32px',
+          padding: '20px 40px 28px 40px',
           scrollbarWidth: 'thin',
           scrollbarColor: '#00F0FF33 transparent',
           background: 'rgba(0,240,255,0.02)',
