@@ -1,15 +1,9 @@
-import { readFileSync } from 'fs';
-import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
-
 /**
- * Processes the SUDATA members CSV and returns chart data
+ * Processes the SUDATA members CSV content and returns chart data
  * Expects CSV with columns: major_std, degree_std, gender, ethnicity_std
+ * @param {string} csvContent - The raw CSV file content as a string
  */
-export function processChartData(csvPath) {
-  // Decode URL-encoded path if necessary
-  const decodedPath = decodeURIComponent(csvPath);
-  const csvContent = readFileSync(decodedPath, 'utf-8');
+export function processChartData(csvContent) {
   const lines = csvContent.trim().split('\n');
   
   // Parse CSV header

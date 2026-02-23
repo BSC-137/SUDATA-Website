@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import ExecutiveCarousel from '../components/ExecutiveCarousel.jsx';
 import InteractivePieChart from '../components/InteractivePieChart.jsx';
 import { processChartData } from '../utils/processChartData.js';
+import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 
@@ -12,7 +13,8 @@ const __dirname = dirname(__filename);
 const csvPath = join(__dirname, '../../public/society_data/sudata_members_cleaned.csv');
 
 // Load and process CSV data
-const { majorData, degreeData, genderData, ethnicityData } = processChartData(csvPath);
+const csvContent = readFileSync(csvPath, 'utf-8');
+const { majorData, degreeData, genderData, ethnicityData } = processChartData(csvContent);
 
 const webArchitects = [
   { name: 'Olivia Peng', role: 'Technical Lead', linkedin: 'https://www.linkedin.com/in/oliviapeng26/', image: '/assets/execs/olivia.jpeg' },
