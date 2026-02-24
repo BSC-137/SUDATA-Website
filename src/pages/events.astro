@@ -13,17 +13,17 @@ const eventsData = JSON.parse(eventsJson);
 
 
 <Layout title={pageTitle}>
-  <div class="min-h-screen bg-[#020617] text-[#94a3b8] pt-24 pb-16 px-4">
+  <div class="min-h-screen bg-[#020617] text-[#94a3b8] pt-20 sm:pt-24 pb-12 sm:pb-16 px-4 sm:px-6">
 
     <!-- Header -->
-    <div class="max-w-7xl mx-auto mb-12">
-      <div class="text-center mb-8">
-        <h1 class="text-5xl md:text-6xl font-bold mb-4">
+    <div class="max-w-7xl mx-auto mb-8 sm:mb-12">
+      <div class="text-center mb-6 sm:mb-8">
+        <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 sm:mb-4">
           <span class="text-[#00F0FF]" style="text-shadow: 0 0 20px #00F0FF, 0 0 40px #00F0FF;">
             Events
           </span>
         </h1>
-        <p class="text-[#94a3b8] font-mono-tech text-lg tracking-wide mb-6">
+        <p class="text-[#94a3b8] font-mono-tech text-base sm:text-lg tracking-wide mb-4 sm:mb-6">
           [ Temporal Data Stream ]
         </p>
 
@@ -33,7 +33,7 @@ const eventsData = JSON.parse(eventsJson);
         </div>
 
         <!-- CALENDAR_GUIDE section (renamed from NAVIGATION_PROTOCOL) -->
-        <div class="reveal-on-scroll terminal-block scanline-overlay p-8 max-w-7xl mx-auto mb-8">
+        <div class="reveal-on-scroll terminal-block scanline-overlay p-6 sm:p-8 md:p-10 max-w-7xl mx-auto mb-8">
           <div class="relative z-10">
             <div class="font-mono-tech text-sudata-neon/80 text-sm tracking-[0.2em] mb-4 flex items-center gap-2">
               <span class="animate-flicker">&gt;_</span>

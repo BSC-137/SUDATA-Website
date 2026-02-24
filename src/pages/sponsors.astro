@@ -38,19 +38,19 @@ const delayClasses = ['delay-0', 'delay-100', 'delay-200', 'delay-300'];
 ---
 
 <Layout title="Sponsors | SUDATA">
-  <div class="flex flex-col w-full max-w-6xl mx-auto space-y-24 pt-32 pb-24 px-4">
+  <div class="flex flex-col w-full max-w-6xl mx-auto space-y-12 sm:space-y-16 md:space-y-24 pt-24 sm:pt-28 md:pt-32 pb-16 sm:pb-20 md:pb-24 px-4 sm:px-6">
 
     <!-- Page title -->
-    <header class="reveal-on-scroll text-center space-y-4">
-      <h1 class="text-4xl md:text-6xl font-bold text-sudata-neon tracking-widest neon-text-shadow font-mono-tech">
+    <header class="reveal-on-scroll text-center space-y-2 sm:space-y-4">
+      <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-sudata-neon tracking-wider sm:tracking-widest neon-text-shadow font-mono-tech">
         OUR SPONSORS
       </h1>
-      <p class="text-sudata-grey font-mono-tech text-lg tracking-wide">
+      <p class="text-sudata-grey font-mono-tech text-base sm:text-lg tracking-wide">
         [ Powering the Next Generation of Data Leaders ]
       </p>
     </header>
 
-    <section class="reveal-on-scroll terminal-block scanline-overlay p-8 md:p-12">
+    <section class="reveal-on-scroll terminal-block scanline-overlay p-6 sm:p-8 md:p-10">
       <div class="relative z-10">
         <div class="font-mono-tech text-sudata-neon/80 text-sm tracking-[0.2em] mb-6 flex items-center gap-2">
           <span class="animate-flicker">&gt;_</span>
@@ -62,7 +62,7 @@ const delayClasses = ['delay-0', 'delay-100', 'delay-200', 'delay-300'];
         </h2>
 
         <!-- [SECTION: 2026_SPONSORS] -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
           {sponsors.map((s, i) => (
             <a
               href={s.href}
@@ -113,7 +113,7 @@ const delayClasses = ['delay-0', 'delay-100', 'delay-200', 'delay-300'];
     </section>
 
     <!-- [SECTION: WHY_PARTNER] -->
-    <section class="reveal-on-scroll terminal-block scanline-overlay p-8 md:p-12">
+    <section class="reveal-on-scroll terminal-block scanline-overlay p-6 sm:p-8 md:p-10">
       <div class="relative z-10">
         <div class="font-mono-tech text-sudata-neon/80 text-sm tracking-[0.2em] mb-6 flex items-center gap-2">
           <span class="animate-flicker">_</span>
@@ -137,7 +137,7 @@ const delayClasses = ['delay-0', 'delay-100', 'delay-200', 'delay-300'];
     </section>
 
 		<!-- [SECTION: PARTNERSHIP_PACKAGES] -->
-		<section class="reveal-on-scroll terminal-block scanline-overlay p-8 md:p-12">
+		<section class="reveal-on-scroll terminal-block scanline-overlay p-6 sm:p-8 md:p-10">
 			<div class="relative z-10">
 				<div class="font-mono-tech text-sudata-neon/80 text-sm tracking-[0.2em] mb-6 flex items-center gap-2">
 					<span class="animate-flicker">_</span>
@@ -147,20 +147,20 @@ const delayClasses = ['delay-0', 'delay-100', 'delay-200', 'delay-300'];
 					Partnership Packages
 				</h2>
 
-				<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+				<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
 
 					<!-- Industry Partner Package -->
-					<div class="reveal-on-scroll group glass-panel-3d p-10 flex flex-col items-start text-left h-full relative overflow-hidden scanline-overlay">
-						<div class="relative z-10 mb-6 font-mono-tech text-sudata-neon text-sm tracking-[0.2em] opacity-80 whitespace-nowrap">
+					<div class="reveal-on-scroll group glass-panel-3d p-6 sm:p-8 md:p-10 flex flex-col items-start text-left h-full relative overflow-hidden scanline-overlay">
+						<div class="relative z-10 mb-4 sm:mb-6 font-mono-tech text-sudata-neon text-xs sm:text-sm tracking-[0.2em] opacity-80 whitespace-nowrap">
 							[ 01_INDUSTRY_PARTNER ]
 						</div>
 						<div class="relative z-10 mb-2">
-							<span class="text-3xl font-bold text-sudata-neon font-mono-tech neon-text-shadow">$2,000</span>
+							<span class="text-2xl sm:text-3xl font-bold text-sudata-neon font-mono-tech neon-text-shadow">$2,000</span>
 						</div>
-						<h3 class="relative z-10 text-2xl font-bold text-white mb-2 tracking-widest group-hover:text-sudata-neon transition-colors font-mono-tech">
+						<h3 class="relative z-10 text-xl sm:text-2xl font-bold text-white mb-2 tracking-wider sm:tracking-widest group-hover:text-sudata-neon transition-colors font-mono-tech">
 							Industry Partner Package
 						</h3>
-						<p class="relative z-10 text-sm font-mono-tech text-sudata-grey/80 mb-6 tracking-wide">
+						<p class="relative z-10 text-xs sm:text-sm font-mono-tech text-sudata-grey/80 mb-4 sm:mb-6 tracking-wide">
 							Maximum Brand Integration
 						</p>
 						<ul class="relative z-10 space-y-3 text-sm font-mono-tech text-sudata-grey/90 leading-relaxed">
@@ -174,17 +174,17 @@ const delayClasses = ['delay-0', 'delay-100', 'delay-200', 'delay-300'];
 					</div>
 
 					<!-- Technical Package -->
-					<div class="reveal-on-scroll group glass-panel-3d p-10 flex flex-col items-start text-left h-full relative overflow-hidden delay-100 scanline-overlay">
-						<div class="relative z-10 mb-6 font-mono-tech text-sudata-neon text-sm tracking-[0.2em] opacity-80 whitespace-nowrap">
+					<div class="reveal-on-scroll group glass-panel-3d p-6 sm:p-8 md:p-10 flex flex-col items-start text-left h-full relative overflow-hidden delay-100 scanline-overlay">
+						<div class="relative z-10 mb-4 sm:mb-6 font-mono-tech text-sudata-neon text-xs sm:text-sm tracking-[0.2em] opacity-80 whitespace-nowrap">
 							[ 02_TECHNICAL ]
 						</div>
 						<div class="relative z-10 mb-2">
-							<span class="text-3xl font-bold text-sudata-neon font-mono-tech neon-text-shadow">$1,250</span>
+							<span class="text-2xl sm:text-3xl font-bold text-sudata-neon font-mono-tech neon-text-shadow">$1,250</span>
 						</div>
-						<h3 class="relative z-10 text-2xl font-bold text-white mb-2 tracking-widest group-hover:text-sudata-neon transition-colors font-mono-tech">
+						<h3 class="relative z-10 text-xl sm:text-2xl font-bold text-white mb-2 tracking-wider sm:tracking-widest group-hover:text-sudata-neon transition-colors font-mono-tech">
 							Technical Package
 						</h3>
-						<p class="relative z-10 text-sm font-mono-tech text-sudata-grey/80 mb-6 tracking-wide">
+						<p class="relative z-10 text-xs sm:text-sm font-mono-tech text-sudata-grey/80 mb-4 sm:mb-6 tracking-wide">
 							Showcase Your Engineering Culture
 						</p>
 						<ul class="relative z-10 space-y-3 text-sm font-mono-tech text-sudata-grey/90 leading-relaxed">
@@ -197,17 +197,17 @@ const delayClasses = ['delay-0', 'delay-100', 'delay-200', 'delay-300'];
 					</div>
 
 					<!-- Recruitment Package -->
-					<div class="reveal-on-scroll group glass-panel-3d p-10 flex flex-col items-start text-left h-full relative overflow-hidden delay-200 scanline-overlay">
-						<div class="relative z-10 mb-6 font-mono-tech text-sudata-neon text-sm tracking-[0.2em] opacity-80 whitespace-nowrap">
+					<div class="reveal-on-scroll group glass-panel-3d p-6 sm:p-8 md:p-10 flex flex-col items-start text-left h-full relative overflow-hidden delay-200 scanline-overlay">
+						<div class="relative z-10 mb-4 sm:mb-6 font-mono-tech text-sudata-neon text-xs sm:text-sm tracking-[0.2em] opacity-80 whitespace-nowrap">
 							[ 03_RECRUITMENT ]
 						</div>
 						<div class="relative z-10 mb-2">
-							<span class="text-3xl font-bold text-sudata-neon font-mono-tech neon-text-shadow">$1,250</span>
+							<span class="text-2xl sm:text-3xl font-bold text-sudata-neon font-mono-tech neon-text-shadow">$1,250</span>
 						</div>
-						<h3 class="relative z-10 text-2xl font-bold text-white mb-2 tracking-widest group-hover:text-sudata-neon transition-colors font-mono-tech">
+						<h3 class="relative z-10 text-xl sm:text-2xl font-bold text-white mb-2 tracking-wider sm:tracking-widest group-hover:text-sudata-neon transition-colors font-mono-tech">
 							Recruitment Package
 						</h3>
-						<p class="relative z-10 text-sm font-mono-tech text-sudata-grey/80 mb-6 tracking-wide">
+						<p class="relative z-10 text-xs sm:text-sm font-mono-tech text-sudata-grey/80 mb-4 sm:mb-6 tracking-wide">
 							Drive Your Recruitment Strategy
 						</p>
 						<ul class="relative z-10 space-y-3 text-sm font-mono-tech text-sudata-grey/90 leading-relaxed">
@@ -256,7 +256,7 @@ const delayClasses = ['delay-0', 'delay-100', 'delay-200', 'delay-300'];
 		</section>
 
 		<!-- // BUILD_THE_FUTURE_TOGETHER -->
-		<footer class="reveal-on-scroll terminal-block scanline-overlay p-8 md:p-12">
+		<footer class="reveal-on-scroll terminal-block scanline-overlay p-6 sm:p-8 md:p-10">
 			<div class="relative z-10 text-center">
 				<div class="font-mono-tech text-sudata-neon/80 text-sm tracking-[0.2em] mb-6 flex items-center justify-center gap-2">
 					<span>// BUILD_THE_FUTURE_TOGETHER</span>

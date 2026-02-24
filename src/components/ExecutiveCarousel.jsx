@@ -27,29 +27,29 @@ function ExecutiveCard({ executive }) {
   const initials = executive.name.split(' ').map(n => n[0]).join('');
   return (
     <div
-      className="executive-card flex-shrink-0 p-6 rounded-2xl flex flex-col items-center text-center executive-card-3d"
+      className="executive-card flex-shrink-0 p-4 sm:p-5 md:p-6 rounded-xl sm:rounded-2xl flex flex-col items-center text-center executive-card-3d"
       style={{ width: `${CARD_WIDTH_PX}px`, minWidth: `${CARD_WIDTH_PX}px` }}
     >
-      <div className="w-28 h-28 rounded-full border-2 border-sudata-neon/60 bg-sudata-navy/80 mb-4 flex items-center justify-center overflow-hidden ring-2 ring-sudata-neon/30 object-cover">
+      <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full border-2 border-sudata-neon/60 bg-sudata-navy/80 mb-3 sm:mb-4 flex items-center justify-center overflow-hidden ring-2 ring-sudata-neon/30 object-cover">
         {executive.image ? (
           <img src={executive.image} alt="" className="w-full h-full object-cover" />
         ) : (
-          <span className="text-sudata-grey/50 text-4xl font-bold font-mono select-none">
+          <span className="text-sudata-grey/50 text-2xl sm:text-3xl md:text-4xl font-bold font-mono select-none">
             {initials}
           </span>
         )}
       </div>
-      <h3 className="font-mono-tech font-bold text-white text-lg tracking-wider mb-1">
+      <h3 className="font-mono-tech font-bold text-white text-base sm:text-lg tracking-wider mb-1">
         {executive.name}
       </h3>
-      <p className="font-mono-tech text-sudata-neon/90 text-sm tracking-widest mb-4">
+      <p className="font-mono-tech text-sudata-neon/90 text-xs sm:text-sm tracking-widest mb-3 sm:mb-4">
         {executive.role}
       </p>
       <a
         href={executive.linkedin}
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-sudata-neon/50 text-sudata-neon hover:bg-sudata-neon/20 hover:shadow-[0_0_15px_rgba(0,240,255,0.5)] transition-all duration-300"
+        className="inline-flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-lg border border-sudata-neon/50 text-sudata-neon hover:bg-sudata-neon/20 active:bg-sudata-neon/30 hover:shadow-[0_0_15px_rgba(0,240,255,0.5)] transition-all duration-300 touch-manipulation"
         aria-label={`${executive.name} on LinkedIn`}
       >
         <LinkedInIcon />
@@ -80,15 +80,15 @@ function ArrowButton({ direction, onClick }) {
     <button
       type="button"
       onClick={onClick}
-      className="carousel-arrow flex-shrink-0 w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center rounded-xl border-2 border-sudata-neon/60 bg-sudata-navy/80 text-sudata-neon hover:bg-sudata-neon/20 hover:shadow-[0_0_25px_rgba(0,240,255,0.5)] hover:border-sudata-neon transition-all duration-300 z-10"
+      className="carousel-arrow flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 flex items-center justify-center rounded-lg sm:rounded-xl border-2 border-sudata-neon/60 bg-sudata-navy/80 text-sudata-neon hover:bg-sudata-neon/20 active:bg-sudata-neon/30 hover:shadow-[0_0_25px_rgba(0,240,255,0.5)] hover:border-sudata-neon transition-all duration-300 z-10 touch-manipulation"
       aria-label={direction === 'left' ? 'Previous executives' : 'Next executives'}
     >
       {direction === 'left' ? (
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square" className="sm:w-6 sm:h-6" aria-hidden="true">
           <path d="M15 18l-6-6 6-6" />
         </svg>
       ) : (
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square" className="sm:w-6 sm:h-6" aria-hidden="true">
           <path d="M9 18l6-6-6-6" />
         </svg>
       )}
@@ -151,11 +151,11 @@ export default function ExecutiveCarousel({ executives = null }) {
   };
 
   return (
-    <div className="relative w-full max-w-[972px] mx-auto flex items-center gap-3 md:gap-4">
+    <div className="relative w-full max-w-[972px] mx-auto flex items-center gap-2 sm:gap-3 md:gap-4 px-2 sm:px-0">
       <ArrowButton direction="left" onClick={() => scroll('left')} />
       <div
         ref={scrollRef}
-        className="executive-carousel flex overflow-x-auto gap-6 py-4 px-2 scrollbar-hide flex-1 min-w-0"
+        className="executive-carousel flex overflow-x-auto gap-4 sm:gap-6 py-4 px-2 scrollbar-hide flex-1 min-w-0 touch-pan-x"
         style={{
           width: '100%',
           maxWidth: VIEWPORT_THREE_CARDS,

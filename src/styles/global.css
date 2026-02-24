@@ -206,3 +206,43 @@
 .executive-card-3d > * {
   transform: translateZ(20px); /* Parallax text slightly */
 }
+
+/* Touch-friendly improvements */
+@media (hover: none) and (pointer: coarse) {
+  /* Mobile touch devices */
+  .glass-panel-3d:hover {
+    transform: translateY(-10px) scale(1.02);
+  }
+  
+  .executive-card-3d:hover {
+    transform: translateY(-5px) translateZ(20px);
+  }
+}
+
+/* Improve tap targets on mobile */
+@media (max-width: 640px) {
+  a, button {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Ensure readable text sizes */
+  body {
+    font-size: 16px; /* Prevents iOS zoom on input focus */
+  }
+}
+
+/* Smooth scrolling for better mobile experience */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Better text rendering on mobile */
+@media (max-width: 768px) {
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}

@@ -81,7 +81,7 @@ function EventCard({ ev, index }) {
     <div style={{ padding: '8px', margin: '-8px', flexShrink: 0 }}>
       <div
         className="group glass-panel-3d scanline-overlay flex flex-col items-start text-left relative"
-        style={{ width: '260px', minWidth: '260px', minHeight: '390px', padding: '36px 28px' }}
+        style={{ width: '240px', minWidth: '240px', minHeight: '360px', padding: '28px 20px' }}
       >
         {/* Top block: category label on line 1, urgency badge on line 2 */}
         <div className="relative z-10 flex flex-col gap-2 w-full mb-5">
@@ -193,7 +193,7 @@ export default function UpcomingEvents({ events = [] }) {
       {/* Header — terminal block style */}
       <div
         className="terminal-block scanline-overlay"
-        style={{ padding: '32px 32px 24px 32px', borderBottomLeftRadius: 0, borderBottomRightRadius: 0 }}
+        style={{ padding: '24px 20px 20px 20px', borderBottomLeftRadius: 0, borderBottomRightRadius: 0 }}
       >
         <div className="relative z-10">
           <div className="font-mono-tech text-sudata-neon/80 text-sm tracking-[0.2em] mb-4 flex items-center gap-2">
@@ -213,12 +213,12 @@ export default function UpcomingEvents({ events = [] }) {
               <div style={{ display: 'flex', gap: '8px' }}>
                 <button
                   onClick={() => scroll(-1)}
-                  className="w-8 h-8 flex items-center justify-center border border-sudata-neon/40 text-sudata-neon font-mono-tech hover:bg-sudata-neon/10 transition-colors text-lg"
+                  className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center border border-sudata-neon/40 text-sudata-neon font-mono-tech hover:bg-sudata-neon/10 active:bg-sudata-neon/20 transition-colors text-lg sm:text-xl touch-manipulation"
                   aria-label="Scroll left"
                 >‹</button>
                 <button
                   onClick={() => scroll(1)}
-                  className="w-8 h-8 flex items-center justify-center border border-sudata-neon/40 text-sudata-neon font-mono-tech hover:bg-sudata-neon/10 transition-colors text-lg"
+                  className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center border border-sudata-neon/40 text-sudata-neon font-mono-tech hover:bg-sudata-neon/10 active:bg-sudata-neon/20 transition-colors text-lg sm:text-xl touch-manipulation"
                   aria-label="Scroll right"
                 >›</button>
               </div>
@@ -230,12 +230,13 @@ export default function UpcomingEvents({ events = [] }) {
       {/* Card scroll row — extra top padding so glow shadow is never clipped */}
       <div
         ref={scrollRef}
+        className="touch-pan-x"
         style={{
           display: 'flex',
-          gap: '24px',
+          gap: '16px',
           overflowX: 'auto',
           overflowY: 'visible',
-          padding: '20px 40px 28px 40px',
+          padding: '16px 20px 24px 20px',
           scrollbarWidth: 'thin',
           scrollbarColor: '#00F0FF33 transparent',
           background: 'rgba(0,240,255,0.02)',
@@ -243,6 +244,7 @@ export default function UpcomingEvents({ events = [] }) {
           borderTop: 'none',
           borderBottomLeftRadius: '12px',
           borderBottomRightRadius: '12px',
+          WebkitOverflowScrolling: 'touch',
         }}
       >
         {upcoming.map((ev, i) => (

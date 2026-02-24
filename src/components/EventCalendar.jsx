@@ -141,13 +141,13 @@ const EventCalendar = ({ events }) => {
   return (
     <div className="space-y-8">
       {/* Filters */}
-      <div className="reveal-on-scroll flex flex-wrap justify-center gap-4">
+      <div className="reveal-on-scroll flex flex-wrap justify-center gap-3 sm:gap-4">
         {Object.entries(filterConfig).map(([type, config]) => (
           <button
             key={type}
             onClick={() => toggleFilter(type)}
             className={`
-              px-6 py-3 rounded-lg font-bold text-sm uppercase tracking-wider
+              px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-bold text-xs sm:text-sm uppercase tracking-wider
               transition-all duration-300 ease-out
               ${activeFilters.has(type)
                 ? `${config.bgActive} border-2 ${config.borderActive} ${config.textActive} ${config.shadow}`
@@ -158,8 +158,8 @@ const EventCalendar = ({ events }) => {
               backdropFilter: 'blur(20px)'
             }}
           >
-            <div className="flex items-center gap-2">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style={{ imageRendering: 'pixelated' }}>
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" className="sm:w-4 sm:h-4" style={{ imageRendering: 'pixelated' }}>
                 <path d={config.icon} />
               </svg>
               {type}
@@ -169,15 +169,15 @@ const EventCalendar = ({ events }) => {
       </div>
 
       {/* Year Selector - Current Year + Archive Dropdown */}
-      <div className="reveal-on-scroll flex justify-center items-center gap-4">
+      <div className="reveal-on-scroll flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-4">
         <button
           onClick={() => {
             setSelectedYear(currentYear);
             setSelectedMonth(new Date().getMonth());
           }}
           className={`
-            px-6 py-2 rounded-lg font-bold text-sm
-            transition-all duration-300 ease-out
+            px-4 sm:px-6 py-2 rounded-lg font-bold text-xs sm:text-sm
+            transition-all duration-300 ease-out w-full sm:w-auto
             ${selectedYear === currentYear
               ? 'bg-[#00F0FF]/20 border-2 border-[#00F0FF] text-[#00F0FF]'
               : 'bg-[#020617] border-2 border-[#94a3b8]/30 text-[#94a3b8] hover:border-[#94a3b8]/50'
@@ -190,7 +190,7 @@ const EventCalendar = ({ events }) => {
           {currentYear}
         </button>
 
-        <div className="relative">
+        <div className="relative w-full sm:w-auto">
           <select
             value={selectedYear === currentYear ? '' : selectedYear}
             onChange={(e) => {
@@ -200,7 +200,7 @@ const EventCalendar = ({ events }) => {
               }
             }}
             className={`
-              px-6 py-2 rounded-lg font-bold text-sm cursor-pointer appearance-none pr-10
+              px-4 sm:px-6 py-2 rounded-lg font-bold text-xs sm:text-sm cursor-pointer appearance-none pr-8 sm:pr-10 w-full
               transition-all duration-300 ease-out
               ${selectedYear !== currentYear
                 ? 'bg-[#00F0FF]/20 border-2 border-[#00F0FF] text-[#00F0FF]'
@@ -217,11 +217,12 @@ const EventCalendar = ({ events }) => {
             ))}
           </select>
           <svg 
-            className={`absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none ${selectedYear !== currentYear ? 'text-[#00F0FF]' : 'text-[#94a3b8]'}`}
-            width="12" 
-            height="12" 
+            className={`absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 pointer-events-none ${selectedYear !== currentYear ? 'text-[#00F0FF]' : 'text-[#94a3b8]'}`}
+            width="10" 
+            height="10" 
             viewBox="0 0 24 24" 
             fill="currentColor"
+            className="sm:w-3 sm:h-3"
             style={{ imageRendering: 'pixelated' }}
           >
             <path d="M7 10L12 15L17 10H7Z" />
@@ -230,7 +231,7 @@ const EventCalendar = ({ events }) => {
       </div>
 
       {/* Month Navigation */}
-      <div className="reveal-on-scroll flex items-center justify-between max-w-2xl mx-auto">
+      <div className="reveal-on-scroll flex items-center justify-between max-w-2xl mx-auto px-2">
         <button
           onClick={() => {
             if (selectedMonth === 0) {
@@ -245,17 +246,17 @@ const EventCalendar = ({ events }) => {
             }
           }}
           disabled={selectedMonth === 0 && !availableYears.includes(selectedYear - 1)}
-          className="p-3 rounded-lg bg-[#00F0FF]/10 border border-[#00F0FF]/30 text-[#00F0FF] 
+          className="p-2 sm:p-3 rounded-lg bg-[#00F0FF]/10 border border-[#00F0FF]/30 text-[#00F0FF] 
                      hover:bg-[#00F0FF]/20 hover:scale-110 transition-all duration-300
-                     disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:scale-100"
+                     disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:scale-100 touch-manipulation"
           style={{ backdropFilter: 'blur(20px)' }}
         >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style={{ imageRendering: 'pixelated' }}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" className="sm:w-6 sm:h-6" style={{ imageRendering: 'pixelated' }}>
             <path d="M15 18L9 12L15 6V18Z" />
           </svg>
         </button>
 
-        <h2 className="text-3xl font-bold text-[#00F0FF]" style={{ textShadow: '0 0 20px #00F0FF' }}>
+        <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-[#00F0FF] text-center px-2" style={{ textShadow: '0 0 20px #00F0FF' }}>
           {months[selectedMonth]} {selectedYear}
         </h2>
 
@@ -273,33 +274,33 @@ const EventCalendar = ({ events }) => {
             }
           }}
           disabled={selectedMonth === 11 && !availableYears.includes(selectedYear + 1)}
-          className="p-3 rounded-lg bg-[#00F0FF]/10 border border-[#00F0FF]/30 text-[#00F0FF] 
+          className="p-2 sm:p-3 rounded-lg bg-[#00F0FF]/10 border border-[#00F0FF]/30 text-[#00F0FF] 
                      hover:bg-[#00F0FF]/20 hover:scale-110 transition-all duration-300
-                     disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:scale-100"
+                     disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:scale-100 touch-manipulation"
           style={{ backdropFilter: 'blur(20px)' }}
         >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style={{ imageRendering: 'pixelated' }}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" className="sm:w-6 sm:h-6" style={{ imageRendering: 'pixelated' }}>
             <path d="M9 18L15 12L9 6V18Z" />
           </svg>
         </button>
       </div>
 
       {/* Calendar Grid */}
-      <div className="reveal-on-scroll bg-[#020617] rounded-2xl border border-[#00F0FF]/20 p-6 backdrop-blur-2xl"
+      <div className="reveal-on-scroll bg-[#020617] rounded-xl sm:rounded-2xl border border-[#00F0FF]/20 p-3 sm:p-4 md:p-6 backdrop-blur-2xl"
            style={{ boxShadow: '0 0 40px rgba(0,240,255,0.1)' }}>
         {/* Day Headers */}
-        <div className="grid grid-cols-7 gap-2 mb-4">
+        <div className="grid grid-cols-7 gap-1 sm:gap-2 mb-2 sm:mb-4">
           {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
-            <div key={day} className="text-center text-[#00F0FF] font-bold text-sm py-2">
+            <div key={day} className="text-center text-[#00F0FF] font-bold text-xs sm:text-sm py-1 sm:py-2">
               {day}
             </div>
           ))}
         </div>
 
         {/* Calendar Days */}
-        <div className="space-y-2">
+        <div className="space-y-1 sm:space-y-2">
           {calendar.map((week, weekIdx) => (
-            <div key={weekIdx} className="grid grid-cols-7 gap-2">
+            <div key={weekIdx} className="grid grid-cols-7 gap-1 sm:gap-2">
               {week.map((day, dayIdx) => {
                 const dayEvents = day ? getEventsForDay(day) : [];
                 const semesterInfo = day ? getSemesterWeek(day) : null;
@@ -309,24 +310,24 @@ const EventCalendar = ({ events }) => {
                   <div
                     key={dayIdx}
                     className={`
-                      aspect-square rounded-lg p-2 relative
+                      aspect-square rounded sm:rounded-lg p-1 sm:p-2 relative
                       ${day
-                        ? 'bg-[#00F0FF]/5 border border-[#00F0FF]/20 hover:bg-[#00F0FF]/10 hover:border-[#00F0FF]/40 cursor-pointer transition-all duration-300'
+                        ? 'bg-[#00F0FF]/5 border border-[#00F0FF]/20 hover:bg-[#00F0FF]/10 hover:border-[#00F0FF]/40 cursor-pointer transition-all duration-300 touch-manipulation'
                         : 'bg-transparent'
                       }
-                      ${dayEvents.length > 0 ? 'ring-2 ring-[#00F0FF]/50' : ''}
+                      ${dayEvents.length > 0 ? 'ring-1 sm:ring-2 ring-[#00F0FF]/50' : ''}
                       ${holidayName ? 'bg-[#FF00FF]/10 border-[#FF00FF]/30' : ''}
                     `}
                     title={holidayName || ''}
                   >
                     {day && (
                       <>
-                        <div className="flex items-start justify-between gap-1">
-                          <div className={`font-bold text-sm ${holidayName ? 'text-[#FF00FF]' : 'text-[#94a3b8]'}`}>
+                        <div className="flex items-start justify-between gap-0.5 sm:gap-1">
+                          <div className={`font-bold text-xs sm:text-sm ${holidayName ? 'text-[#FF00FF]' : 'text-[#94a3b8]'}`}>
                             {day}
                           </div>
                           {semesterInfo && (
-                            <div className="text-[9px] text-[#00F0FF]/60 font-mono leading-tight">
+                            <div className="text-[8px] sm:text-[9px] text-[#00F0FF]/60 font-mono leading-tight">
                               {semesterInfo.week 
                                 ? `S${semesterInfo.semester}W${semesterInfo.week}`
                                 : semesterInfo.period
@@ -337,8 +338,8 @@ const EventCalendar = ({ events }) => {
                         
                         {/* Public Holiday Indicator */}
                         {holidayName && !dayEvents.length && (
-                          <div className="absolute bottom-1 left-1 right-1">
-                            <div className="text-[9px] text-[#FF00FF] font-bold truncate">
+                          <div className="absolute bottom-0.5 sm:bottom-1 left-0.5 sm:left-1 right-0.5 sm:right-1">
+                            <div className="text-[8px] sm:text-[9px] text-[#FF00FF] font-bold truncate">
                               {holidayName}
                             </div>
                           </div>
@@ -346,14 +347,14 @@ const EventCalendar = ({ events }) => {
                         
                         {/* Events - positioned at top */}
                         {dayEvents.length > 0 && (
-                          <div className="mt-1 space-y-1">
+                          <div className="mt-0.5 sm:mt-1 space-y-0.5 sm:space-y-1">
                             {dayEvents.map(event => {
                               const eventConfig = filterConfig[event.type];
                               return (
                                 <button
                                   key={event.id}
                                   onClick={() => setSelectedEvent(event)}
-                                  className={`w-full text-left px-1.5 py-0.5 rounded text-[10px] font-bold truncate transition-colors`}
+                                  className={`w-full text-left px-1 sm:px-1.5 py-0.5 rounded text-[9px] sm:text-[10px] font-bold truncate transition-colors touch-manipulation`}
                                   style={{
                                     backgroundColor: eventConfig.color,
                                     color: '#020617'
@@ -377,12 +378,12 @@ const EventCalendar = ({ events }) => {
       </div>
 
       {/* Events List for Mobile */}
-      <div className="lg:hidden space-y-4">
-        <h3 className="text-xl font-bold text-[#00F0FF] mb-4">
+      <div className="lg:hidden space-y-3 sm:space-y-4">
+        <h3 className="text-lg sm:text-xl font-bold text-[#00F0FF] mb-3 sm:mb-4">
           Events This Month ({monthEvents.length})
         </h3>
         {monthEvents.length === 0 ? (
-          <div className="text-center py-12 text-[#94a3b8]">
+          <div className="text-center py-8 sm:py-12 text-[#94a3b8] text-sm sm:text-base">
             <p>No events this month with selected filters.</p>
           </div>
         ) : (
@@ -390,12 +391,12 @@ const EventCalendar = ({ events }) => {
             <button
               key={event.id}
               onClick={() => setSelectedEvent(event)}
-              className="w-full text-left p-4 rounded-lg bg-[#00F0FF]/10 border border-[#00F0FF]/30
-                       hover:bg-[#00F0FF]/20 hover:scale-[1.02] transition-all duration-300"
+              className="w-full text-left p-3 sm:p-4 rounded-lg bg-[#00F0FF]/10 border border-[#00F0FF]/30
+                       hover:bg-[#00F0FF]/20 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 touch-manipulation"
               style={{ backdropFilter: 'blur(20px)' }}
             >
-              <div className="font-bold text-[#00F0FF] mb-1">{event.title}</div>
-              <div className="text-sm text-[#94a3b8]">
+              <div className="font-bold text-[#00F0FF] mb-1 text-sm sm:text-base">{event.title}</div>
+              <div className="text-xs sm:text-sm text-[#94a3b8]">
                 {new Date(event.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric' })} • {event.time} • {event.venue}
               </div>
             </button>

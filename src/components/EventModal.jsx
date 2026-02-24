@@ -134,11 +134,11 @@ const EventModal = ({ event, onClose }) => {
 
   return (
     <div 
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80 backdrop-blur-sm"
       onClick={onClose}
     >
       <div 
-        className="relative w-full max-w-3xl max-h-[90vh] overflow-y-auto bg-[#020617] rounded-2xl border-2 border-[#00F0FF]/30 p-8"
+        className="relative w-full max-w-3xl max-h-[95vh] sm:max-h-[90vh] overflow-y-auto bg-[#020617] rounded-xl sm:rounded-2xl border-2 border-[#00F0FF]/30 p-4 sm:p-6 md:p-8"
         style={{ 
           backdropFilter: 'blur(40px)',
           boxShadow: '0 0 60px rgba(0,240,255,0.3), inset 0 0 40px rgba(0,240,255,0.05)'
@@ -148,19 +148,19 @@ const EventModal = ({ event, onClose }) => {
         {/* Close Button (X) - Only this one remains */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-2 rounded-lg bg-[#00F0FF]/10 border border-[#00F0FF]/30 text-[#00F0FF] 
-                   hover:bg-[#00F0FF]/20 hover:scale-110 transition-all duration-300"
+          className="absolute top-2 right-2 sm:top-4 sm:right-4 p-2 rounded-lg bg-[#00F0FF]/10 border border-[#00F0FF]/30 text-[#00F0FF] 
+                   hover:bg-[#00F0FF]/20 active:bg-[#00F0FF]/30 hover:scale-110 active:scale-95 transition-all duration-300 touch-manipulation"
           aria-label="Close modal"
         >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style={{ imageRendering: 'pixelated' }}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" className="sm:w-6 sm:h-6" style={{ imageRendering: 'pixelated' }}>
             <path d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z" />
           </svg>
         </button>
 
         {/* Event Type Badge - NO attendee count */}
-        <div className="flex items-center gap-3 mb-6">
+        <div className="flex items-center gap-3 mb-4 sm:mb-6">
           <div 
-            className="px-4 py-2 rounded-lg border-2 flex items-center gap-2 font-bold text-sm uppercase"
+            className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg border-2 flex items-center gap-1.5 sm:gap-2 font-bold text-xs sm:text-sm uppercase"
             style={{
               borderColor: typeColors[event.type],
               color: typeColors[event.type],
@@ -168,7 +168,7 @@ const EventModal = ({ event, onClose }) => {
               boxShadow: `0 0 20px ${typeColors[event.type]}40`
             }}
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style={{ imageRendering: 'pixelated' }}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" className="sm:w-5 sm:h-5" style={{ imageRendering: 'pixelated' }}>
               <path d={typeIcons[event.type]} />
             </svg>
             {event.type}
@@ -176,48 +176,48 @@ const EventModal = ({ event, onClose }) => {
         </div>
 
         {/* Event Title */}
-        <h2 className="text-4xl font-bold mb-6 text-[#00F0FF]" style={{ textShadow: '0 0 20px #00F0FF' }}>
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6 text-[#00F0FF]" style={{ textShadow: '0 0 20px #00F0FF' }}>
           {event.title}
         </h2>
 
         {/* Event Details Grid */}
-        <div className="grid md:grid-cols-2 gap-6 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
           {/* Date */}
-          <div className="flex items-start gap-3">
-            <div className="p-2 rounded-lg bg-[#00F0FF]/10 border border-[#00F0FF]/30">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="#00F0FF" style={{ imageRendering: 'pixelated' }}>
+          <div className="flex items-start gap-2 sm:gap-3">
+            <div className="p-1.5 sm:p-2 rounded-lg bg-[#00F0FF]/10 border border-[#00F0FF]/30 flex-shrink-0">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="#00F0FF" className="sm:w-6 sm:h-6" style={{ imageRendering: 'pixelated' }}>
                 <path d="M19 3H18V1H16V3H8V1H6V3H5C3.89 3 3 3.9 3 5V19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3ZM19 19H5V9H19V19ZM19 7H5V5H19V7Z" />
               </svg>
             </div>
-            <div>
+            <div className="min-w-0">
               <div className="text-xs text-[#94a3b8] uppercase tracking-wider mb-1">Date</div>
-              <div className="text-[#00F0FF] font-semibold">{formatDate(event.date)}</div>
+              <div className="text-sm sm:text-base text-[#00F0FF] font-semibold">{formatDate(event.date)}</div>
             </div>
           </div>
 
           {/* Time */}
-          <div className="flex items-start gap-3">
-            <div className="p-2 rounded-lg bg-[#00F0FF]/10 border border-[#00F0FF]/30">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="#00F0FF" style={{ imageRendering: 'pixelated' }}>
+          <div className="flex items-start gap-2 sm:gap-3">
+            <div className="p-1.5 sm:p-2 rounded-lg bg-[#00F0FF]/10 border border-[#00F0FF]/30 flex-shrink-0">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="#00F0FF" className="sm:w-6 sm:h-6" style={{ imageRendering: 'pixelated' }}>
                 <path d="M12 2C6.5 2 2 6.5 2 12S6.5 22 12 22 22 17.5 22 12 17.5 2 12 2ZM12 20C7.59 20 4 16.41 4 12S7.59 4 12 4 20 7.59 20 12 16.41 20 12 20ZM12.5 7H11V13L16.2 16.2L17 14.9L12.5 12.2V7Z" />
               </svg>
             </div>
-            <div>
+            <div className="min-w-0">
               <div className="text-xs text-[#94a3b8] uppercase tracking-wider mb-1">Time</div>
-              <div className="text-[#00F0FF] font-semibold">{event.time}</div>
+              <div className="text-sm sm:text-base text-[#00F0FF] font-semibold">{event.time}</div>
             </div>
           </div>
 
           {/* Venue */}
-          <div className="flex items-start gap-3">
-            <div className="p-2 rounded-lg bg-[#00F0FF]/10 border border-[#00F0FF]/30">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="#00F0FF" style={{ imageRendering: 'pixelated' }}>
+          <div className="flex items-start gap-2 sm:gap-3">
+            <div className="p-1.5 sm:p-2 rounded-lg bg-[#00F0FF]/10 border border-[#00F0FF]/30 flex-shrink-0">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="#00F0FF" className="sm:w-6 sm:h-6" style={{ imageRendering: 'pixelated' }}>
                 <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22S19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 7.62 10.62 6.5 12 6.5S14.5 7.62 14.5 9C14.5 10.38 13.38 11.5 12 11.5Z" />
               </svg>
             </div>
-            <div>
+            <div className="min-w-0">
               <div className="text-xs text-[#94a3b8] uppercase tracking-wider mb-1">Venue</div>
-              <div className="text-[#00F0FF] font-semibold">{event.venue}</div>
+              <div className="text-sm sm:text-base text-[#00F0FF] font-semibold break-words">{event.venue}</div>
             </div>
           </div>
 
@@ -238,20 +238,20 @@ const EventModal = ({ event, onClose }) => {
         </div>
 
         {/* Description */}
-        <div className="mb-8">
-          <h3 className="text-xl font-bold text-[#00F0FF] mb-3">About This Event</h3>
-          <p className="text-[#94a3b8] leading-relaxed">{event.description}</p>
+        <div className="mb-6 sm:mb-8">
+          <h3 className="text-lg sm:text-xl font-bold text-[#00F0FF] mb-2 sm:mb-3">About This Event</h3>
+          <p className="text-sm sm:text-base text-[#94a3b8] leading-relaxed">{event.description}</p>
         </div>
 
         {/* Collaborators */}
         {event.collaborators && event.collaborators.length > 0 && (
-          <div className="mb-8">
-            <h3 className="text-xl font-bold text-[#00F0FF] mb-3">Collaborators</h3>
+          <div className="mb-6 sm:mb-8">
+            <h3 className="text-lg sm:text-xl font-bold text-[#00F0FF] mb-2 sm:mb-3">Collaborators</h3>
             <div className="flex flex-wrap gap-2">
               {event.collaborators.map((collab, idx) => (
                 <span 
                   key={idx}
-                  className="px-3 py-1 rounded-full bg-[#00F0FF]/10 border border-[#00F0FF]/30 text-[#00F0FF] text-sm font-semibold"
+                  className="px-2 sm:px-3 py-1 rounded-full bg-[#00F0FF]/10 border border-[#00F0FF]/30 text-[#00F0FF] text-xs sm:text-sm font-semibold"
                 >
                   {collab}
                 </span>
@@ -261,13 +261,13 @@ const EventModal = ({ event, onClose }) => {
         )}
 
         {/* Action Buttons - BOLD TEAL STYLE (like original View Sign-Up Form) */}
-        <div className="flex flex-col sm:flex-row gap-4">
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
           <a
             href={event.signupLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-1 px-6 py-4 rounded-lg bg-[#00F0FF] text-[#020617] font-bold text-center
-                     hover:bg-[#00F0FF]/90 hover:scale-105 transition-all duration-300"
+            className="flex-1 px-4 sm:px-6 py-3 sm:py-4 rounded-lg bg-[#00F0FF] text-[#020617] font-bold text-center text-sm sm:text-base
+                     hover:bg-[#00F0FF]/90 active:bg-[#00F0FF]/80 hover:scale-105 active:scale-95 transition-all duration-300 touch-manipulation"
             style={{ boxShadow: '0 0 30px rgba(0,240,255,0.5)' }}
           >
             View Sign-Up Form
@@ -275,11 +275,11 @@ const EventModal = ({ event, onClose }) => {
           
           <button
             onClick={downloadICS}
-            className="flex-1 px-6 py-4 rounded-lg bg-[#00F0FF] text-[#020617] font-bold
-                     hover:bg-[#00F0FF]/90 hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2"
+            className="flex-1 px-4 sm:px-6 py-3 sm:py-4 rounded-lg bg-[#00F0FF] text-[#020617] font-bold text-sm sm:text-base
+                     hover:bg-[#00F0FF]/90 active:bg-[#00F0FF]/80 hover:scale-105 active:scale-95 transition-all duration-300 flex items-center justify-center gap-2 touch-manipulation"
             style={{ boxShadow: '0 0 30px rgba(0,240,255,0.5)' }}
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style={{ imageRendering: 'pixelated' }}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" className="sm:w-5 sm:h-5" style={{ imageRendering: 'pixelated' }}>
               <path d="M19 3H18V1H16V3H8V1H6V3H5C3.89 3 3 3.9 3 5V19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3ZM19 19H5V9H19V19ZM19 7H5V5H19V7Z" />
             </svg>
             Add to Calendar
