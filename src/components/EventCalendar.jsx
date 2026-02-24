@@ -216,13 +216,12 @@ const EventCalendar = ({ events }) => {
               <option key={year} value={year}>{year}</option>
             ))}
           </select>
-          <svg 
-            className={`absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 pointer-events-none ${selectedYear !== currentYear ? 'text-[#00F0FF]' : 'text-[#94a3b8]'}`}
-            width="10" 
-            height="10" 
-            viewBox="0 0 24 24" 
+          <svg
+            className={`absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 pointer-events-none sm:w-3 sm:h-3 ${selectedYear !== currentYear ? 'text-[#00F0FF]' : 'text-[#94a3b8]'}`}
+            width="10"
+            height="10"
+            viewBox="0 0 24 24"
             fill="currentColor"
-            className="sm:w-3 sm:h-3"
             style={{ imageRendering: 'pixelated' }}
           >
             <path d="M7 10L12 15L17 10H7Z" />

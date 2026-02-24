@@ -240,7 +240,7 @@ export default function UpcomingEvents({ events = [] }) {
           scrollbarWidth: 'thin',
           scrollbarColor: '#00F0FF33 transparent',
           background: 'rgba(0,240,255,0.02)',
-          border: '1px solid rgba(0,240,255,0.15)',
+          border: '1px solid rgba(0,240,255,0.4)',
           borderTop: 'none',
           borderBottomLeftRadius: '12px',
           borderBottomRightRadius: '12px',
