@@ -179,12 +179,12 @@ const InteractivePieChart = ({ data, title, colorScheme = 'viridis' }) => {
   };
 
   return (
-    <div ref={containerRef} className="space-y-3 relative h-full flex flex-col">
+    <div ref={containerRef} className="space-y-3 relative w-full flex flex-col">
       <div className="font-mono-tech text-sudata-neon/90 text-xs tracking-[0.2em]">
         {title}
       </div>
-      <div className="relative w-full h-full rounded-lg border border-sudata-neon/20 hover:border-sudata-neon/50 transition-all duration-300 bg-black/40 p-4 flex flex-col">
-        <div className="flex flex-col items-center flex-1">
+      <div className="relative w-full rounded-lg border border-sudata-neon/20 hover:border-sudata-neon/50 transition-all duration-300 bg-black/40 p-4 flex flex-col">
+        <div className="flex flex-col items-center">
           {/* SVG Chart */}
           <div className="relative flex-shrink-0">
             <svg ref={svgRef} className="max-w-full h-auto" />

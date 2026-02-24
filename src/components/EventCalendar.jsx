@@ -5,6 +5,10 @@ import { getHolidayName } from '../data/publicHolidays';
 
 const EventCalendar = ({ events }) => {
   const currentYear = new Date().getFullYear();
+  const todayDate = new Date();
+  const todayDay = todayDate.getDate();
+  const todayMonth = todayDate.getMonth();
+  const todayYear = todayDate.getFullYear();
   const [selectedYear, setSelectedYear] = useState(currentYear);
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth()); // 0 = January
   const [selectedEvent, setSelectedEvent] = useState(null);
@@ -304,6 +308,7 @@ const EventCalendar = ({ events }) => {
                 const dayEvents = day ? getEventsForDay(day) : [];
                 const semesterInfo = day ? getSemesterWeek(day) : null;
                 const holidayName = day ? getPublicHoliday(day) : null;
+                const isToday = day === todayDay && selectedMonth === todayMonth && selectedYear === todayYear;
                 
                 return (
                   <div
@@ -322,7 +327,11 @@ const EventCalendar = ({ events }) => {
                     {day && (
                       <>
                         <div className="flex items-start justify-between gap-0.5 sm:gap-1">
-                          <div className={`font-bold text-xs sm:text-sm ${holidayName ? 'text-[#FF00FF]' : 'text-[#94a3b8]'}`}>
+                          <div className={`font-bold text-xs sm:text-sm ${
+                            isToday
+                              ? 'w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center rounded-full bg-white/10 ring-1 ring-white/25 text-[#00F0FF]'
+                              : holidayName ? 'text-[#FF00FF]' : 'text-[#94a3b8]'
+                          }`}>
                             {day}
                           </div>
                           {semesterInfo && (

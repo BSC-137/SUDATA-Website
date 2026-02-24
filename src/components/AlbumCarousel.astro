@@ -64,7 +64,6 @@ const uid = `carousel-${Math.random().toString(36).slice(2)}`;
             type="button"
             data-dot={i}
             aria-label={`Go to slide ${i + 1}`}
-            style={`background-image: url(${img.src}); background-size: cover; background-position: center;`}
           />
         ))}
       </div>
@@ -259,11 +258,7 @@ const uid = `carousel-${Math.random().toString(36).slice(2)}`;
 
   @media (max-width: 767px) {
     .album-card {
-      --dot-size: 40px;
-    }
-    .dots {
-      gap: 6px;
-      border-radius: 12px;
+      --dot-size: 6px;
     }
   }
 

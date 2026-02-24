@@ -74,7 +74,8 @@ const PastPartnersCarousel = () => {
       if (!pausedRef.current) {
         posRef.current += speed;
         const half = track.scrollWidth / 2;
-        if (posRef.current >= half) posRef.current = 0;
+        if (posRef.current >= half) posRef.current -= half;
+        if (posRef.current < 0) posRef.current += half;
         track.style.transform = `translateX(-${posRef.current}px)`;
       }
       rafRef.current = requestAnimationFrame(tick);
@@ -82,6 +83,51 @@ const PastPartnersCarousel = () => {
 
     rafRef.current = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(rafRef.current);
+  }, []);
+
+  // Wheel event listener (trackpad horizontal scroll)
+  useEffect(() => {
+    const wrapper = wrapperRef.current;
+    if (!wrapper) return;
+    const onWheel = (e) => {
+      if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
+      e.preventDefault();
+      const track = trackRef.current;
+      if (!track) return;
+      posRef.current += e.deltaX;
+      const half = track.scrollWidth / 2;
+      if (posRef.current >= half) posRef.current -= half;
+      if (posRef.current < 0) posRef.current += half;
+      track.style.transform = `translateX(-${posRef.current}px)`;
+    };
+    wrapper.addEventListener('wheel', onWheel, { passive: false });
+    return () => wrapper.removeEventListener('wheel', onWheel);
+  }, []);
+
+  // Touch event listeners (mobile finger drag)
+  useEffect(() => {
+    const wrapper = wrapperRef.current;
+    if (!wrapper) return;
+    let lastX = 0;
+    const onTouchStart = (e) => { lastX = e.touches[0].clientX; };
+    const onTouchMove = (e) => {
+      const x = e.touches[0].clientX;
+      const delta = lastX - x;
+      lastX = x;
+      const track = trackRef.current;
+      if (!track) return;
+      posRef.current += delta;
+      const half = track.scrollWidth / 2;
+      if (posRef.current >= half) posRef.current -= half;
+      if (posRef.current < 0) posRef.current += half;
+      track.style.transform = `translateX(-${posRef.current}px)`;
+    };
+    wrapper.addEventListener('touchstart', onTouchStart, { passive: true });
+    wrapper.addEventListener('touchmove', onTouchMove, { passive: true });
+    return () => {
+      wrapper.removeEventListener('touchstart', onTouchStart);
+      wrapper.removeEventListener('touchmove', onTouchMove);
+    };
   }, []);
 
   // IntersectionObserver: reset pin when scrolled out of view

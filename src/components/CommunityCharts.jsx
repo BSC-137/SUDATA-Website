@@ -37,7 +37,7 @@ export default function CommunityCharts({ majorData, degreeData, genderData, eth
             </button>
           ))}
         </div>
-        <div className="h-[400px]">
+        <div className="w-full">
           <InteractivePieChart
             data={dataMap[activeTab].data}
             title={dataMap[activeTab].title}
@@ -46,17 +46,17 @@ export default function CommunityCharts({ majorData, degreeData, genderData, eth
       </div>
 
       {/* Desktop: 2-column grid (unchanged layout) */}
-      <div className="hidden md:grid md:grid-cols-2 gap-6 sm:gap-8 auto-rows-fr">
-        <div className="h-[500px] md:h-[580px]">
+      <div className="hidden md:grid md:grid-cols-2 gap-6 sm:gap-8">
+        <div className="w-full">
           <InteractivePieChart data={majorData} title="FIELD_DISTRIBUTION" />
         </div>
-        <div className="h-[500px] md:h-[580px]">
+        <div className="w-full">
           <InteractivePieChart data={degreeData} title="DEGREE_DISTRIBUTION" />
         </div>
-        <div className="h-[500px] md:h-[580px]">
+        <div className="w-full">
           <InteractivePieChart data={genderData} title="GENDER_BALANCE" />
         </div>
-        <div className="h-[500px] md:h-[580px]">
+        <div className="w-full">
           <InteractivePieChart data={ethnicityData} title="ETHNICITY_DIVERSITY" />
         </div>
       </div>

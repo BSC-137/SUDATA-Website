@@ -27,7 +27,7 @@ function ExecutiveCard({ executive, cardWidth = DEFAULT_CARD_WIDTH }) {
   const initials = executive.name.split(' ').map(n => n[0]).join('');
   return (
     <div
-      className="executive-card flex-shrink-0 p-4 sm:p-5 md:p-6 rounded-xl sm:rounded-2xl flex flex-col items-center text-center executive-card-3d"
+      className="executive-card flex-shrink-0 p-4 sm:p-5 md:p-6 rounded-xl sm:rounded-2xl flex flex-col items-center text-center executive-card-3d snap-start sm:snap-align-none"
       style={{ width: `${cardWidth}px`, minWidth: `${cardWidth}px` }}
     >
       <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full border-2 border-sudata-neon/60 bg-sudata-navy/80 mb-3 sm:mb-4 flex items-center justify-center overflow-hidden ring-2 ring-sudata-neon/30 object-cover">
@@ -110,8 +110,8 @@ export default function ExecutiveCarousel({ executives = null }) {
     if (!el) return;
     const observer = new ResizeObserver(() => {
       const containerWidth = el.clientWidth;
-      if (containerWidth < 400) {
-        setCardWidth(containerWidth - 80);
+      if (containerWidth < 640) {
+        setCardWidth(containerWidth);
       } else {
         setCardWidth(DEFAULT_CARD_WIDTH);
       }
@@ -170,7 +170,7 @@ export default function ExecutiveCarousel({ executives = null }) {
       <ArrowButton direction="left" onClick={() => scroll('left')} />
       <div
         ref={scrollRef}
-        className="executive-carousel flex overflow-x-auto gap-4 sm:gap-6 py-4 px-2 scrollbar-hide flex-1 min-w-0 touch-pan-x"
+        className="executive-carousel flex overflow-x-auto gap-4 sm:gap-6 py-4 px-2 scrollbar-hide flex-1 min-w-0 touch-pan-x snap-x snap-mandatory sm:snap-none"
         style={{
           width: '100%',
           maxWidth: VIEWPORT_THREE_CARDS,

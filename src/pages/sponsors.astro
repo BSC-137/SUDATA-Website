@@ -46,7 +46,7 @@ const delayClasses = ['delay-0', 'delay-100', 'delay-200', 'delay-300'];
         OUR SPONSORS
       </h1>
       <p class="text-sudata-grey font-mono-tech text-base sm:text-lg tracking-wide">
-        [ Powering the Next Generation of Data Leaders ]
+        [ Powering the Next Generation<br class="sm:hidden" /> of Data Leaders ]
       </p>
     </header>
 
@@ -101,7 +101,7 @@ const delayClasses = ['delay-0', 'delay-100', 'delay-200', 'delay-300'];
     <section class="reveal-on-scroll w-full">
       <div class="font-mono-tech text-sudata-neon/80 text-sm tracking-[0.2em] mb-6 flex justify-center gap-2">
         <span class="animate-flicker">_</span>
-        <span class="whitespace-nowrap text-xs sm:text-sm">[SECTION: LEGACY_PARTNERS]</span>
+        <span class="truncate min-w-0 text-xs sm:text-sm">[SECTION: LEGACY_PARTNERS]</span>
       </div>
       <h2 class="text-2xl md:text-3xl font-bold text-white font-mono-tech tracking-widest mb-4 text-center">
         Our Network
@@ -141,13 +141,14 @@ const delayClasses = ['delay-0', 'delay-100', 'delay-200', 'delay-300'];
 			<div class="relative z-10">
 				<div class="font-mono-tech text-sudata-neon/80 text-sm tracking-[0.2em] mb-6 flex items-center gap-2">
 					<span class="animate-flicker">_</span>
-					<span class="whitespace-nowrap text-xs sm:text-sm">[SECTION: PARTNERSHIP_PACKAGES]</span>
+					<span class="truncate min-w-0 text-xs sm:text-sm">[SECTION: PARTNERSHIP_PACKAGES]</span>
 				</div>
 				<h2 class="text-2xl md:text-3xl font-bold text-white font-mono-tech tracking-widest mb-8">
 					Partnership Packages
 				</h2>
 
-				<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+				<!-- Desktop: 3-column grid (unchanged) -->
+				<div class="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
 
 					<!-- Industry Partner Package -->
 					<div class="reveal-on-scroll group glass-panel-3d p-6 sm:p-8 md:p-10 flex flex-col items-start text-left h-full relative overflow-hidden scanline-overlay">
@@ -221,6 +222,99 @@ const delayClasses = ['delay-0', 'delay-100', 'delay-200', 'delay-300'];
 
 				</div>
 
+				<!-- Mobile: accordion dropdowns -->
+				<div class="md:hidden space-y-3">
+
+					<details class="pkg-item glass-panel-3d relative overflow-hidden scanline-overlay" open>
+						<summary class="pkg-summary cursor-pointer list-none flex items-center justify-between gap-3 p-4 relative z-10">
+							<div class="flex items-center gap-3">
+								<div>
+									<div class="font-mono-tech text-sudata-neon text-xs tracking-[0.2em] opacity-80 whitespace-nowrap mb-0.5">[ 01_INDUSTRY_PARTNER ]</div>
+									<div class="flex items-baseline gap-2">
+										<span class="text-xl font-bold text-sudata-neon font-mono-tech">$2,000</span>
+										<span class="font-mono-tech text-sm font-bold text-white tracking-wider">Industry Partner</span>
+									</div>
+								</div>
+							</div>
+							<span class="pkg-chevron font-mono-tech text-sudata-neon text-lg flex-shrink-0">▾</span>
+						</summary>
+						<div class="px-4 pb-4 relative z-10">
+							<p class="font-mono-tech text-xs text-sudata-grey/80 mb-3 tracking-wide">Maximum Brand Integration</p>
+							<ul class="space-y-2 text-sm font-mono-tech text-sudata-grey/90 leading-relaxed">
+								<li class="flex items-start gap-2"><span class="text-sudata-neon mt-0.5">›</span>Dedicated Account Manager</li>
+								<li class="flex items-start gap-2"><span class="text-sudata-neon mt-0.5">›</span>Year-round marketing access</li>
+								<li class="flex items-start gap-2"><span class="text-sudata-neon mt-0.5">›</span>Exclusive bespoke event per semester</li>
+								<li class="flex items-start gap-2"><span class="text-sudata-neon mt-0.5">›</span>Guaranteed thought leadership spots</li>
+								<li class="flex items-start gap-2"><span class="text-sudata-neon mt-0.5">›</span>VIP access to all SUDATA events</li>
+								<li class="flex items-start gap-2"><span class="text-sudata-neon mt-0.5">›</span>Premier brand placement</li>
+							</ul>
+						</div>
+					</details>
+
+					<details class="pkg-item glass-panel-3d relative overflow-hidden scanline-overlay" open>
+						<summary class="pkg-summary cursor-pointer list-none flex items-center justify-between gap-3 p-4 relative z-10">
+							<div class="flex items-center gap-3">
+								<div>
+									<div class="font-mono-tech text-sudata-neon text-xs tracking-[0.2em] opacity-80 whitespace-nowrap mb-0.5">[ 02_TECHNICAL ]</div>
+									<div class="flex items-baseline gap-2">
+										<span class="text-xl font-bold text-sudata-neon font-mono-tech">$1,250</span>
+										<span class="font-mono-tech text-sm font-bold text-white tracking-wider">Technical Package</span>
+									</div>
+								</div>
+							</div>
+							<span class="pkg-chevron font-mono-tech text-sudata-neon text-lg flex-shrink-0">▾</span>
+						</summary>
+						<div class="px-4 pb-4 relative z-10">
+							<p class="font-mono-tech text-xs text-sudata-grey/80 mb-3 tracking-wide">Showcase Your Engineering Culture</p>
+							<ul class="space-y-2 text-sm font-mono-tech text-sudata-grey/90 leading-relaxed">
+								<li class="flex items-start gap-2"><span class="text-sudata-neon mt-0.5">›</span>Guaranteed judging position in major competition</li>
+								<li class="flex items-start gap-2"><span class="text-sudata-neon mt-0.5">›</span>Dedicated technical workshop slot</li>
+								<li class="flex items-start gap-2"><span class="text-sudata-neon mt-0.5">›</span>Thought leadership seminar opportunity</li>
+								<li class="flex items-start gap-2"><span class="text-sudata-neon mt-0.5">›</span>Two marketing features across channels</li>
+								<li class="flex items-start gap-2"><span class="text-sudata-neon mt-0.5">›</span>Access to Datathons & Case Competitions</li>
+							</ul>
+						</div>
+					</details>
+
+					<details class="pkg-item glass-panel-3d relative overflow-hidden scanline-overlay" open>
+						<summary class="pkg-summary cursor-pointer list-none flex items-center justify-between gap-3 p-4 relative z-10">
+							<div class="flex items-center gap-3">
+								<div>
+									<div class="font-mono-tech text-sudata-neon text-xs tracking-[0.2em] opacity-80 whitespace-nowrap mb-0.5">[ 03_RECRUITMENT ]</div>
+									<div class="flex items-baseline gap-2">
+										<span class="text-xl font-bold text-sudata-neon font-mono-tech">$1,250</span>
+										<span class="font-mono-tech text-sm font-bold text-white tracking-wider">Recruitment Package</span>
+									</div>
+								</div>
+							</div>
+							<span class="pkg-chevron font-mono-tech text-sudata-neon text-lg flex-shrink-0">▾</span>
+						</summary>
+						<div class="px-4 pb-4 relative z-10">
+							<p class="font-mono-tech text-xs text-sudata-grey/80 mb-3 tracking-wide">Drive Your Recruitment Strategy</p>
+							<ul class="space-y-2 text-sm font-mono-tech text-sudata-grey/90 leading-relaxed">
+								<li class="flex items-start gap-2"><span class="text-sudata-neon mt-0.5">›</span>Comprehensive recruitment campaign (6 Instagram posts)</li>
+								<li class="flex items-start gap-2"><span class="text-sudata-neon mt-0.5">›</span>'Pathways in Data' industry spotlight</li>
+								<li class="flex items-start gap-2"><span class="text-sudata-neon mt-0.5">›</span>Newsletter feature & brand placement</li>
+								<li class="flex items-start gap-2"><span class="text-sudata-neon mt-0.5">›</span>Direct access to penultimate year students</li>
+								<li class="flex items-start gap-2"><span class="text-sudata-neon mt-0.5">›</span>Priority logo placement</li>
+							</ul>
+						</div>
+					</details>
+
+					<script>
+						if (typeof window !== 'undefined' && window.innerWidth < 768) {
+							document.querySelectorAll('.pkg-item').forEach(function(el) { el.removeAttribute('open'); });
+						}
+						document.querySelectorAll('.pkg-item').forEach(function(el) {
+							el.addEventListener('toggle', function() {
+								var chevron = el.querySelector('.pkg-chevron');
+								if (chevron) chevron.textContent = el.open ? '▾' : '▸';
+							});
+						});
+					</script>
+
+				</div>
+
 				<div class="mt-12 text-center">
 					<p class="text-sudata-grey font-mono-tech text-sm mb-6">
 						All sponsors receive: Free introductory post • Invitation to Careers in Data Science • Brand on website
@@ -256,4 +350,9 @@ const delayClasses = ['delay-0', 'delay-100', 'delay-200', 'delay-300'];
 		</section>
 
 	</div>
+<style>
+  .pkg-item summary::-webkit-details-marker { display: none; }
+  .pkg-item summary { list-style: none; }
+</style>
+
 </Layout>
