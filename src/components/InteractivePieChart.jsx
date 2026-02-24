@@ -49,6 +49,9 @@ const InteractivePieChart = ({ data, title, colorScheme = 'viridis' }) => {
     const g = svg
       .attr('width', width)
       .attr('height', height)
+      .attr('viewBox', `0 0 ${width} ${height}`)
+      .style('width', '100%')
+      .style('height', 'auto')
       .append('g')
       .attr('transform', `translate(${width / 2},${height / 2})`);
 

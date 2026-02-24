@@ -29,20 +29,41 @@ const partners = [
 
 const duplicated = [...partners, ...partners];
 
-const LOGO_WIDTH = 160;
-const GAP = 48;
-
 const PastPartnersCarousel = () => {
   const trackRef = useRef(null);
+  const wrapperRef = useRef(null);
   const rafRef = useRef(null);
   const posRef = useRef(0);
   const pausedRef = useRef(false);
-  const [paused, setPaused] = useState(false);
+  const pinnedRef = useRef(false);
 
+  const [paused, setPaused] = useState(false);
+  const [pinned, setPinned] = useState(false);
+  const [logoWidth, setLogoWidth] = useState(160);
+  const [gap, setGap] = useState(48);
+
+  // Sync pausedRef with paused state
   useEffect(() => {
     pausedRef.current = paused;
   }, [paused]);
 
+  // Responsive logo sizing
+  useEffect(() => {
+    const updateSizes = () => {
+      if (window.innerWidth < 640) {
+        setLogoWidth(90);
+        setGap(24);
+      } else {
+        setLogoWidth(160);
+        setGap(48);
+      }
+    };
+    updateSizes();
+    window.addEventListener('resize', updateSizes);
+    return () => window.removeEventListener('resize', updateSizes);
+  }, []);
+
+  // Animation loop
   useEffect(() => {
     const track = trackRef.current;
     if (!track) return;
@@ -63,8 +84,44 @@ const PastPartnersCarousel = () => {
     return () => cancelAnimationFrame(rafRef.current);
   }, []);
 
+  // IntersectionObserver: reset pin when scrolled out of view
+  useEffect(() => {
+    const wrapper = wrapperRef.current;
+    if (!wrapper) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) {
+            pinnedRef.current = false;
+            setPinned(false);
+            setPaused(false);
+          }
+        });
+      },
+      { threshold: 0 }
+    );
+    io.observe(wrapper);
+    return () => io.disconnect();
+  }, []);
+
+  const handleItemClick = () => {
+    pinnedRef.current = !pinnedRef.current;
+    setPinned(pinnedRef.current);
+    setPaused(pinnedRef.current);
+  };
+
+  const handleMouseEnter = () => {
+    setPaused(true);
+  };
+
+  const handleMouseLeave = () => {
+    if (!pinnedRef.current) {
+      setPaused(false);
+    }
+  };
+
   return (
-    <div className="w-full px-4 sm:px-0">
+    <div className="w-full px-4 sm:px-0" ref={wrapperRef}>
       <div className="relative overflow-hidden">
         {/* Fade edges */}
         <div className="absolute left-0 top-0 bottom-0 w-12 sm:w-16 md:w-24 bg-gradient-to-r from-[#09090b] to-transparent z-10 pointer-events-none" />
@@ -73,15 +130,16 @@ const PastPartnersCarousel = () => {
         <div
           ref={trackRef}
           className="flex items-center py-8"
-          style={{ width: 'max-content', willChange: 'transform', gap: `${GAP}px` }}
+          style={{ width: 'max-content', willChange: 'transform', gap: `${gap}px` }}
         >
           {duplicated.map((partner, i) => (
             <div
               key={`${partner.name}-${i}`}
-              className="flex-shrink-0 flex items-center justify-center opacity-40 hover:opacity-100 transition-opacity duration-300 cursor-default"
-              style={{ width: `${LOGO_WIDTH}px`, height: '48px' }}
-              onMouseEnter={() => setPaused(true)}
-              onMouseLeave={() => setPaused(false)}
+              className="flex-shrink-0 flex items-center justify-center opacity-40 hover:opacity-100 transition-opacity duration-300 cursor-pointer"
+              style={{ width: `${logoWidth}px`, height: '48px' }}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+              onClick={handleItemClick}
             >
               <img
                 src={partner.logo}
@@ -94,7 +152,7 @@ const PastPartnersCarousel = () => {
       </div>
 
       <p className="text-center text-sudata-grey font-mono-tech text-xs mt-6 tracking-wide opacity-50">
-        Hover to pause
+        {pinned ? 'Tap any logo to resume' : 'Hover to pause · tap to lock'}
       </p>
     </div>
   );

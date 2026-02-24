@@ -19,16 +19,16 @@ const EXECUTIVES = [
   { name: 'Lucas Sue', role: 'International Director', linkedin: 'https://www.linkedin.com/in/lucas-sue-5aa720358/', image: '/assets/execs/lucas s.jpeg' },
 ];
 
-const CARD_WIDTH_PX = 300;
+const DEFAULT_CARD_WIDTH = 300;
 const CARD_GAP_PX = 24;
-const VIEWPORT_THREE_CARDS = CARD_WIDTH_PX * 3 + CARD_GAP_PX * 2; // 972px
+const VIEWPORT_THREE_CARDS = DEFAULT_CARD_WIDTH * 3 + CARD_GAP_PX * 2; // 972px
 
-function ExecutiveCard({ executive }) {
+function ExecutiveCard({ executive, cardWidth = DEFAULT_CARD_WIDTH }) {
   const initials = executive.name.split(' ').map(n => n[0]).join('');
   return (
     <div
       className="executive-card flex-shrink-0 p-4 sm:p-5 md:p-6 rounded-xl sm:rounded-2xl flex flex-col items-center text-center executive-card-3d"
-      style={{ width: `${CARD_WIDTH_PX}px`, minWidth: `${CARD_WIDTH_PX}px` }}
+      style={{ width: `${cardWidth}px`, minWidth: `${cardWidth}px` }}
     >
       <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full border-2 border-sudata-neon/60 bg-sudata-navy/80 mb-3 sm:mb-4 flex items-center justify-center overflow-hidden ring-2 ring-sudata-neon/30 object-cover">
         {executive.image ? (
@@ -101,11 +101,26 @@ const easeOutQuint = (t) => 1 - Math.pow(1 - t, 5);
 
 export default function ExecutiveCarousel({ executives = null }) {
   const scrollRef = useRef(null);
-  // Removed canScroll states since we loop now
+  const [cardWidth, setCardWidth] = useState(DEFAULT_CARD_WIDTH);
   
   const items = executives || EXECUTIVES;
 
-  const scrollAmount = CARD_WIDTH_PX + CARD_GAP_PX;
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const observer = new ResizeObserver(() => {
+      const containerWidth = el.clientWidth;
+      if (containerWidth < 400) {
+        setCardWidth(containerWidth - 80);
+      } else {
+        setCardWidth(DEFAULT_CARD_WIDTH);
+      }
+    });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  const scrollAmount = cardWidth + CARD_GAP_PX;
 
   const scrollToPosition = (target, duration = 800) => {
     const el = scrollRef.current;
@@ -165,7 +180,7 @@ export default function ExecutiveCarousel({ executives = null }) {
         }}
       >
         {items.map((exec, i) => (
-          <ExecutiveCard key={`${exec.name}-${i}`} executive={exec} />
+          <ExecutiveCard key={`${exec.name}-${i}`} executive={exec} cardWidth={cardWidth} />
         ))}
       </div>
       <ArrowButton direction="right" onClick={() => scroll('right')} />

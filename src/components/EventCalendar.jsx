@@ -309,7 +309,7 @@ const EventCalendar = ({ events }) => {
                   <div
                     key={dayIdx}
                     className={`
-                      aspect-square rounded sm:rounded-lg p-1 sm:p-2 relative
+                      min-h-[52px] sm:aspect-square rounded sm:rounded-lg p-1 sm:p-2 relative
                       ${day
                         ? 'bg-[#00F0FF]/5 border border-[#00F0FF]/20 hover:bg-[#00F0FF]/10 hover:border-[#00F0FF]/40 cursor-pointer transition-all duration-300 touch-manipulation'
                         : 'bg-transparent'
@@ -353,7 +353,7 @@ const EventCalendar = ({ events }) => {
                                 <button
                                   key={event.id}
                                   onClick={() => setSelectedEvent(event)}
-                                  className={`w-full text-left px-1 sm:px-1.5 py-0.5 rounded text-[9px] sm:text-[10px] font-bold truncate transition-colors touch-manipulation`}
+                                  className={`w-full text-left px-1 sm:px-1.5 py-0.5 rounded text-[9px] sm:text-[10px] font-bold line-clamp-3 transition-colors touch-manipulation`}
                                   style={{
                                     backgroundColor: eventConfig.color,
                                     color: '#020617'
@@ -376,32 +376,6 @@ const EventCalendar = ({ events }) => {
         </div>
       </div>
 
-      {/* Events List for Mobile */}
-      <div className="lg:hidden space-y-3 sm:space-y-4">
-        <h3 className="text-lg sm:text-xl font-bold text-[#00F0FF] mb-3 sm:mb-4">
-          Events This Month ({monthEvents.length})
-        </h3>
-        {monthEvents.length === 0 ? (
-          <div className="text-center py-8 sm:py-12 text-[#94a3b8] text-sm sm:text-base">
-            <p>No events this month with selected filters.</p>
-          </div>
-        ) : (
-          monthEvents.map(event => (
-            <button
-              key={event.id}
-              onClick={() => setSelectedEvent(event)}
-              className="w-full text-left p-3 sm:p-4 rounded-lg bg-[#00F0FF]/10 border border-[#00F0FF]/30
-                       hover:bg-[#00F0FF]/20 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 touch-manipulation"
-              style={{ backdropFilter: 'blur(20px)' }}
-            >
-              <div className="font-bold text-[#00F0FF] mb-1 text-sm sm:text-base">{event.title}</div>
-              <div className="text-xs sm:text-sm text-[#94a3b8]">
-                {new Date(event.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric' })} • {event.time} • {event.venue}
-              </div>
-            </button>
-          ))
-        )}
-      </div>
 
       {/* Event Modal */}
       {selectedEvent && (

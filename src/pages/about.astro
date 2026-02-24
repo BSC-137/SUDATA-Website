@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import ExecutiveCarousel from '../components/ExecutiveCarousel.jsx';
-import InteractivePieChart from '../components/InteractivePieChart.jsx';
+import CommunityCharts from '../components/CommunityCharts.jsx';
 import { processChartData } from '../utils/processChartData.js';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -37,7 +37,7 @@ const webArchitects = [
 			<div class="relative z-10">
 				<div class="font-mono-tech text-sudata-neon/80 text-sm tracking-[0.2em] mb-4 flex items-center gap-2">
 					<span class="animate-flicker">&gt;_</span>
-					<span>[SECTION: MISSION_LOG]</span>
+					<span class="whitespace-nowrap text-xs sm:text-sm">[SECTION: MISSION_LOG]</span>
 				</div>
 				<h2 class="text-2xl md:text-3xl font-bold text-white font-mono-tech tracking-widest mb-6">
 					The Human Layer of Data Science
@@ -53,49 +53,76 @@ const webArchitects = [
 			<div class="relative z-10">
 				<div class="font-mono-tech text-sudata-neon/80 text-sm tracking-[0.2em] mb-6 flex items-center gap-2">
 					<span class="animate-flicker">_</span>
-					<span>[SECTION: CORE_PILLARS]</span>
+					<span class="whitespace-nowrap text-xs sm:text-sm">[SECTION: CORE_PILLARS]</span>
 				</div>
 
-				<div class="space-y-10">
+				<div class="space-y-4 md:space-y-10">
 					<!-- 01. THE SOCIAL FABRIC -->
-					<div>
-						<div class="font-mono-tech text-sudata-neon text-sm tracking-[0.2em] mb-2">
-							01. THE SOCIAL FABRIC
-						</div>
-						<h3 class="text-xl font-bold text-white font-mono-tech tracking-wider mb-3">
-							Work Hard, Play Harder.
-						</h3>
-						<p class="text-sudata-grey font-mono-tech text-base leading-relaxed">
-							We aren't just a society; we're a bustling ecosystem of like-minded people. From high-energy parties and casual pub nights to late-night study grinds, SUDATA is where you find your "nodes"—lifelong friends who share your drive. We take our social life as seriously as our datasets, ensuring there's always a welcoming space to meet new people and step away from the screen.
+					<details class="pillar-item" open>
+						<summary class="cursor-pointer list-none flex items-center justify-between gap-2 py-2 md:cursor-default">
+							<div>
+								<div class="font-mono-tech text-sudata-neon text-sm tracking-[0.2em] mb-1">
+									01. THE SOCIAL FABRIC
+								</div>
+								<h3 class="text-xl font-bold text-white font-mono-tech tracking-wider">
+									Work Hard, Play Harder.
+								</h3>
+							</div>
+							<span class="pillar-chevron font-mono-tech text-sudata-neon text-lg md:hidden">▾</span>
+						</summary>
+						<p class="text-sudata-grey font-mono-tech text-base leading-relaxed pt-3">
+							We aren’t just a society; we’re a bustling ecosystem of like-minded people. From high-energy parties and casual pub nights to late-night study grinds, SUDATA is where you find your “nodes”—lifelong friends who share your drive. We take our social life as seriously as our datasets, ensuring there’s always a welcoming space to meet new people and step away from the screen.
 						</p>
-					</div>
+					</details>
 
 					<!-- 02. INDUSTRIAL SYNERGY -->
-					<div>
-						<div class="font-mono-tech text-sudata-neon text-sm tracking-[0.2em] mb-2">
-							02. INDUSTRIAL SYNERGY
-						</div>
-						<h3 class="text-xl font-bold text-white font-mono-tech tracking-wider mb-3">
-							Your High-Bandwidth Career Pipeline.
-						</h3>
-						<p class="text-sudata-grey font-mono-tech text-base leading-relaxed">
-							We boast extensive industry connections that put our members directly in front of the world's leading tech and data firms. Our networking events aren't just about handing out resumes; they are about building genuine relationships with professionals. Whether it's an exclusive industry dinner or a formal networking night, we provide the bandwidth you need to launch your career.
+					<details class="pillar-item" open>
+						<summary class="cursor-pointer list-none flex items-center justify-between gap-2 py-2 md:cursor-default">
+							<div>
+								<div class="font-mono-tech text-sudata-neon text-sm tracking-[0.2em] mb-1">
+									02. INDUSTRIAL SYNERGY
+								</div>
+								<h3 class="text-xl font-bold text-white font-mono-tech tracking-wider">
+									Your High-Bandwidth Career Pipeline.
+								</h3>
+							</div>
+							<span class="pillar-chevron font-mono-tech text-sudata-neon text-lg md:hidden">▾</span>
+						</summary>
+						<p class="text-sudata-grey font-mono-tech text-base leading-relaxed pt-3">
+							We boast extensive industry connections that put our members directly in front of the world’s leading tech and data firms. Our networking events aren’t just about handing out resumes; they are about building genuine relationships with professionals. Whether it’s an exclusive industry dinner or a formal networking night, we provide the bandwidth you need to launch your career.
 						</p>
-					</div>
+					</details>
 
 					<!-- 03. THE FORGE -->
-					<div>
-						<div class="font-mono-tech text-sudata-neon text-sm tracking-[0.2em] mb-2">
-							03. THE FORGE: HACKATHONS & LABS
-						</div>
-						<h3 class="text-xl font-bold text-white font-mono-tech tracking-wider mb-3">
-							Where Theory Meets Execution.
-						</h3>
-						<p class="text-sudata-grey font-mono-tech text-base leading-relaxed">
-							Our workshops and hackathons are the heartbeat of our academic side. We host high-intensity events designed to push your limits, from Python deep-dives to neural network builds. It's collaborative, it's competitive, and it's the best way to level up your stack alongside the brightest minds at the University of Sydney.
+					<details class="pillar-item" open>
+						<summary class="cursor-pointer list-none flex items-center justify-between gap-2 py-2 md:cursor-default">
+							<div>
+								<div class="font-mono-tech text-sudata-neon text-sm tracking-[0.2em] mb-1">
+									03. THE FORGE: HACKATHONS & LABS
+								</div>
+								<h3 class="text-xl font-bold text-white font-mono-tech tracking-wider">
+									Where Theory Meets Execution.
+								</h3>
+							</div>
+							<span class="pillar-chevron font-mono-tech text-sudata-neon text-lg md:hidden">▾</span>
+						</summary>
+						<p class="text-sudata-grey font-mono-tech text-base leading-relaxed pt-3">
+							Our workshops and hackathons are the heartbeat of our academic side. We host high-intensity events designed to push your limits, from Python deep-dives to neural network builds. It’s collaborative, it’s competitive, and it’s the best way to level up your stack alongside the brightest minds at the University of Sydney.
 						</p>
-					</div>
+					</details>
 				</div>
+
+				<script>
+					if (typeof window !== 'undefined' && window.innerWidth < 768) {
+						document.querySelectorAll('.pillar-item').forEach(function(el) { el.removeAttribute('open'); });
+					}
+					document.querySelectorAll('.pillar-item').forEach(function(el) {
+						el.addEventListener('toggle', function() {
+							var chevron = el.querySelector('.pillar-chevron');
+							if (chevron) chevron.textContent = el.open ? '▾' : '▸';
+						});
+					});
+				</script>
 			</div>
 		</section>
 
@@ -104,7 +131,7 @@ const webArchitects = [
 			<div class="relative z-10">
 				<div class="font-mono-tech text-sudata-neon/80 text-sm tracking-[0.2em] mb-6 flex items-center gap-2">
 					<span class="animate-flicker">_</span>
-					<span>[SECTION: COMMUNITY_COMPOSITION]</span>
+					<span class="whitespace-nowrap text-xs sm:text-sm">[SECTION: COMMUNITY_COMPOSITION]</span>
 				</div>
 				<h2 class="text-2xl md:text-3xl font-bold text-white font-mono-tech tracking-widest mb-6">
 					Our Community in Data
@@ -113,43 +140,13 @@ const webArchitects = [
 					Diversity is our strength. Meet the vibrant community of SUDATA members.
 				</p>
 				
-				<div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 auto-rows-fr">
-					<!-- Major Distribution -->
-					<div class="h-[400px] sm:h-[500px] md:h-[580px]">
-						<InteractivePieChart 
-							data={majorData} 
-							title="FIELD_DISTRIBUTION" 
-							client:visible 
-						/>
-					</div>
-
-					<!-- Degree Level -->
-					<div class="h-[400px] sm:h-[500px] md:h-[580px]">
-						<InteractivePieChart 
-							data={degreeData} 
-							title="DEGREE_DISTRIBUTION" 
-							client:visible 
-						/>
-					</div>
-
-					<!-- Gender Balance -->
-					<div class="h-[400px] sm:h-[500px] md:h-[580px]">
-						<InteractivePieChart 
-							data={genderData} 
-							title="GENDER_BALANCE" 
-							client:visible 
-						/>
-					</div>
-
-					<!-- Ethnicity Diversity -->
-					<div class="h-[400px] sm:h-[500px] md:h-[580px]">
-						<InteractivePieChart 
-							data={ethnicityData} 
-							title="ETHNICITY_DIVERSITY" 
-							client:visible 
-						/>
-					</div>
-				</div>
+				<CommunityCharts
+					majorData={majorData}
+					degreeData={degreeData}
+					genderData={genderData}
+					ethnicityData={ethnicityData}
+					client:visible
+				/>
 			</div>
 		</section>
 
@@ -157,7 +154,7 @@ const webArchitects = [
 		<section class="reveal-on-scroll w-full">
 			<div class="font-mono-tech text-sudata-neon/80 text-sm tracking-[0.2em] mb-4 flex justify-center gap-2">
 				<span class="animate-flicker">_</span>
-				<span>[SECTION: EXEC_TEAM_HEADER]</span>
+				<span class="whitespace-nowrap text-xs sm:text-sm">[SECTION: EXECS]</span>
 			</div>
 			<h2 class="text-2xl md:text-4xl font-bold text-white font-mono-tech tracking-widest mb-2 text-center">
 				Meet the Architects
@@ -174,7 +171,7 @@ const webArchitects = [
 		<section class="reveal-on-scroll w-full">
 			<div class="font-mono-tech text-sudata-neon/80 text-xs sm:text-sm tracking-[0.2em] mb-3 sm:mb-4 flex justify-center gap-2">
 				<span class="animate-flicker">_</span>
-				<span>[SECTION: WEB_ARCHITECTS]</span>
+				<span class="whitespace-nowrap">[SECTION: WEB_ARCHITECTS]</span>
 			</div>
 			<h2 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white font-mono-tech tracking-wider sm:tracking-widest mb-2 text-center px-4">
 				Web Architects
@@ -203,4 +200,14 @@ const webArchitects = [
 			</div>
 		</footer>
 	</div>
+<style>
+  /* Desktop: pillar details always open, summary not interactive */
+  @media (min-width: 768px) {
+    .pillar-item > *:not(summary) { display: block !important; }
+    .pillar-item summary { pointer-events: none; }
+  }
+  /* Remove default marker */
+  .pillar-item summary::-webkit-details-marker { display: none; }
+  .pillar-item summary { list-style: none; }
+</style>
 </Layout>

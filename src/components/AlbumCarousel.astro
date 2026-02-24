@@ -58,8 +58,14 @@ const uid = `carousel-${Math.random().toString(36).slice(2)}`;
           <span class="dot-indicator-dot"></span>
         </span>
 
-        {images.map((_, i) => (
-          <button class="dot" type="button" data-dot={i} aria-label={`Go to slide ${i + 1}`} />
+        {images.map((img, i) => (
+          <button
+            class="dot"
+            type="button"
+            data-dot={i}
+            aria-label={`Go to slide ${i + 1}`}
+            style={`background-image: url(${img.src}); background-size: cover; background-position: center;`}
+          />
         ))}
       </div>
     </div>
@@ -237,6 +243,8 @@ const uid = `carousel-${Math.random().toString(36).slice(2)}`;
     gap: 10px;
     padding: 9px 12px;
     border-radius: 999px;
+    max-width: calc(100% - 24px);
+    overflow-x: auto;
 
     background: rgba(var(--sudata-navy), 0.50);
     border: 1px solid rgba(var(--sudata-neon), 0.16);
@@ -245,6 +253,18 @@ const uid = `carousel-${Math.random().toString(36).slice(2)}`;
 
     box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.04) inset;
     z-index: 10;
+    scrollbar-width: none;
+  }
+  .dots::-webkit-scrollbar { display: none; }
+
+  @media (max-width: 767px) {
+    .album-card {
+      --dot-size: 40px;
+    }
+    .dots {
+      gap: 6px;
+      border-radius: 12px;
+    }
   }
 
   .dot {
