@@ -1,14 +1,22 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import EventModal from './EventModal';
 import { getSemesterInfo } from '../data/semesterDates';
 import { getHolidayName } from '../data/publicHolidays';
 
 const EventCalendar = ({ events }) => {
   const currentYear = new Date().getFullYear();
-  const todayDate = new Date();
-  const todayDay = todayDate.getDate();
-  const todayMonth = todayDate.getMonth();
-  const todayYear = todayDate.getFullYear();
+  // Keep null during SSR/SSG so the static HTML has no "today" circle,
+  // avoiding a hydration mismatch. useEffect sets these client-side in
+  // the user's own local timezone after mount.
+  const [todayDay, setTodayDay] = useState(null);
+  const [todayMonth, setTodayMonth] = useState(null);
+  const [todayYear, setTodayYear] = useState(null);
+  useEffect(() => {
+    const now = new Date();
+    setTodayDay(now.getDate());
+    setTodayMonth(now.getMonth());
+    setTodayYear(now.getFullYear());
+  }, []);
   const [selectedYear, setSelectedYear] = useState(currentYear);
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth()); // 0 = January
   const [selectedEvent, setSelectedEvent] = useState(null);
@@ -308,7 +316,7 @@ const EventCalendar = ({ events }) => {
                 const dayEvents = day ? getEventsForDay(day) : [];
                 const semesterInfo = day ? getSemesterWeek(day) : null;
                 const holidayName = day ? getPublicHoliday(day) : null;
-                const isToday = day === todayDay && selectedMonth === todayMonth && selectedYear === todayYear;
+                const isToday = todayDay !== null && day === todayDay && selectedMonth === todayMonth && selectedYear === todayYear;
                 
                 return (
                   <div
