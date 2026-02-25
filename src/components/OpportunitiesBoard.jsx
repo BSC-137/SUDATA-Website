@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 
 function formatDeadline(deadline) {
   if (!deadline) return null;
@@ -13,6 +13,7 @@ function isPast(deadline) {
 }
 
 function OpportunityCard({ opp }) {
+  const [descExpanded, setDescExpanded] = useState(false);
   const deadlineStr  = formatDeadline(opp.deadline);
   const deadlinePast = isPast(opp.deadline);
   const effectiveStatus = (opp.status === 'closed' || deadlinePast) ? 'closed' : 'open';
@@ -42,10 +43,26 @@ function OpportunityCard({ opp }) {
         {opp.title}
       </h3>
 
-      {/* Description — flex-1 pushes the footer content (deadline + button) to the bottom */}
-      <p className="relative z-10 text-xs font-mono-tech text-sudata-grey/90 leading-relaxed flex-1">
+      {/* Description — always visible on desktop (flex-1 pushes footer down) */}
+      <p className="relative z-10 text-xs font-mono-tech text-sudata-grey/90 leading-relaxed flex-1 hidden sm:block">
         {opp.description}
       </p>
+
+      {/* Description — collapsible toggle on mobile only */}
+      <div className="sm:hidden relative z-10">
+        <button
+          onClick={() => setDescExpanded(v => !v)}
+          className="flex items-center gap-1.5 font-mono-tech text-xs text-sudata-neon/60 tracking-wider hover:text-sudata-neon transition-colors"
+        >
+          <span className="text-[10px]">{descExpanded ? '▲' : '▼'}</span>
+          <span>{descExpanded ? 'HIDE DETAILS' : 'SHOW DETAILS'}</span>
+        </button>
+        {descExpanded && (
+          <p className="text-xs font-mono-tech text-sudata-grey/90 leading-relaxed mt-2">
+            {opp.description}
+          </p>
+        )}
+      </div>
 
       {/* Deadline */}
       <div className="relative z-10 font-mono-tech text-xs text-sudata-grey/60 tracking-wider">

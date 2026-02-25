@@ -1,35 +1,63 @@
+import { useState, useEffect, lazy, Suspense } from 'react';
+
 /**
- * PDFViewer — renders a PDF inline via an iframe styled to the SUDATA dark theme,
- * with a download button below.
- *
- * The iframe is shown immediately so the browser's native PDF viewer can display
- * its own loading progress — no blocking overlay that waits for full render.
+ * Lazily import the flipbook — this is a dynamic import so pdfjs-dist is
+ * never evaluated during Astro's Node.js SSR phase (only in the browser).
+ */
+const PDFMobileFlipbook = lazy(() => import('./PDFMobileFlipbook.jsx'));
+
+/**
+ * PDFViewer — shows a page-by-page flipbook on mobile and an inline iframe on
+ * desktop, with a download button below on both.
  *
  * Props:
  *   pdfSrc           — public path to the PDF, e.g. "/First%20Year%20Guide%20(Booklets).pdf"
- *   downloadFilename — suggested filename for the download, e.g. "SUDATA-First-Year-Guide.pdf"
+ *   downloadFilename — suggested filename for the download
  */
 export default function PDFViewer({ pdfSrc, downloadFilename }) {
+  // Detect mobile after hydration — null means "not yet determined"
+  const [isMobile, setIsMobile] = useState(null);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 640);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
+
   return (
     <div className="w-full flex flex-col items-center gap-6">
 
-      {/* Viewer wrapper */}
-      <div
-        className="relative w-full overflow-hidden bg-[#0a0f1e]"
-        style={{
-          boxShadow: '0 0 0 1px rgba(0,240,255,0.25), 8px 8px 0 rgba(0,240,255,0.07), -8px 8px 0 rgba(0,240,255,0.07)',
-          /* min 320px on phone → grows with viewport → caps at 580px on large screens */
-          height: 'clamp(320px, 55vw, 580px)',
-        }}
-      >
-        <iframe
-          src={pdfSrc}
-          title="First Year Guide"
-          className="w-full h-full border-0"
-        />
-      </div>
+      {/* Viewer — flipbook on mobile, iframe on desktop.
+          During SSR isMobile is null so nothing renders (avoids Node.js issues). */}
+      {isMobile === null ? null : isMobile ? (
+        <Suspense fallback={
+          <div
+            className="relative w-full overflow-hidden bg-[#0a0f1e] flex items-center justify-center py-16"
+            style={{ boxShadow: '0 0 0 1px rgba(0,240,255,0.25)' }}
+          >
+            <span className="font-mono-tech text-sudata-neon/50 text-xs tracking-widest">LOADING PDF...</span>
+          </div>
+        }>
+          <PDFMobileFlipbook pdfSrc={pdfSrc} />
+        </Suspense>
+      ) : (
+        <div
+          className="relative w-full overflow-hidden bg-[#0a0f1e]"
+          style={{
+            boxShadow: '0 0 0 1px rgba(0,240,255,0.25), 8px 8px 0 rgba(0,240,255,0.07), -8px 8px 0 rgba(0,240,255,0.07)',
+            height: 'clamp(320px, 55vw, 580px)',
+          }}
+        >
+          <iframe
+            src={pdfSrc}
+            title="First Year Guide"
+            className="w-full h-full border-0"
+          />
+        </div>
+      )}
 
-      {/* Download button — matches the "DOWNLOAD PROSPECTUS" style on the sponsors page */}
+      {/* Download button */}
       <a
         href={pdfSrc}
         download={downloadFilename}

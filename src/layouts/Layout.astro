@@ -29,7 +29,7 @@ const { title = "SUDATA" } = Astro.props;
 		<!-- Glassmorphic Navbar -->
 		<nav id="main-nav" class="fixed top-6 left-0 right-0 mx-auto max-w-fit z-50 flex justify-center transition-all duration-500">
 			<div class="backdrop-blur-xl bg-white/5 border border-white/20 rounded-full shadow-2xl shadow-sudata-cyan/20">
-				<div class="px-8 py-4">
+				<div id="nav-pill-inner" class="px-8 py-4">
 					<div id="nav-inner" class="flex items-center gap-12 transition-all duration-500">
 						<!-- Logo/Brand -->
 						<button id="nav-toggle" class="relative text-white font-bold text-lg tracking-wider hover:text-sudata-cyan transition-colors cursor-pointer bg-transparent border-none p-0 focus:outline-none whitespace-nowrap">
@@ -77,14 +77,18 @@ const { title = "SUDATA" } = Astro.props;
 					max-width: calc(100% - 2rem) !important;
 					border-radius: 1rem;
 				}
+				/* Tighten the outer pill padding so the expanded menu is compact */
+				#main-nav.nav-mobile-expanded #nav-pill-inner {
+					padding: 0.5rem 0.75rem;
+				}
 				#main-nav.nav-mobile-expanded #nav-links {
 					flex-wrap: wrap;
 					justify-content: center;
-					gap: 0.25rem;
+					gap: 0.2rem;
 				}
 				#main-nav.nav-mobile-expanded #nav-links a {
-					padding: 0.4rem 0.75rem;
-					font-size: 0.75rem;
+					padding: 0.3rem 0.55rem;
+					font-size: 0.7rem;
 				}
 			}
 		</style>
