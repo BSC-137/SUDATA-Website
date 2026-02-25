@@ -19,6 +19,9 @@ src/
 └── events_template.xlsx        # Excel template for SUDATA directors to fill in their event details of the year 
 ```
 
+For Careers page, sponsorships opportunities: 
+python3 scripts/convertOpportunitiesExcelToJson.py src/data/opportunities_template.xlsx src/data/opportunities.json
+
 ## 🎨 Design Features
 
 Your events calendar maintains the SUDATA design system:

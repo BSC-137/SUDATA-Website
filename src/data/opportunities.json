@@ -1,0 +1,40 @@
+{
+  "opportunities": [
+    {
+      "sponsor": "Jane Street",
+      "sponsorTier": 1,
+      "sponsorLogo": "/sponsors/current-sponsors/jane-street.png",
+      "title": "Jane Street Application Portal (AUS)",
+      "type": "Full-Time & Internship",
+      "deadline": "2026-03-08",
+      "status": "open",
+      "description": "Apply to Jane Street's full range of roles — internships, new grad positions, and experienced hires — through their dedicated Australian application portal. Rolling applications, apply any time.",
+      "applicationLink": "https://www.janestreet.com/apply-portal-aus/",
+      "id": "opp_001"
+    },
+    {
+      "sponsor": "IMC Trading",
+      "sponsorTier": 3,
+      "sponsorLogo": "/sponsors/current-sponsors/imc-trading.webp",
+      "title": "Summer Internship Program",
+      "type": "Internship",
+      "deadline": "2026-04-30",
+      "status": "open",
+      "description": "IMC Trading is offering internship positions for students interested in quantitative trading, software engineering, and market making. Join a global team of problem solvers using technology and algorithms to trade in financial markets worldwide.",
+      "applicationLink": "https://bit.ly/4cdblbA",
+      "id": "opp_002"
+    },
+    {
+      "sponsor": "Jane Street",
+      "sponsorTier": 1,
+      "sponsorLogo": "/sponsors/current-sponsors/jane-street.png",
+      "title": "Women in Trading Program",
+      "type": "Program",
+      "deadline": "2026-02-15",
+      "status": "closed",
+      "description": "Jane Street's Women in Trading program is a unique opportunity for women interested in quantitative trading, programming, and mathematics. This cohort's applications are now closed — stay tuned for future rounds.",
+      "applicationLink": "https://tr.ee/GNsjYgfuHO",
+      "id": "opp_003"
+    }
+  ]
+}
