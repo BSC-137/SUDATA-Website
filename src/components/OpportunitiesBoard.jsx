@@ -132,40 +132,58 @@ export default function OpportunitiesBoard({ opportunities }) {
     );
   }
 
-  return (
-    /*
-     * Single unified grid — all cards (across all sponsors) share the same
-     * column tracks and row tracks, so cards in the same row are always
-     * equal height regardless of which sponsor they belong to.
-     */
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
-      {sortedGroups.map(([sponsor, { logo, opps }], groupIdx) => (
-        <React.Fragment key={sponsor}>
-
-          {/* Sponsor header — spans the full grid width */}
-          <div className={`col-span-full flex items-center gap-3 sm:gap-4 ${groupIdx > 0 ? 'mt-2 sm:mt-4' : ''}`}>
-            {logo && (
-              <img
-                src={logo}
-                alt={sponsor}
-                className="h-7 w-auto object-contain opacity-80 flex-shrink-0"
-                loading="lazy"
-              />
-            )}
-            <div className="flex-1 h-px bg-sudata-neon/20" />
-            <span className="font-mono-tech text-sudata-grey/60 text-xs tracking-[0.2em] whitespace-nowrap">
-              [ {sponsor.toUpperCase()} ]
-            </span>
-            <div className="flex-1 h-px bg-sudata-neon/20" />
-          </div>
-
-          {/* Cards — direct grid children, so they share row height with all other cards */}
-          {opps.map((opp) => (
-            <OpportunityCard key={opp.id} opp={opp} />
-          ))}
-
-        </React.Fragment>
-      ))}
+  // Shared sponsor header markup (used in both layouts)
+  const SponsorHeader = ({ sponsor, logo, mt }) => (
+    <div className={`flex items-center gap-3 sm:gap-4 ${mt ? 'mt-3 sm:mt-4' : ''}`}>
+      {logo && (
+        <img
+          src={logo}
+          alt={sponsor}
+          className="h-7 w-auto object-contain opacity-80 flex-shrink-0"
+          loading="lazy"
+        />
+      )}
+      <div className="flex-1 h-px bg-sudata-neon/20" />
+      <span className="font-mono-tech text-sudata-grey/60 text-xs tracking-[0.2em] whitespace-nowrap">
+        [ {sponsor.toUpperCase()} ]
+      </span>
+      <div className="flex-1 h-px bg-sudata-neon/20" />
     </div>
+  );
+
+  return (
+    <>
+      {/* ── Mobile: per-group horizontal scroll rows ───────────────────────
+           Each card is a fixed 240 px wide; the row scrolls horizontally so
+           cards are always side-by-side without any text clipping.          */}
+      <div className="sm:hidden flex flex-col gap-4">
+        {sortedGroups.map(([sponsor, { logo, opps }], groupIdx) => (
+          <div key={sponsor}>
+            <SponsorHeader sponsor={sponsor} logo={logo} mt={groupIdx > 0} />
+            <div className="mt-3 flex overflow-x-auto gap-3 pb-1 snap-x snap-mandatory">
+              {opps.map((opp) => (
+                <div key={opp.id} className="flex-none w-[240px] snap-start">
+                  <OpportunityCard opp={opp} />
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* ── Desktop: unified CSS grid (all cards share the same row tracks) */}
+      <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {sortedGroups.map(([sponsor, { logo, opps }], groupIdx) => (
+          <React.Fragment key={sponsor}>
+            <div className={`col-span-full ${groupIdx > 0 ? 'mt-4' : ''}`}>
+              <SponsorHeader sponsor={sponsor} logo={logo} mt={false} />
+            </div>
+            {opps.map((opp) => (
+              <OpportunityCard key={opp.id} opp={opp} />
+            ))}
+          </React.Fragment>
+        ))}
+      </div>
+    </>
   );
 }

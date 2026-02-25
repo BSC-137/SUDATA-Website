@@ -69,11 +69,21 @@ export default function PDFMobileFlipbook({ pdfSrc }) {
 
         const containerW   = container.clientWidth || 300;
         const baseViewport = page.getViewport({ scale: 1 });
-        const scale        = containerW / baseViewport.width;
+
+        // Multiply by devicePixelRatio so the canvas is drawn at full physical
+        // resolution — without this, the browser upscales the canvas on Retina /
+        // high-DPR screens and the text looks blurry.
+        const dpr          = window.devicePixelRatio || 1;
+        const scale        = (containerW / baseViewport.width) * dpr;
         const viewport     = page.getViewport({ scale });
 
+        // Canvas backing store = physical pixels
         canvas.width  = viewport.width;
         canvas.height = viewport.height;
+
+        // CSS size = logical (CSS) pixels so it fills the container correctly
+        canvas.style.width  = `${containerW}px`;
+        canvas.style.height = `${Math.round(viewport.height / dpr)}px`;
 
         const task = page.render({
           canvasContext: canvas.getContext('2d'),
@@ -118,7 +128,7 @@ export default function PDFMobileFlipbook({ pdfSrc }) {
             UNABLE TO LOAD PDF
           </div>
         )}
-        <canvas ref={canvasRef} className="w-full block" />
+        <canvas ref={canvasRef} className="block" />
       </div>
 
       {/* Page navigation */}
