@@ -1,6 +1,28 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import NetworkLogo from '../components/NetworkLogo.jsx';
+
+// USU member count — set USU_MEMBER_COUNT in Vercel env vars to update
+const usuMembers = parseInt(import.meta.env.USU_MEMBER_COUNT || '680');
+
+// Instagram follower count — fetched from Instagram Graph API at build time
+// Token expires every 60 days: refresh at graph.instagram.com/refresh_access_token
+let igFollowers = 4294;
+try {
+	const token = import.meta.env.INSTAGRAM_ACCESS_TOKEN;
+	const userId = import.meta.env.INSTAGRAM_USER_ID;
+	if (token && userId) {
+		const res = await fetch(
+			`https://graph.instagram.com/v21.0/${userId}?fields=followers_count&access_token=${token}`
+		);
+		if (res.ok) {
+			const data = await res.json();
+			igFollowers = data.followers_count ?? igFollowers;
+		}
+	}
+} catch {
+	// silently fall back to default
+}
 ---
 
 <Layout title="SUDATA | Data Science Society">
@@ -107,7 +129,7 @@ import NetworkLogo from '../components/NetworkLogo.jsx';
 				<!-- USU Members -->
 				<div class="flex flex-col items-center gap-2">
 					<div class="flex items-end gap-2">
-						<span id="usu-count" class="text-5xl md:text-6xl font-bold text-sudata-neon font-mono neon-text-shadow tabular-nums" data-target="599">0</span>
+						<span id="usu-count" class="text-5xl md:text-6xl font-bold text-sudata-neon font-mono neon-text-shadow tabular-nums" data-target={usuMembers}>0</span>
 						<span class="text-sudata-neon text-3xl font-mono mb-1">+</span>
 					</div>
 					<div class="font-mono-tech text-sudata-grey/70 text-sm tracking-[0.15em] uppercase flex items-center gap-2">
@@ -125,7 +147,7 @@ import NetworkLogo from '../components/NetworkLogo.jsx';
 				<!-- Instagram Followers -->
 				<div class="flex flex-col items-center gap-2">
 					<div class="flex items-end gap-2">
-						<span id="ig-count" class="text-5xl md:text-6xl font-bold text-sudata-neon font-mono neon-text-shadow tabular-nums" data-target="4251">0</span>
+						<span id="ig-count" class="text-5xl md:text-6xl font-bold text-sudata-neon font-mono neon-text-shadow tabular-nums" data-target={igFollowers}>0</span>
 						<span class="text-sudata-neon text-3xl font-mono mb-1">+</span>
 					</div>
 					<div class="font-mono-tech text-sudata-grey/70 text-sm tracking-[0.15em] uppercase flex items-center gap-2">

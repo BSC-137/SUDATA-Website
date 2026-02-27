@@ -160,7 +160,7 @@ export default function OpportunitiesBoard({ opportunities }) {
         {sortedGroups.map(([sponsor, { logo, opps }], groupIdx) => (
           <div key={sponsor}>
             <SponsorHeader sponsor={sponsor} logo={logo} mt={groupIdx > 0} />
-            <div className="mt-3 flex overflow-x-auto gap-3 pb-1 snap-x snap-mandatory">
+            <div className="mt-3 flex overflow-x-auto gap-3 pt-6 pb-4 snap-x snap-mandatory">
               {opps.map((opp) => (
                 <div key={opp.id} className="flex-none w-[240px] snap-start">
                   <OpportunityCard opp={opp} />

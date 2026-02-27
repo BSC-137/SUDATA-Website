@@ -264,6 +264,11 @@ const uid = `carousel-${Math.random().toString(36).slice(2)}`;
       gap: 4px;
       padding: 5px 8px;
     }
+    /* Override global a/button min-size so dot buttons stay tiny */
+    .dot {
+      min-width: 0;
+      min-height: 0;
+    }
   }
 
   .dot {
@@ -349,16 +354,19 @@ const uid = `carousel-${Math.random().toString(36).slice(2)}`;
 
     const setDotsActive = (idx) => {
       dots.forEach((d, i) => (d.dataset.active = String(i === idx)));
+      // Auto-scroll the dots bar so the active dot stays centred and visible
+      if (dotsWrap && dots[idx]) {
+        const dot = dots[idx];
+        const target = dot.offsetLeft + dot.offsetWidth / 2 - dotsWrap.clientWidth / 2;
+        dotsWrap.scrollLeft = Math.max(0, Math.min(target, dotsWrap.scrollWidth - dotsWrap.clientWidth));
+      }
     };
 
     let centers = [];
     const recomputeCenters = () => {
-      const wrapRect = dotsWrap.getBoundingClientRect();
-      const wrapLeft = wrapRect.left + dotsWrap.clientLeft;
-      centers = dots.map((d) => {
-        const r = d.getBoundingClientRect();
-        return (r.left - wrapLeft) + r.width / 2;
-      });
+      // Use offsetLeft (scroll-content-relative) so positions stay correct
+      // even when the dots bar itself scrolls.
+      centers = dots.map((d) => d.offsetLeft + d.offsetWidth / 2);
     };
 
     const setIndicatorProgress = (t) => {

@@ -72,6 +72,13 @@ const { title = "SUDATA" } = Astro.props;
 			</div>
 		</nav>
 		<style>
+			/* Remove tap/touch highlight on nav links so iOS doesn't leave a
+			   persistent white ring on the last-tapped link */
+			#nav-links a {
+				-webkit-tap-highlight-color: transparent;
+				outline: none;
+			}
+
 			@media (max-width: 639px) {
 				#main-nav.nav-mobile-expanded {
 					max-width: calc(100% - 2rem) !important;
@@ -89,6 +96,11 @@ const { title = "SUDATA" } = Astro.props;
 				#main-nav.nav-mobile-expanded #nav-links a {
 					padding: 0.3rem 0.55rem;
 					font-size: 0.7rem;
+					/* Centre text inside each button (including Membership) */
+					text-align: center;
+					display: inline-flex;
+					align-items: center;
+					justify-content: center;
 				}
 			}
 		</style>
