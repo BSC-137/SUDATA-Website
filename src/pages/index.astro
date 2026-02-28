@@ -183,9 +183,65 @@ try {
 					</span>
 				</a>
 			</div>
+			<!-- Subcom recruitment CTA — remove this block after recruitment closes -->
+			<div id="subcom-section" class="reveal-on-scroll flex flex-col items-center gap-3 w-full mt-2 sm:mt-4">
+				<p class="font-mono-tech text-base sm:text-lg text-white text-center tracking-wide font-bold">
+					Like what you see? Help shape what SUDATA becomes.
+				</p>
+				<!-- Active state (before deadline) -->
+				<a
+					id="subcom-active"
+					href="https://forms.gle/1MQWKQtUChUzeNfS6"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="group relative inline-flex items-center justify-center px-6 sm:px-10 md:px-14 py-4 sm:py-5 md:py-7 font-mono-tech font-bold text-sudata-navy text-sm sm:text-base md:text-lg transition-all duration-300 bg-sudata-neon hover:bg-[#70FFFF] rounded-xl shadow-[0_0_20px_rgba(0,240,255,0.6)] hover:shadow-[0_0_50px_rgba(0,240,255,1)] btn-scanline hover:-translate-y-1 w-full sm:w-auto"
+				>
+					<span class="relative flex items-center gap-2 sm:gap-3">
+						Join the Family
+						<!-- Star/sparkle pixel icon -->
+						<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="text-sudata-navy sm:w-6 sm:h-6 animate-pulse" style="image-rendering: pixelated;">
+							<path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="#020617"/>
+						</svg>
+					</span>
+				</a>
+
+				<!-- Expired state (after deadline) — hidden by default, shown via script -->
+				<a
+					id="subcom-expired"
+					href="https://www.instagram.com/usyd.sudata/"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="hidden group relative inline-flex items-center justify-center px-6 sm:px-10 md:px-14 py-4 sm:py-5 md:py-7 font-mono-tech font-bold text-sm sm:text-base md:text-lg rounded-xl w-full sm:w-auto"
+					style="color: rgba(255,255,255,0.25); border: 1px solid rgba(255,255,255,0.12); background: transparent;"
+				>
+					<span class="relative flex items-center gap-2 sm:gap-3">
+						Stay tuned for our next recruitment
+						<!-- Instagram icon -->
+						<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="sm:w-6 sm:h-6" style="image-rendering: pixelated;">
+							<path fill-rule="evenodd" clip-rule="evenodd" d="M7 2H17V4H19V6H21V18H19V20H17V22H7V20H5V18H3V6H5V4H7V2ZM7 4H5V6H7V4ZM17 4H19V6H17V4ZM19 18V6H21V18H19ZM17 20V18H19V20H17ZM7 20H17V18H7V20ZM5 18V20H7V18H5ZM5 6V18H3V6H5ZM9 8H15V10H17V14H15V16H9V14H7V10H9V8ZM11 10H13V14H11V10ZM17 6H19V8H17V6Z" fill="currentColor"/>
+						</svg>
+					</span>
+				</a>
+
+				<!-- Deadline label (active) -->
+				<p id="subcom-deadline-text" class="font-mono text-xs text-sudata-grey/40 tracking-wider">
+					Applications close 13 March 2026
+				</p>
+				<!-- Closed label (expired) — hidden by default -->
+				<p id="subcom-closed-text" class="hidden font-mono text-xs text-sudata-grey/30 tracking-wider">
+					Recruitment closed — watch our Insta for the next round
+				</p>
+			</div>
 		</div>
 	</div>
 </Layout>
+
+<script>
+	// ── Subcom deadline check — hide entire section after 13 Mar 2026 ───────
+	if (new Date() >= new Date('2026-03-14T00:00:00')) {
+		document.getElementById('subcom-section')?.classList.add('hidden');
+	}
+</script>
 
 <script>
 	// ── Count-up animation triggered by IntersectionObserver ──────────────

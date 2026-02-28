@@ -772,16 +772,17 @@
     {
       "title": "Poker Workshop",
       "date": "2026-03-04",
-      "time": "TBA",
-      "venue": "TBA",
+      "time": "17:00",
+      "venue": "Wentworth Building Timber floors (International Student Lounge)",
       "type": "social",
       "description": "Crash course in poker ahead of our poker tournament",
       "collaborators": [
         "SUDATA",
-        "SQT"
+        "SQT",
+        "Susquehanna"
       ],
       "catering": "TBA",
-      "signupLink": "TBA",
+      "signupLink": "https://forms.gle/PMUkorsxWhRaeZdq7",
       "attendees": 0,
       "id": "event_050"
     },
@@ -802,6 +803,22 @@
       "id": "event_051"
     },
     {
+      "title": "Dinner with Jane Street",
+      "date": "2026-03-05",
+      "time": "17:00",
+      "venue": "TBA University of Sydney",
+      "type": "academic",
+      "description": "Jane Street is hosting a dinner in Sydney! University of Sydney students of all backgrounds and tenures are encouraged to attend. We hope to meet intellectually curious problem solvers - you don't need experience in finance to work at Jane Street.",
+      "collaborators": [
+        "SUDATA",
+        "Jane Street"
+      ],
+      "catering": "Dinner",
+      "signupLink": "https://docs.google.com/forms/d/e/1FAIpQLSf46ZiUBv2E_YBmU0tA3ywnUhGT7KrWh1ifW98jJ2F-iPxs4g/viewform",
+      "attendees": 0,
+      "id": "event_052"
+    },
+    {
       "title": "Introduction to R Workshop",
       "date": "2026-03-06",
       "time": "16:00",
@@ -814,7 +831,7 @@
       "catering": "Snacks",
       "signupLink": "https://docs.google.com/forms/d/e/1FAIpQLScgW3fZhxdtB65OgVPNcWrCGxCODn6fjWnh4lLI3cafpXfg_A/viewform",
       "attendees": 0,
-      "id": "event_052"
+      "id": "event_053"
     },
     {
       "title": "Meet The Startups",
@@ -832,7 +849,23 @@
       "catering": "TBA",
       "signupLink": "TBA",
       "attendees": 0,
-      "id": "event_053"
+      "id": "event_054"
+    },
+    {
+      "title": "Jane Street Tech Talk",
+      "date": "2026-03-17",
+      "time": "18:00",
+      "venue": "TBA",
+      "type": "academic",
+      "description": "Join a JS technologist to learn more about “Making OCaml Safe for Performance Engineering.",
+      "collaborators": [
+        "SUDATA",
+        "Jane Street"
+      ],
+      "catering": "TBA",
+      "signupLink": "https://docs.google.com/forms/d/e/1FAIpQLSe0fgyAoK7WviXjjQG5-B0WpO6OdeasQA5FbJU1cbfgnZAceQ/viewform",
+      "attendees": 0,
+      "id": "event_055"
     },
     {
       "title": "SUDATA Pub Crawl",
@@ -847,7 +880,7 @@
       "catering": "Drinks available for purchase",
       "signupLink": "TBA",
       "attendees": 0,
-      "id": "event_054"
+      "id": "event_056"
     },
     {
       "title": "Total Drama Island 2026 Camp",
@@ -863,9 +896,9 @@
         "BISA"
       ],
       "catering": "Meals provided",
-      "signupLink": "TBA",
+      "signupLink": "https://events.humanitix.com/sudata-x-sums-x-biosoc-x-bisa-camp-2026?fbclid=IwY2xjawQPexdleHRuA2FlbQIxMQBzcnRjBmFwcF9pZAEwAAEeKIdw7O0NIVHgrUBA4rsJpch8avlWCWYw99hV2MRQQhl3VFoFGBe3HjmW1bk_aem_4Qh6p4uxUHZAc60DdXkfHg",
       "attendees": 0,
-      "id": "event_055"
+      "id": "event_057"
     },
     {
       "title": "Datathon",
@@ -882,7 +915,7 @@
       "catering": "Lunch and Snacks",
       "signupLink": "TBA",
       "attendees": 0,
-      "id": "event_056"
+      "id": "event_058"
     },
     {
       "title": "Amstelveen Consulting Workshop",
@@ -898,7 +931,7 @@
       "catering": "TBA",
       "signupLink": "TBA",
       "attendees": 0,
-      "id": "event_057"
+      "id": "event_059"
     },
     {
       "title": "Data Science Careers Panel",
@@ -914,7 +947,7 @@
       "catering": "TBA",
       "signupLink": "TBA",
       "attendees": 0,
-      "id": "event_058"
+      "id": "event_060"
     },
     {
       "title": "Industry Networking Night",
@@ -929,7 +962,7 @@
       "catering": "Canapés and drinks",
       "signupLink": "TBA",
       "attendees": 0,
-      "id": "event_059"
+      "id": "event_061"
     },
     {
       "title": "DATA1001/2001 Revision Session",
@@ -944,7 +977,7 @@
       "catering": "Lunch and Snacks",
       "signupLink": "TBA",
       "attendees": 0,
-      "id": "event_060"
+      "id": "event_062"
     }
   ]
 }

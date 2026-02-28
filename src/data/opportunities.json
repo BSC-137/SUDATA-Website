@@ -25,6 +25,18 @@
       "id": "opp_002"
     },
     {
+      "sponsor": "Atlassian",
+      "sponsorTier": 3,
+      "sponsorLogo": "/sponsors/current-sponsors/atlassian.png",
+      "title": "Atlassian Internships",
+      "type": "Internship",
+      "deadline": null,
+      "status": "open",
+      "description": "Atlassian’s intern program combines hands-on technical training, professional growth opportunities, dedicated mentorship, and strong social connections. This holistic approach empowers students to hit the ground running and sets them up for a successful career at Atlassian!",
+      "applicationLink": "https://www.atlassian.com/company/careers/all-jobs?team=Interns&location=Australia%2CNew%20Zealand&search=",
+      "id": "opp_003"
+    },
+    {
       "sponsor": "Jane Street",
       "sponsorTier": 1,
       "sponsorLogo": "/sponsors/current-sponsors/jane-street.png",
@@ -34,7 +46,7 @@
       "status": "closed",
       "description": "Jane Street's Women in Trading program is a unique opportunity for women interested in quantitative trading, programming, and mathematics. This cohort's applications are now closed — stay tuned for future rounds.",
       "applicationLink": "https://tr.ee/GNsjYgfuHO",
-      "id": "opp_003"
+      "id": "opp_004"
     }
   ]
 }
