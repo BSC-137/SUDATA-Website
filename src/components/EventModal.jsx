@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 const EventModal = ({ event, onClose }) => {
   // Close on Escape key
@@ -32,6 +32,20 @@ const EventModal = ({ event, onClose }) => {
   };
 
   const typeColor = typeColors[event.type];
+
+  const [calMenuOpen, setCalMenuOpen] = useState(false);
+  const menuRef = useRef(null);
+
+  // close calendar menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (menuRef.current && !menuRef.current.contains(e.target)) {
+        setCalMenuOpen(false);
+      }
+    };
+    window.addEventListener('mousedown', handleClickOutside);
+    return () => window.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const formatDate = (dateStr) => {
     const date = new Date(dateStr);
@@ -133,6 +147,25 @@ const EventModal = ({ event, onClose }) => {
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
   };
+
+  // will open a google cal page to request to add the event to users calendar
+  const buildGoogleCalUrl = () => {
+    const [year, month, day] = event.date.split('-').map(Number);
+    const [hours, minutes] = event.time.split(':').map(Number);
+    const start = new Date(Date.UTC(year, month - 1, day, hours, minutes));
+    const end = new Date(start.getTime() + 60 * 60 * 1000);
+    const fmt = (d) => d.toISOString().replace(/-|:|\.\d+/g, '');
+    const params = new URLSearchParams({
+      action: 'TEMPLATE',
+      text: event.title,
+      dates: `${fmt(start)}/${fmt(end)}`,
+      details: event.description || '',
+      location: event.venue || '',
+      sprop: `name:SUDATA Events`,
+    });
+    return `https://www.google.com/calendar/render?${params.toString()}`;
+  };
+
 
   return (
     <div 
@@ -287,24 +320,51 @@ const EventModal = ({ event, onClose }) => {
             View Sign-Up Form
           </a>
           
-          <button
-            onClick={downloadICS}
-            className="flex-1 px-4 sm:px-6 py-3 sm:py-4 rounded-lg text-[#020617] font-bold text-sm sm:text-base
-                     hover:scale-105 active:scale-95 transition-all duration-300 flex items-center justify-center gap-2 touch-manipulation"
-            style={{ 
-              backgroundColor: typeColor,
-              boxShadow: `0 0 30px ${typeColor}80`,
-            }}
-            onMouseEnter={(e) => e.target.style.backgroundColor = `${typeColor}cc`}
-            onMouseLeave={(e) => e.target.style.backgroundColor = typeColor}
-            onMouseDown={(e) => e.target.style.backgroundColor = `${typeColor}99`}
-            onMouseUp={(e) => e.target.style.backgroundColor = typeColor}
-          >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" className="sm:w-5 sm:h-5" style={{ imageRendering: 'pixelated' }}>
-              <path d="M19 3H18V1H16V3H8V1H6V3H5C3.89 3 3 3.9 3 5V19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3ZM19 19H5V9H19V19ZM19 7H5V5H19V7Z" />
-            </svg>
-            Add to Calendar
-          </button>
+          <div className="relative flex-1" ref={menuRef}>
+            <button
+              onClick={() => setCalMenuOpen((o) => !o)}
+              className="w-full px-4 sm:px-6 py-3 sm:py-4 rounded-lg text-[#020617] font-bold text-sm sm:text-base
+                       hover:scale-105 active:scale-95 transition-all duration-300 flex items-center justify-center gap-2 touch-manipulation"
+              style={{ 
+                backgroundColor: typeColor,
+                boxShadow: `0 0 30px ${typeColor}80`,
+              }}
+              onMouseEnter={(e) => e.target.style.backgroundColor = `${typeColor}cc`}
+              onMouseLeave={(e) => e.target.style.backgroundColor = typeColor}
+              onMouseDown={(e) => e.target.style.backgroundColor = `${typeColor}99`}
+              onMouseUp={(e) => e.target.style.backgroundColor = typeColor}
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" className="sm:w-5 sm:h-5" style={{ imageRendering: 'pixelated' }}>
+                <path d="M19 3H18V1H16V3H8V1H6V3H5C3.89 3 3 3.9 3 5V19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3ZM19 19H5V9H19V19ZM19 7H5V5H19V7Z" />
+              </svg>
+              Add to Calendar ▾
+            </button>
+
+            {calMenuOpen && (
+              <div className="absolute right-0 mt-2 w-full bg-[#020617] rounded-lg border border-[#555] shadow-lg z-50">
+                <button
+                  onClick={() => {
+                    downloadICS();
+                    setCalMenuOpen(false);
+                  }}
+                  className="w-full text-left px-4 py-2 hover:bg-[#333] transition"
+                  style={{ color: typeColor }}
+                >
+                  Apple Calendar
+                </button>
+                <a
+                  href={buildGoogleCalUrl()}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full block text-left px-4 py-2 hover:bg-[#333] transition"
+                  style={{ color: typeColor }}
+                  onClick={() => setCalMenuOpen(false)}
+                >
+                  Google Calendar
+                </a>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
