@@ -19,7 +19,7 @@ function EventRow({ ev }) {
   const rawLink = ev.signupLink || ev.registrationLink || ev.link;
   const hasLink = rawLink && rawLink.startsWith('http') ? rawLink : null;
   const color = (ev.type || ev.category || 'academic').toLowerCase() === 'social'
-    ? '#3B82F6'
+    ? '#FAD85D'  // yellow
     : '#00F0FF';
 
   const inner = (

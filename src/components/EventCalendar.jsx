@@ -141,11 +141,11 @@ const EventCalendar = ({ events }) => {
       icon: 'M12 2L2 7V11C2 16.55 6.84 21.74 12 23C17.16 21.74 22 16.55 22 11V7L12 2Z' 
     },
     social: { 
-      color: '#3B82F6',  // Bold blue
-      bgActive: 'bg-[#3B82F6]/20',
-      borderActive: 'border-[#3B82F6]',
-      textActive: 'text-[#3B82F6]',
-      shadow: 'shadow-[0_0_20px_rgba(59,130,246,0.5)]',
+      color: '#FAD85D',  // Yellow
+      bgActive: 'bg-[#FAD85D]/20',
+      borderActive: 'border-[#FAD85D]',
+      textActive: 'text-[#FAD85D]',
+      shadow: 'shadow-[0_0_20px_rgba(246,230,59,0.5)]',
       icon: 'M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2Z' 
     },
   };
