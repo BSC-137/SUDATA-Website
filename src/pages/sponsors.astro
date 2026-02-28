@@ -5,6 +5,24 @@ import CopyEmailButton from '../components/CopyEmailButton.jsx';
 
 const usuMembers = parseInt(import.meta.env.USU_MEMBER_COUNT || '599');
 
+// Instagram follower count — fetched from Instagram Graph API at build time
+let igFollowers = 4294;
+try {
+  const token = import.meta.env.INSTAGRAM_ACCESS_TOKEN;
+  const userId = import.meta.env.INSTAGRAM_USER_ID;
+  if (token && userId) {
+    const res = await fetch(
+      `https://graph.instagram.com/v21.0/${userId}?fields=followers_count&access_token=${token}`
+    );
+    if (res.ok) {
+      const data = await res.json();
+      igFollowers = data.followers_count ?? igFollowers;
+    }
+  }
+} catch {
+  // silently fall back to default
+}
+
 const sponsors = [
   {
     name: 'Jane Street',
@@ -126,7 +144,7 @@ const delayClasses = ['delay-0', 'delay-100', 'delay-200', 'delay-300'];
         </h2>
         <div class="space-y-4 text-sudata-grey font-mono-tech text-base md:text-lg leading-relaxed">
 		<p>
-			We are the <span class="text-sudata-neon">direct pipeline</span> to Sydney's most ambitious analytical minds. Our {usuMembers}+ active members span Computer Science, Engineering, Mathematics, Finance, and beyond—united by a shared drive to master the technologies defining the next decade.
+			We are the <span class="text-sudata-neon">direct pipeline</span> to Sydney's most ambitious analytical minds. Our {igFollowers}+ active members span Computer Science, Engineering, Mathematics, Finance, and beyond—united by a shared drive to master the technologies defining the next decade.
 		</p>
 		<p>
 			Through SUDATA, you gain access to <span class="text-white">high-potential talent</span> who combine technical ability with commercial awareness. We don't just teach theory; we cultivate problem-solvers ready to tackle real-world challenges from day one.

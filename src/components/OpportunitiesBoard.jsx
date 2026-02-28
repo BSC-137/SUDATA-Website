@@ -139,7 +139,7 @@ export default function OpportunitiesBoard({ opportunities }) {
         <img
           src={logo}
           alt={sponsor}
-          className="h-7 w-auto object-contain opacity-80 flex-shrink-0"
+          className="h-7 w-auto max-w-[100px] object-contain opacity-80 flex-shrink-0"
           loading="lazy"
         />
       )}
