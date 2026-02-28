@@ -337,11 +337,11 @@ const EventModal = ({ event, onClose }) => {
               <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" className="sm:w-5 sm:h-5" style={{ imageRendering: 'pixelated' }}>
                 <path d="M19 3H18V1H16V3H8V1H6V3H5C3.89 3 3 3.9 3 5V19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3ZM19 19H5V9H19V19ZM19 7H5V5H19V7Z" />
               </svg>
-              Add to Calendar ▾
+              Add to Calendar
             </button>
 
             {calMenuOpen && (
-              <div className="absolute right-0 mt-2 w-full bg-[#020617] rounded-lg border border-[#555] shadow-lg z-50">
+              <div className="absolute right-0 bottom-full mb-2 w-full bg-[#020617] rounded-lg border border-[#555] shadow-lg z-50">
                 <button
                   onClick={() => {
                     downloadICS();
