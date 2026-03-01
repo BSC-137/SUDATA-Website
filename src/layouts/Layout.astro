@@ -168,7 +168,7 @@ const isHomePage = Astro.url.pathname === '/';
 			})();
 		</script>
 
-		<main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-24 w-full relative z-10">
+		<main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-24 w-full relative">
 			<slot />
 		</main>
 
@@ -178,7 +178,7 @@ const isHomePage = Astro.url.pathname === '/';
 					<p class="text-sm text-sudata-grey/60">&copy; {new Date().getFullYear()} SUDATA. All rights reserved.</p>
 					<div class="flex flex-col sm:flex-row sm:flex-wrap items-center sm:items-center gap-0.5 sm:gap-1.5 sm:justify-start">
 						<span class="text-[11px] text-sudata-grey/35 font-mono">Technical issues? Reach us at</span>
-						<span class="inline-flex items-center gap-1">
+						<span class="flex flex-row flex-nowrap items-center gap-1">
 							<span class="text-[11px] text-sudata-grey/35 font-mono">technology@sudata.org</span>
 							<!-- Copy email button -->
 							<button

@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 
-// Recruitment closes 13 Mar — auto-hide everything from 14 Mar onwards
-const DEADLINE = new Date('2026-03-14T00:00:00');
+// Recruitment closes 6 Mar — auto-hide popup and disable widget from 6 Mar onwards
+const DEADLINE = new Date('2026-03-06T00:00:00');
 const APPLY_LINK = 'https://forms.gle/1MQWKQtUChUzeNfS6';
 
 export default function SubcomRecruitment({ isHomePage }) {
@@ -20,10 +20,11 @@ export default function SubcomRecruitment({ isHomePage }) {
 
   // ── Deadline + popup trigger ──────────────────────────────────────────────
   useEffect(() => {
-    if (new Date() >= DEADLINE) return; // stay expired, render nothing
+    setWidgetVisible(true); // widget always mounts; expired flag controls its state
+
+    if (new Date() >= DEADLINE) return; // stay expired — no popup, widget disabled
 
     setExpired(false);
-    setWidgetVisible(true);
 
     if (!isHomePage) return;
 
@@ -160,8 +161,6 @@ export default function SubcomRecruitment({ isHomePage }) {
     setPopupOpen(false);
   };
 
-  if (expired) return null;
-
   return (
     <>
       {/* ── Popup ──────────────────────────────────────────────────────────── */}
@@ -213,7 +212,7 @@ export default function SubcomRecruitment({ isHomePage }) {
               <svg width="12" height="12" viewBox="0 0 24 24" fill="#00F0FF" style={{ imageRendering: 'pixelated', opacity: 0.6 }}>
                 <path d="M12 2C6.5 2 2 6.5 2 12S6.5 22 12 22 22 17.5 22 12 17.5 2 12 2ZM12 20C7.59 20 4 16.41 4 12S7.59 4 12 4 20 7.59 20 12 16.41 20 12 20ZM12.5 7H11V13L16.2 16.2L17 14.9L12.5 12.2V7Z" />
               </svg>
-              Closes 13 March 2026
+              Closes 6 March 2026
             </div>
 
             {/* Apply button — min-h-[44px] ensures tappable on mobile */}
@@ -241,54 +240,69 @@ export default function SubcomRecruitment({ isHomePage }) {
           ref={widgetRef}
           className="fixed right-4 sm:right-6 z-[62] select-none touch-none"
           style={{
-            cursor: 'grab',
-            // Sit above iOS Safari browser chrome using safe-area-inset
+            cursor: expired ? 'default' : 'grab',
             bottom: 'calc(1rem + env(safe-area-inset-bottom, 0px))',
           }}
           onMouseDown={(e) => {
-            if (e.button !== 0) return;
+            if (expired || e.button !== 0) return;
             e.preventDefault();
             startDrag(e.clientX, e.clientY);
           }}
           onTouchStart={(e) => {
+            if (expired) return;
             const touch = e.touches[0];
             startDrag(touch.clientX, touch.clientY);
           }}
         >
-          <a
-            href={APPLY_LINK}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group flex items-center gap-2 px-4 bg-[#020617] border border-[#00F0FF]/50 hover:border-[#00F0FF] rounded-xl font-mono text-[#00F0FF] text-xs font-bold transition-colors duration-300 hover:bg-[#00F0FF]/10 touch-manipulation"
-            style={{
-              boxShadow: '0 0 16px rgba(0,240,255,0.2)',
-              cursor: 'inherit',
-              // 44px min height for iOS tap target compliance
-              minHeight: '44px',
-            }}
-            aria-label="Apply for SUDATA subcommittee"
-            draggable={false}
-            onClick={(e) => {
-              // Cancel navigation if the widget was dragged rather than tapped
-              if (dragState.current.hasMoved) e.preventDefault();
-            }}
-          >
-            <svg
-              width="12" height="12" viewBox="0 0 24 24" fill="currentColor"
-              className="animate-pulse shrink-0"
-              style={{ imageRendering: 'pixelated' }}
+          {expired ? (
+            <div
+              className="flex items-center gap-2 px-4 bg-[#020617] border border-[#94a3b8]/20 rounded-xl font-mono text-[#94a3b8]/40 text-xs font-bold"
+              style={{ minHeight: '44px', cursor: 'not-allowed' }}
+              aria-label="Subcommittee applications closed"
             >
-              <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
-            </svg>
-            JOIN SUBCOM
-            <svg
-              width="10" height="10" viewBox="0 0 24 24" fill="currentColor"
-              className="group-hover:translate-x-0.5 transition-transform shrink-0"
-              style={{ imageRendering: 'pixelated' }}
+              <svg
+                width="12" height="12" viewBox="0 0 24 24" fill="currentColor"
+                className="shrink-0"
+                style={{ imageRendering: 'pixelated' }}
+              >
+                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
+              </svg>
+              SUBCOM CLOSED
+            </div>
+          ) : (
+            <a
+              href={APPLY_LINK}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center gap-2 px-4 bg-[#020617] border border-[#00F0FF]/50 hover:border-[#00F0FF] rounded-xl font-mono text-[#00F0FF] text-xs font-bold transition-colors duration-300 hover:bg-[#00F0FF]/10 touch-manipulation"
+              style={{
+                boxShadow: '0 0 16px rgba(0,240,255,0.2)',
+                cursor: 'inherit',
+                minHeight: '44px',
+              }}
+              aria-label="Apply for SUDATA subcommittee"
+              draggable={false}
+              onClick={(e) => {
+                if (dragState.current.hasMoved) e.preventDefault();
+              }}
             >
-              <path d="M10 17l5-5-5-5v10z" />
-            </svg>
-          </a>
+              <svg
+                width="12" height="12" viewBox="0 0 24 24" fill="currentColor"
+                className="animate-pulse shrink-0"
+                style={{ imageRendering: 'pixelated' }}
+              >
+                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
+              </svg>
+              JOIN SUBCOM
+              <svg
+                width="10" height="10" viewBox="0 0 24 24" fill="currentColor"
+                className="group-hover:translate-x-0.5 transition-transform shrink-0"
+                style={{ imageRendering: 'pixelated' }}
+              >
+                <path d="M10 17l5-5-5-5v10z" />
+              </svg>
+            </a>
+          )}
         </div>
       )}
     </>

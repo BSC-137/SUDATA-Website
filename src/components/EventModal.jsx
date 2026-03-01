@@ -57,13 +57,22 @@ const EventModal = ({ event, onClose }) => {
     });
   };
 
+  // Parse event time safely — falls back to midnight for "TBD" or missing times
+  const parseEventTime = (timeStr) => {
+    if (timeStr && timeStr.includes(':')) {
+      const [h, m] = timeStr.split(':').map(Number);
+      if (!isNaN(h) && !isNaN(m)) return { hours: h, minutes: m };
+    }
+    return { hours: 0, minutes: 0 };
+  };
+
   /**
    * Generate ICS file content for calendar import
    */
   const generateICS = () => {
     // Parse date and time
     const [year, month, day] = event.date.split('-').map(Number);
-    const [hours, minutes] = event.time.split(':').map(Number);
+    const { hours, minutes } = parseEventTime(event.time);
     
     // Create start date object
     const startDate = new Date(year, month - 1, day, hours, minutes);
@@ -151,7 +160,7 @@ const EventModal = ({ event, onClose }) => {
   // will open a google cal page to request to add the event to users calendar
   const buildGoogleCalUrl = () => {
     const [year, month, day] = event.date.split('-').map(Number);
-    const [hours, minutes] = event.time.split(':').map(Number);
+    const { hours, minutes } = parseEventTime(event.time);
     const start = new Date(Date.UTC(year, month - 1, day, hours, minutes));
     const end = new Date(start.getTime() + 60 * 60 * 1000);
     const fmt = (d) => d.toISOString().replace(/-|:|\.\d+/g, '');
@@ -173,7 +182,7 @@ const EventModal = ({ event, onClose }) => {
       onClick={onClose}
     >
       <div 
-        className="relative w-full max-w-3xl max-h-[95vh] sm:max-h-[90vh] overflow-y-auto bg-[#020617] rounded-xl sm:rounded-2xl border-2 border-[#00F0FF]/30 p-4 sm:p-6 md:p-8"
+        className="relative w-full max-w-3xl max-h-[90dvh] sm:max-h-[90vh] overflow-y-auto bg-[#020617] rounded-xl sm:rounded-2xl border-2 border-[#00F0FF]/30 p-4 sm:p-6 md:p-8"
         style={{ 
           backdropFilter: 'blur(40px)',
           boxShadow: '0 0 60px rgba(0,240,255,0.3), inset 0 0 40px rgba(0,240,255,0.05)'
@@ -301,7 +310,7 @@ const EventModal = ({ event, onClose }) => {
         )}
 
         {/* Action Buttons - BOLD TEAL STYLE (like original View Sign-Up Form) */}
-        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+        <div className="flex flex-col sm:flex-row sm:items-end gap-3 sm:gap-4">
           <a
             href={event.signupLink}
             target="_blank"
@@ -312,15 +321,15 @@ const EventModal = ({ event, onClose }) => {
               backgroundColor: typeColor,
               boxShadow: `0 0 30px ${typeColor}80`,
             }}
-            onMouseEnter={(e) => e.target.style.backgroundColor = `${typeColor}cc`}
-            onMouseLeave={(e) => e.target.style.backgroundColor = typeColor}
-            onMouseDown={(e) => e.target.style.backgroundColor = `${typeColor}99`}
-            onMouseUp={(e) => e.target.style.backgroundColor = typeColor}
+            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = `${typeColor}cc`}
+            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = typeColor}
+            onMouseDown={(e) => e.currentTarget.style.backgroundColor = `${typeColor}99`}
+            onMouseUp={(e) => e.currentTarget.style.backgroundColor = typeColor}
           >
             View Sign-Up Form
           </a>
           
-          <div className="relative flex-1" ref={menuRef}>
+          <div className="flex-1 flex flex-col-reverse gap-2" ref={menuRef}>
             <button
               onClick={() => setCalMenuOpen((o) => !o)}
               className="w-full px-4 sm:px-6 py-3 sm:py-4 rounded-lg text-[#020617] font-bold text-sm sm:text-base
@@ -329,10 +338,10 @@ const EventModal = ({ event, onClose }) => {
                 backgroundColor: typeColor,
                 boxShadow: `0 0 30px ${typeColor}80`,
               }}
-              onMouseEnter={(e) => e.target.style.backgroundColor = `${typeColor}cc`}
-              onMouseLeave={(e) => e.target.style.backgroundColor = typeColor}
-              onMouseDown={(e) => e.target.style.backgroundColor = `${typeColor}99`}
-              onMouseUp={(e) => e.target.style.backgroundColor = typeColor}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = `${typeColor}cc`}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = typeColor}
+              onMouseDown={(e) => e.currentTarget.style.backgroundColor = `${typeColor}99`}
+              onMouseUp={(e) => e.currentTarget.style.backgroundColor = typeColor}
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" className="sm:w-5 sm:h-5" style={{ imageRendering: 'pixelated' }}>
                 <path d="M19 3H18V1H16V3H8V1H6V3H5C3.89 3 3 3.9 3 5V19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3ZM19 19H5V9H19V19ZM19 7H5V5H19V7Z" />
@@ -341,7 +350,7 @@ const EventModal = ({ event, onClose }) => {
             </button>
 
             {calMenuOpen && (
-              <div className="absolute right-0 bottom-full mb-2 w-full bg-[#020617] rounded-lg border border-[#555] shadow-lg z-50">
+              <div className="w-full bg-[#020617] rounded-lg border border-[#555] shadow-lg overflow-hidden">
                 <button
                   onClick={() => {
                     downloadICS();

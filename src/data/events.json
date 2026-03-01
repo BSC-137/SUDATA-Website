@@ -803,6 +803,21 @@
       "id": "event_051"
     },
     {
+      "title": "Introduction to R Workshop",
+      "date": "2026-03-05",
+      "time": "16:00",
+      "venue": "TBA",
+      "type": "academic",
+      "description": "Learn the fundamentals of R programming for data analysis, and connect with new friends in a relaxed, supportive environment",
+      "collaborators": [
+        "SUDATA"
+      ],
+      "catering": "Snacks",
+      "signupLink": "https://docs.google.com/forms/d/e/1FAIpQLScgW3fZhxdtB65OgVPNcWrCGxCODn6fjWnh4lLI3cafpXfg_A/viewform",
+      "attendees": 0,
+      "id": "event_052"
+    },
+    {
       "title": "Dinner with Jane Street",
       "date": "2026-03-05",
       "time": "17:00",
@@ -815,21 +830,6 @@
       ],
       "catering": "Dinner",
       "signupLink": "https://docs.google.com/forms/d/e/1FAIpQLSf46ZiUBv2E_YBmU0tA3ywnUhGT7KrWh1ifW98jJ2F-iPxs4g/viewform",
-      "attendees": 0,
-      "id": "event_052"
-    },
-    {
-      "title": "Introduction to R Workshop",
-      "date": "2026-03-06",
-      "time": "16:00",
-      "venue": "TBA",
-      "type": "academic",
-      "description": "Learn the fundamentals of R programming for data analysis, and connect with new friends in a relaxed, supportive environment",
-      "collaborators": [
-        "SUDATA"
-      ],
-      "catering": "Snacks",
-      "signupLink": "https://docs.google.com/forms/d/e/1FAIpQLScgW3fZhxdtB65OgVPNcWrCGxCODn6fjWnh4lLI3cafpXfg_A/viewform",
       "attendees": 0,
       "id": "event_053"
     },
