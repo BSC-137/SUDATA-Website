@@ -1,10 +1,10 @@
 # ─────────────────────────────────────────────────────────────────────────────
-# DAILY REDEPLOY — refreshes Instagram follower count every day at 9am AEDT
+# WEEKLY REDEPLOY — refreshes Instagram follower count every Monday at 9am AEDT
 #
 # HOW TO ACTIVATE (once deployment is set up from the repo owner's end):
 #
 #   1. In your Vercel project → Settings → Git → Deploy Hooks
-#      → Create a hook named "Daily Redeploy" for the main branch
+#      → Create a hook named "Weekly Redeploy" for the main branch
 #      → Copy the generated hook URL
 #
 #   2. In your GitHub repo → Settings → Secrets and variables → Actions
@@ -19,16 +19,16 @@
 #       Then update INSTAGRAM_ACCESS_TOKEN in Vercel → Settings → Environment Variables
 # ─────────────────────────────────────────────────────────────────────────────
 
-# name: Daily Redeploy
-#
-# on:
-#   schedule:
-#     - cron: '0 23 * * *'  # 11pm UTC = 9am AEDT (UTC+10)
-#   workflow_dispatch:        # allows manual trigger from GitHub Actions tab
-#
-# jobs:
-#   redeploy:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Trigger Vercel deploy hook
-#         run: curl -X POST ${{ secrets.VERCEL_DEPLOY_HOOK_URL }}
+name: Weekly Redeploy
+
+on:
+  schedule:
+    - cron: '0 23 * * 0'  # 11pm UTC Sunday = 9am AEDT Monday
+  workflow_dispatch:        # allows manual trigger from GitHub Actions tab
+
+jobs:
+  redeploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Vercel deploy hook
+        run: curl -X POST ${{ secrets.VERCEL_DEPLOY_HOOK_URL }}
