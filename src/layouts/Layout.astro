@@ -117,14 +117,20 @@ const isHomePage = Astro.url.pathname === '/';
 					min-width: 0;
 				}
 				#main-nav.nav-mobile-expanded #nav-links a {
-					padding: 0.3rem 0.25rem;
+					padding: 0.3rem 0.15rem;
 					font-size: 0.6rem;
 					line-height: 1.2;
 					text-align: center;
-					display: inline-flex;
+					/* flex (not inline-flex) so each link fills its grid cell fully */
+					display: flex;
 					align-items: center;
 					justify-content: center;
 					white-space: normal;
+				}
+				/* Membership: rectangular pill that fills its cell completely */
+				#main-nav.nav-mobile-expanded #nav-links a:last-child {
+					border-radius: 0.4rem;
+					padding: 0.3rem 0.2rem;
 				}
 			}
 		</style>
