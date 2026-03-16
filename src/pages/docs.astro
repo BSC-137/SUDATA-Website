@@ -71,7 +71,7 @@ const renderedDocs = docs.map((doc) => ({
 										data-section={doc.id}
 									>
 										<span class="text-sudata-neon/50 group-hover:text-sudata-neon text-xs tabular-nums transition-colors">{String(i + 1).padStart(2, '0')}</span>
-										<span class="truncate">{doc.title}</span>
+										<span class="break-words min-w-0">{doc.title}</span>
 									</a>
 								</li>
 							))}
@@ -107,6 +107,25 @@ const renderedDocs = docs.map((doc) => ({
 	}
 	.docs-toc-link.active span:first-child {
 		color: #00F0FF;
+	}
+	.docs-prose {
+		overflow-wrap: break-word;
+		word-break: break-word;
+		min-width: 0;
+	}
+	.docs-prose pre,
+	.docs-prose code {
+		overflow-x: auto;
+		white-space: pre-wrap;
+		word-break: break-all;
+	}
+	.docs-prose a {
+		overflow-wrap: break-word;
+		word-break: break-all;
+	}
+	.docs-prose table {
+		display: block;
+		overflow-x: auto;
 	}
 </style>
 

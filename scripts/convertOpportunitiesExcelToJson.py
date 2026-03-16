@@ -10,7 +10,7 @@ Columns:
   sponsor            | Sponsor company name (must match a current sponsor)
   sponsor_logo       | Path to sponsor logo, e.g. /sponsors/current-sponsors/imc-trading.webp
   sponsor_tier       | Display order: 1=Industry Partner, 2=Technical, 3=Recruitment/Sponsor (optional, default 99)
-  type               | Internship | Program | Full-Time & Internship | Work Experience | Scholarship | Other
+  type               | Internship | Graduate | Program | Part-Time | Full-Time | Scholarship | Others
   deadline           | YYYY-MM-DD, or leave blank for rolling/no deadline
   status             | open | closed
   description        | Brief description of the opportunity
@@ -25,7 +25,7 @@ from openpyxl import load_workbook
 from datetime import datetime
 
 VALID_STATUSES = ['open', 'closed']
-VALID_TYPES = ['Internship', 'Program', 'Full-Time & Internship', 'Work Experience', 'Scholarship', 'Other']
+VALID_TYPES = ['Internship', 'Graduate', 'Program', 'Part-Time', 'Full-Time', 'Scholarship', 'Others']
 REQUIRED_HEADERS = [
     'opportunity_title', 'sponsor', 'sponsor_logo', 'type',
     'deadline', 'status', 'description', 'application_link'

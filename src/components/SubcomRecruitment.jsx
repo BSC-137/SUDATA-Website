@@ -20,9 +20,9 @@ export default function SubcomRecruitment({ isHomePage }) {
 
   // ── Deadline + popup trigger ──────────────────────────────────────────────
   useEffect(() => {
-    setWidgetVisible(true); // widget always mounts; expired flag controls its state
+    if (new Date() >= DEADLINE) return; // past deadline — hide widget entirely
 
-    if (new Date() >= DEADLINE) return; // stay expired — no popup, widget disabled
+    setWidgetVisible(true);
 
     setExpired(false);
 

@@ -120,7 +120,7 @@ const delayClasses = ['delay-0', 'delay-100', 'delay-200', 'delay-300', 'delay-[
                     <img
                       src={s.src}
                       alt={s.name}
-                      class="w-28 h-14 object-contain"
+                      class="w-44 h-24 sm:w-28 sm:h-14 object-contain"
                       loading="lazy"
                       decoding="async"
                     />
@@ -157,10 +157,12 @@ const delayClasses = ['delay-0', 'delay-100', 'delay-200', 'delay-300', 'delay-[
             var GAP = 20; // gap-5
             var offset = 0;
             var cw = 0; // card width (set by sizeCards)
+            var perView = 3;
 
             function sizeCards() {
               var vw = viewport.clientWidth;
-              cw = Math.floor((vw - GAP * 2) / 3); // exactly 3 cards visible
+              perView = vw < 640 ? 1 : 3;
+              cw = Math.floor((vw - GAP * (perView - 1)) / perView);
               track.querySelectorAll('a').forEach(function (card) {
                 card.style.width = cw + 'px';
               });
@@ -174,7 +176,7 @@ const delayClasses = ['delay-0', 'delay-100', 'delay-200', 'delay-300', 'delay-[
             }
 
             function minOffset() {
-              return -(track.querySelectorAll('a').length - 3) * (cw + GAP);
+              return -(track.querySelectorAll('a').length - perView) * (cw + GAP);
             }
             function go(val) {
               offset = Math.max(minOffset(), Math.min(0, val));

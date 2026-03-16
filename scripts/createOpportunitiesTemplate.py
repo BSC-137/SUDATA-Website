@@ -49,7 +49,7 @@ INSTRUCTIONS = [
     ['sponsor',           'Sponsor company name  *REQUIRED',                                                    'IMC Trading'],
     ['sponsor_logo',      'Path to logo in /public/sponsors/current-sponsors/  *REQUIRED',                      '/sponsors/current-sponsors/imc-trading.webp'],
     ['sponsor_tier',      'Controls the display order of sponsor groups (optional). Lower = shown first.',      '1 = Industry Partner  |  2 = Technical  |  3 = Recruitment/Sponsor  |  blank = last'],
-    ['type',              'Category  *REQUIRED — must be one of the allowed values',                             'Internship | Program | Full-Time & Internship | Work Experience | Scholarship | Other'],
+    ['type',              'Category  *REQUIRED — must be one of the allowed values',                             'Internship | Graduate | Program | Part-Time | Full-Time | Scholarship | Others'],
     ['deadline',          'Application deadline in YYYY-MM-DD format. Leave blank for rolling / no deadline.',  '2026-04-30'],
     ['status',            'open  or  closed  *REQUIRED',                                                        'open'],
     ['description',       'Short paragraph describing the opportunity  *REQUIRED',                               'IMC Trading is offering internship positions for...'],

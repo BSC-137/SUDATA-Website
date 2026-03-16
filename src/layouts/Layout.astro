@@ -94,18 +94,19 @@ const isHomePage = Astro.url.pathname === '/';
 					padding: 0.5rem 0.75rem;
 				}
 				#main-nav.nav-mobile-expanded #nav-links {
-					flex-wrap: wrap;
-					justify-content: center;
+					display: grid;
+					grid-template-columns: repeat(4, 1fr);
 					gap: 0.2rem;
+					width: 100%;
 				}
 				#main-nav.nav-mobile-expanded #nav-links a {
 					padding: 0.3rem 0.55rem;
 					font-size: 0.7rem;
-					/* Centre text inside each button (including Membership) */
 					text-align: center;
 					display: inline-flex;
 					align-items: center;
 					justify-content: center;
+					white-space: nowrap;
 				}
 			}
 		</style>

@@ -13,6 +13,18 @@
       "id": "opp_001"
     },
     {
+      "sponsor": "Westpac",
+      "sponsorTier": 3,
+      "sponsorLogo": "/sponsors/current-sponsors/westpac.png",
+      "title": "Westpac Graduate Program",
+      "type": "Graduate",
+      "deadline": "2026-04-10",
+      "status": "open",
+      "description": "Westpac are looking for uncommon minds who expect to\ncontribute from day one and have an impact. Their\nprograms will get your career off to a flying start!\nIf you’re curious, eager to learn and ready to explore what a\ncareer in banking could look like, this is a place where your\nideas can grow - across areas like Financial Markets &amp;\nTreasury, Corporate &amp; Institutional Banking, Global\nTransaction Services and Group Treasury.",
+      "applicationLink": "https://au.gradconnection.com/employers/westpac/jobs",
+      "id": "opp_002"
+    },
+    {
       "sponsor": "IMC Trading",
       "sponsorTier": 3,
       "sponsorLogo": "/sponsors/current-sponsors/imc-trading.webp",
@@ -22,7 +34,7 @@
       "status": "open",
       "description": "IMC Trading is offering internship positions for students interested in quantitative trading, software engineering, and market making. Join a global team of problem solvers using technology and algorithms to trade in financial markets worldwide.",
       "applicationLink": "https://bit.ly/4cdblbA",
-      "id": "opp_002"
+      "id": "opp_003"
     },
     {
       "sponsor": "Atlassian",
@@ -34,7 +46,7 @@
       "status": "open",
       "description": "Atlassian’s intern program combines hands-on technical training, professional growth opportunities, dedicated mentorship, and strong social connections. This holistic approach empowers students to hit the ground running and sets them up for a successful career at Atlassian!",
       "applicationLink": "https://www.atlassian.com/company/careers/all-jobs?team=Interns&location=Australia%2CNew%20Zealand&search=",
-      "id": "opp_003"
+      "id": "opp_004"
     },
     {
       "sponsor": "Jane Street",
@@ -46,7 +58,7 @@
       "status": "closed",
       "description": "Jane Street's Women in Trading program is a unique opportunity for women interested in quantitative trading, programming, and mathematics. This cohort's applications are now closed — stay tuned for future rounds.",
       "applicationLink": "https://tr.ee/GNsjYgfuHO",
-      "id": "opp_004"
+      "id": "opp_005"
     }
   ]
 }

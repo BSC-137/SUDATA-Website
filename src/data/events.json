@@ -868,17 +868,19 @@
       "id": "event_055"
     },
     {
-      "title": "SUDATA Pub Crawl",
+      "title": "SUDATA x SUMS x EconSoc Trivia & Pub Crawl",
       "date": "2026-03-20",
-      "time": "TBD",
-      "venue": "TBA",
+      "time": "17:30",
+      "venue": "BHB Seminar Room 3200",
       "type": "social",
-      "description": "A social night out hopping between venues with SUDATA members to unwind and meet new people",
+      "description": "A social night out hopping between venues with SUDATA, SUMS and EconSoc members to unwind and meet new people",
       "collaborators": [
-        "SUDATA"
+        "SUDATA",
+        "SUMS",
+        "Econsoc"
       ],
-      "catering": "Drinks available for purchase",
-      "signupLink": "TBA",
+      "catering": "Food provided at the Trivia",
+      "signupLink": "https://docs.google.com/forms/d/e/1FAIpQLScqpPcQ59sVttaKaBFjwePnOLHKFWUo0syGt0UPCwH8KmnG5A/viewform?usp=dialog",
       "attendees": 0,
       "id": "event_056"
     },
