@@ -89,24 +89,44 @@ const isHomePage = Astro.url.pathname === '/';
 					max-width: calc(100% - 2rem) !important;
 					border-radius: 1rem;
 				}
+				/* Clip so nothing bleeds outside the pill */
+				#main-nav.nav-mobile-expanded > div {
+					overflow: hidden;
+					border-radius: inherit;
+				}
 				/* Tighten the outer pill padding so the expanded menu is compact */
 				#main-nav.nav-mobile-expanded #nav-pill-inner {
 					padding: 0.5rem 0.75rem;
+				}
+				/* Override Tailwind gap-12 that kicks in when JS clears inline gap */
+				#main-nav.nav-mobile-expanded #nav-inner {
+					gap: 0.5rem;
+					width: 100%;
+					align-items: center;
+				}
+				/* Keep SUDATA from shrinking */
+				#main-nav.nav-mobile-expanded #nav-toggle {
+					flex-shrink: 0;
 				}
 				#main-nav.nav-mobile-expanded #nav-links {
 					display: grid;
 					grid-template-columns: repeat(4, 1fr);
 					gap: 0.2rem;
-					width: 100%;
+					flex: 1;
+					min-width: 0;
+					overflow: hidden;
 				}
 				#main-nav.nav-mobile-expanded #nav-links a {
-					padding: 0.3rem 0.55rem;
-					font-size: 0.7rem;
+					padding: 0.25rem 0.2rem;
+					font-size: 0.6rem;
+					line-height: 1.2;
 					text-align: center;
 					display: inline-flex;
 					align-items: center;
 					justify-content: center;
-					white-space: nowrap;
+					white-space: normal;
+					overflow: hidden;
+					min-width: 0;
 				}
 			}
 		</style>

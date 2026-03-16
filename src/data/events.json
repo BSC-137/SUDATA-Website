@@ -834,24 +834,6 @@
       "id": "event_053"
     },
     {
-      "title": "Meet The Startups",
-      "date": "2026-03-16",
-      "time": "TBA",
-      "venue": "TBA",
-      "type": "academic",
-      "description": "Panel discussion with startup founders about data science in entrepreneurship.",
-      "collaborators": [
-        "SUDATA",
-        "SUSMI",
-        "STARTUPLINK",
-        "MEDSCISOC"
-      ],
-      "catering": "TBA",
-      "signupLink": "TBA",
-      "attendees": 0,
-      "id": "event_054"
-    },
-    {
       "title": "Jane Street Tech Talk",
       "date": "2026-03-17",
       "time": "18:00",
@@ -865,15 +847,15 @@
       "catering": "TBA",
       "signupLink": "https://docs.google.com/forms/d/e/1FAIpQLSe0fgyAoK7WviXjjQG5-B0WpO6OdeasQA5FbJU1cbfgnZAceQ/viewform",
       "attendees": 0,
-      "id": "event_055"
+      "id": "event_054"
     },
     {
-      "title": "SUDATA x SUMS x EconSoc Trivia & Pub Crawl",
+      "title": "SUDATA x SUMS x Econsoc Trivia & Pub Crawl",
       "date": "2026-03-20",
       "time": "17:30",
       "venue": "BHB Seminar Room 3200",
       "type": "social",
-      "description": "A social night out hopping between venues with SUDATA, SUMS and EconSoc members to unwind and meet new people",
+      "description": "A social night out hopping between venues with SUDATA, SUMS and Econsoc members to unwind and meet new people",
       "collaborators": [
         "SUDATA",
         "SUMS",
@@ -881,6 +863,24 @@
       ],
       "catering": "Food provided at the Trivia",
       "signupLink": "https://docs.google.com/forms/d/e/1FAIpQLScqpPcQ59sVttaKaBFjwePnOLHKFWUo0syGt0UPCwH8KmnG5A/viewform?usp=dialog",
+      "attendees": 0,
+      "id": "event_055"
+    },
+    {
+      "title": "Meet The Startups",
+      "date": "2026-03-20",
+      "time": "18:00",
+      "venue": "PNR Lecture Theatre",
+      "type": "academic",
+      "description": "Panel discussion with startup founders about data science in entrepreneurship.",
+      "collaborators": [
+        "SUDATA",
+        "SUSMI",
+        "STARTUPLINK",
+        "MEDSCISOC"
+      ],
+      "catering": "TBA",
+      "signupLink": "https://events.humanitix.com/meet-the-startups-susmi-x-sudata-x-sul-x-medscisoc",
       "attendees": 0,
       "id": "event_056"
     },
